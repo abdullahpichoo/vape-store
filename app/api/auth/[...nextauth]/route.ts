@@ -27,11 +27,7 @@ export const authOptions: NextAuthOptions = {
         console.log("Credentials", credentials);
 
         // Connecting to the database
-        try {
-          await connectToDatabase();
-        } catch (e) {
-          throw new Error(e as string);
-        }
+        await connectToDatabase();
 
         // Checking for empty credentials
         if (!credentials || !credentials.email || !credentials.password) {
