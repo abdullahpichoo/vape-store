@@ -16,10 +16,14 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
-    default: "user",
+    default: "retailer",
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
+
+const User = models.User || model("User", UserSchema);
+
+export default User;

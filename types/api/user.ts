@@ -2,7 +2,7 @@ import { Response } from "..";
 
 export type UserPayloadType = Response<UserType>;
 
-interface UserType {
+export interface UserType {
   email: string;
   password: string;
   role: string;
