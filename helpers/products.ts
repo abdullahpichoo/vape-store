@@ -1,12 +1,12 @@
 // product.js
-import { connectToDatabase } from '../utils/database';
-import Productschema from '../models/product';
-import {product} from '../types/api/product'
+import { connectToDatabase } from "../utils/database";
+import Productschema from "../models/product";
+import { ProductType } from "../types/api/product";
 
-type productData=product
+type productData = ProductType;
 
 // Create a new product
-export async function createProduct(data:productData) {
+export async function createProduct(data: productData) {
   await connectToDatabase();
 
   try {
@@ -29,7 +29,7 @@ export async function getAllProducts() {
 }
 
 // Get a single product by ID
-export async function getProductById(id:string | string[] | undefined) {
+export async function getProductById(id: string | string[] | undefined) {
   await connectToDatabase();
 
   try {
@@ -40,7 +40,10 @@ export async function getProductById(id:string | string[] | undefined) {
 }
 
 // Update a product by ID
-export async function updateProduct(id:string | string[] | undefined, data:productData) {
+export async function updateProduct(
+  id: string | string[] | undefined,
+  data: productData
+) {
   await connectToDatabase();
 
   try {
@@ -51,7 +54,7 @@ export async function updateProduct(id:string | string[] | undefined, data:produ
 }
 
 // Delete a product by ID
-export async function deleteProduct(id:string | string[] | undefined) {
+export async function deleteProduct(id: string | string[] | undefined) {
   await connectToDatabase();
 
   try {

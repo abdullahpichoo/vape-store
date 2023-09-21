@@ -1,33 +1,13 @@
-export type product = {
- name: {
-  type: String
- },
- description: {
-  type: String
- },
- price: {
-  type: Number
- },
- images: [
-  {
-   public_id: {
-    type: String
-   },
-   url: {
-    type: String
-   },
-  }
- ],
- category: {
-  type: String
- },
- brand: {
-  type: String
- },
- rating: {
-  type: Number
- },
- countInStock: {
-  type: Number
- },
-}
+export type ProductType = {
+  name: string;
+  description: string;
+  price: number;
+  images: {
+    public_id: string;
+    url: string;
+  }[];
+  category: string;
+  brand: string;
+  rating: number;
+  countInStock: number;
+};
