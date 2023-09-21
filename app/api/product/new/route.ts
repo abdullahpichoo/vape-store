@@ -1,23 +1,7 @@
-import { connectToDatabase } from "@/utils/database";
-import Prompt from "@/models/product";
+import { NextApiRequest, NextApiResponse } from 'next';
+import productHandler from '../productsHandler'
 
-// export const POST = async (req) => {
-//   const { userId, prompt, tag } = await req.json();
-
-//   try {
-//     console.log("Calling Create Prompt...");
-//     await connectToDatabase();
-//     console.log("DB Connected...");
-//     const newPrompt = await Prompt.create({
-//       creator: userId,
-//       prompt,
-//       tag,
-//     });
-//     console.log("Prompt Created: ", newPrompt);
-
-//     return new Response(JSON.stringify(newPrompt), { status: 201 });
-//   } catch (error) {
-//     console.log("Create Prompt Error: ", error);
-//     return new Response(JSON.stringify(newPrompt), { status: 500 });
-//   }
-// };
+export async function POST(req:NextApiRequest, res:NextApiResponse){
+  //call productHandler and pass req and res
+  productHandler(req, res);
+}

@@ -22,7 +22,7 @@ const ProductSchema = new Schema(
         url: {
           type: String,
         },
-      },
+      }
     ],
     category: {
       type: String,
@@ -36,22 +36,6 @@ const ProductSchema = new Schema(
       type: Number,
       required: [true, "Please provide a rating for this product."],
     },
-    reviews: [
-      {
-        rating: {
-          type: Number,
-          required: [true, "Please provide a rating for this product."],
-        },
-        comment: {
-          type: String,
-          required: [true, "Please provide a comment for this product."],
-        },
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
-      },
-    ],
     countInStock: {
       type: Number,
       required: [true, "Please provide a count in stock for this product."],
