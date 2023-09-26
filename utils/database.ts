@@ -8,7 +8,7 @@ export const connectToDatabase = async () => {
 
   if (mongoose.connections[0].readyState) {
     console.log("MongoDB is already connected.");
-    return;
+    return true;
   }
 
   try {
@@ -17,8 +17,8 @@ export const connectToDatabase = async () => {
       dbName: process.env.DATABASE_NAME,
     });
     console.log("MongoDB is connected!");
+    return true;
   } catch (err) {
-    // If there is an error, log it
-    throw new Error(MONGODB_CONNECTION_ERROR as string);
+    return false;
   }
 };

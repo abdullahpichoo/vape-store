@@ -23,10 +23,11 @@ const NewRetailer = () => {
       },
       body: JSON.stringify(formData),
     });
-    setIsSubmitting(true);
+    const data = await result.json();
 
-    // const data = await result.json();
-    console.log("Res", result);
+    setIsSubmitting(false);
+
+    console.log("Res", data);
   };
 
   return (
