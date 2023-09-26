@@ -5,8 +5,9 @@ import { signIn, signOut } from "next-auth/react";
 const Login = () => {
   const login = async () => {
     const result = await signIn("credentials", {
-      email: "asdasd",
-      password: "asdasda",
+      email: "abdullah@mail.com",
+      password: "12345678",
+      admin: true,
       redirect: false,
     });
     console.log("Result", result);

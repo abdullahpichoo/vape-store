@@ -1,7 +1,7 @@
 // product.js
-import { connectToDatabase } from "../utils/database";
-import Productschema from "../models/product";
-import { ProductType } from "../types/api/product";
+import { connectToDatabase } from "../../utils/database";
+import Productschema from "../../models/product";
+import { ProductType } from "../../types/api/product";
 
 type productData = ProductType;
 
