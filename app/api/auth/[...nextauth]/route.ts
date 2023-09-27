@@ -1,5 +1,5 @@
 import { INVALID_CREDENTIALS } from "@/contants/errorMsgs";
-import User from "@/models/user";
+import User from "@/backend/models/user";
 import { connectToDatabase } from "@/utils/database";
 
 import NextAuth from "next-auth";

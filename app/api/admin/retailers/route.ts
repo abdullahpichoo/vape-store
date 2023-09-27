@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { getAllProducts } from "@/backend/controllers/product-controller";
-import { failedToFetchProductsResponse } from "@/backend/utils/responses/product";
+import { getAllUsers } from "@/backend/controllers/retailer-controller";
+import { failedToFetchUsersResponse } from "@/backend/utils/responses/user";
 import { connectToDatabase } from "@/utils/database";
 import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
@@ -13,12 +13,12 @@ export const GET = async () => {
   }
 
   try {
-    const products = await getAllProducts();
+    const users = await getAllUsers();
     const response = {
       message: "Products fetched successfully",
       status: 200,
       success: true,
-      payLoad: products,
+      payLoad: users,
     };
 
     return NextResponse.json(
@@ -28,6 +28,6 @@ export const GET = async () => {
       { status: 200 }
     );
   } catch (error) {
-    return failedToFetchProductsResponse;
+    return failedToFetchUsersResponse;
   }
 };

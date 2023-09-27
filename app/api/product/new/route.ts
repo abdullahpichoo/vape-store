@@ -1,20 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// There is no need for a route handler here!
-// Just write the POST logic in the function below as this API (/product/new) is only for adding a new product
-// For the GET, PUT, DELETE, go to the [id]/route.ts file
-export async function POST(req: NextRequest) {
-  // Write the POST logic here and use "NextRequest", "NextResponse", not NextApiResponse
-  const { email, password } = await req.json();
-  console.log("Params", email, password);
+import { createProduct } from "@/backend/controllers/product-controller";
+import { productCreationFailedResponse } from "@/backend/utils/responses/product";
+import { connectToDatabase } from "@/utils/database";
+import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
+import { ProductType } from "@/types/api/product";
+import { Response } from "@/types";
 
-  return NextResponse.json(
-    {
-      body: {
-        email: email,
-        password: password,
+export async function POST(req: NextRequest) {
+  // Connecting to the database
+  const isConnected = await connectToDatabase();
+  if (!isConnected) {
+    return dbConnectionErrorResponse;
+  }
+
+  const product: ProductType = await req.json();
+  if (!product) {
+    return productCreationFailedResponse;
+  }
+  try {
+    const createdProduct = await createProduct(product);
+
+    const response: Response<ProductType> = {
+      message: "Product created successfully",
+      status: 201,
+      success: true,
+      payLoad: createdProduct,
+    };
+
+    return NextResponse.json(
+      {
+        body: response,
       },
-    },
-    { status: 201 }
-  );
+      { status: 201 }
+    );
+  } catch (error) {
+    return productCreationFailedResponse;
+  }
 }

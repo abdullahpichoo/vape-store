@@ -1,10 +1,17 @@
-import User from "@/models/user";
+import User from "@/backend/models/user";
 import { Response } from "@/types";
 import { UserType } from "@/types/api/user";
 import { connectToDatabase } from "@/utils/database";
 import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
-import { userNotFoundResponse } from "@/utils/server/user/responses";
+import {
+  userNotFoundResponse,
+  userUpdateFailedResponse,
+} from "@/backend/utils/responses/user";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  getUserById,
+  updateUser,
+} from "@/backend/controllers/retailer-controller";
 
 // GET api/admin/retailers/:id
 export const GET = async (
@@ -17,33 +24,34 @@ export const GET = async (
     };
   }
 ) => {
+  const { id } = params;
+  if (!id) {
+    return userNotFoundResponse;
+  }
+
   // Connecting to the database
   const isConnected = await connectToDatabase();
   if (!isConnected) {
     return dbConnectionErrorResponse;
   }
 
-  console.log("Params", params);
-  const { id } = params;
-
-  const user = (await User.findById(id)) as UserType;
-  if (!user) {
+  try {
+    const user = await getUserById(id);
+    const response: Response<UserType> = {
+      success: true,
+      status: 200,
+      message: "User found successfully!",
+      payLoad: user,
+    };
+    return NextResponse.json(
+      {
+        body: response,
+      },
+      { status: 200 }
+    );
+  } catch (err) {
     return userNotFoundResponse;
   }
-
-  const response: Response<UserType> = {
-    success: true,
-    status: 200,
-    message: "User found successfully!",
-    payLoad: user,
-  };
-
-  return NextResponse.json(
-    {
-      body: response,
-    },
-    { status: 200 }
-  );
 };
 
 // PUT api/admin/retailers/:id
@@ -64,28 +72,26 @@ export const PUT = async (
   }
 
   const { id } = params;
-  const { username, email, password } = await req.json();
+  const user = (await req.json()) as UserType;
 
-  const user = await User.findById(id);
-  if (!user) {
+  if (!user || !id) {
     return userNotFoundResponse;
   }
-
-  user.username = username;
-
-  const updatedUser = await user.save();
-
-  const response: Response<UserType> = {
-    success: true,
-    status: 200,
-    message: "User updated successfully!",
-    payLoad: updatedUser,
-  };
-
-  return NextResponse.json(
-    {
-      body: response,
-    },
-    { status: 200 }
-  );
+  try {
+    const updatedUser = await updateUser(id, user);
+    const response: Response<UserType> = {
+      success: true,
+      status: 200,
+      message: "User updated successfully!",
+      payLoad: updatedUser,
+    };
+    return NextResponse.json(
+      {
+        body: response,
+      },
+      { status: 200 }
+    );
+  } catch (err) {
+    return userUpdateFailedResponse;
+  }
 };
