@@ -21,7 +21,7 @@ export const GET = async (
   }
 ) => {
   const { id } = params;
-  if (!id) return profileNotFoundResponse;
+  if (!id) return profileNotFoundResponse();
 
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();

@@ -1,10 +1,7 @@
-import { NextResponse } from "next/server";
-
 import { PROFILE_NOT_FOUND } from "@/contants/errorMsgs";
 
-import { responseGenerator } from ".";
+import { getErrorResponse } from ".";
 
-export const profileNotFoundResponse = NextResponse.json(
-  responseGenerator(PROFILE_NOT_FOUND),
-  { status: 400 }
-);
+export const profileNotFoundResponse = () => {
+  return getErrorResponse(PROFILE_NOT_FOUND);
+};
