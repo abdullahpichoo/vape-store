@@ -9,7 +9,6 @@ import {
 } from "@/contants/errorMsgs";
 import { ProductType } from "@/types/api/product";
 
-// Create a new product
 export async function createProduct(data: ProductType) {
   try {
     const product = await Product.create(data);
@@ -20,8 +19,7 @@ export async function createProduct(data: ProductType) {
   }
 }
 
-// Get a list of all products
-export async function getAllProducts() {
+export async function getAllProducts(): Promise<ProductType[]> {
   try {
     return await Product.find({});
   } catch (error) {
@@ -29,10 +27,9 @@ export async function getAllProducts() {
   }
 }
 
-// Get a single product by ID
-export async function getProductById(id: string) {
+export async function getProductById(id: string): Promise<ProductType> {
   try {
-    const product = await Product.findById(id);
+    const product = (await Product.findById(id)) as ProductType;
     if (!product) {
       throw new Error(PRODUCT_NOT_FOUND as string);
     }
@@ -42,7 +39,6 @@ export async function getProductById(id: string) {
   }
 }
 
-// Update a product by ID
 export async function updateProduct(id: string, data: ProductType) {
   try {
     const product = await Product.findByIdAndUpdate(id, data, { new: true });
@@ -55,7 +51,6 @@ export async function updateProduct(id: string, data: ProductType) {
   }
 }
 
-// Delete a product by ID
 export async function deleteProduct(id: string) {
   // TODO: When a product is deleted, all of the cart items related to that product should also be deleted and its reviews should also be deleted
   try {

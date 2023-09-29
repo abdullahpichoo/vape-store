@@ -1,5 +1,3 @@
-import { NextResponse } from "next/server";
-
 import {
   FAILED_TO_CREATE_PRODUCT,
   FAILED_TO_DELETE_PRODUCT,
@@ -8,29 +6,24 @@ import {
   PRODUCT_NOT_FOUND,
 } from "@/contants/errorMsgs";
 
-import { responseGenerator } from ".";
+import { getErrorResponse } from ".";
 
-export const productCreationFailedResponse = NextResponse.json(
-  responseGenerator(FAILED_TO_CREATE_PRODUCT),
-  { status: 400 }
-);
+export const productCreationFailedResponse = () => {
+  return getErrorResponse(FAILED_TO_CREATE_PRODUCT);
+};
 
-export const productUpdateFailedResponse = NextResponse.json(
-  responseGenerator(FAILED_TO_UPDATE_PRODUCT),
-  { status: 400 }
-);
+export const productUpdateFailedResponse = () => {
+  return getErrorResponse(FAILED_TO_UPDATE_PRODUCT);
+};
 
-export const productDeletionFailedResponse = NextResponse.json(
-  responseGenerator(FAILED_TO_DELETE_PRODUCT),
-  { status: 400 }
-);
+export const productDeletionFailedResponse = () => {
+  return getErrorResponse(FAILED_TO_DELETE_PRODUCT);
+};
 
-export const productNotFoundResponse = NextResponse.json(
-  responseGenerator(PRODUCT_NOT_FOUND),
-  { status: 400 }
-);
+export const productNotFoundResponse = () => {
+  return getErrorResponse(PRODUCT_NOT_FOUND);
+};
 
-export const failedToFetchProductsResponse = NextResponse.json(
-  responseGenerator(FAILED_TO_GET_PRODUCTS),
-  { status: 400 }
-);
+export const failedToFetchProductsResponse = () => {
+  return getErrorResponse(FAILED_TO_GET_PRODUCTS);
+};

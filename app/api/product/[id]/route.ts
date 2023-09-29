@@ -1,16 +1,24 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 import {
   deleteProduct,
   getProductById,
   updateProduct,
 } from "@/backend/controllers/product-controller";
+import { getSuccessResponse } from "@/backend/utils/responses";
+import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import {
   productDeletionFailedResponse,
   productNotFoundResponse,
+  productUpdateFailedResponse,
 } from "@/backend/utils/responses/product";
+import {
+  PRODUCT_CREATED_SUCCESSFULLY,
+  PRODUCT_DELETED_SUCCESSFULLY,
+  PRODUCT_UPDATED_SUCCESSFULLY,
+} from "@/contants/successMsgs";
+import { ProductType } from "@/types/api/product";
 import { connectToDatabase } from "@/utils/database";
-import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
 // GET /api/product/:id
 export const GET = async (
@@ -24,34 +32,19 @@ export const GET = async (
   }
 ) => {
   const { id } = params;
+  if (!id) return productNotFoundResponse();
 
-  if (!id) {
-    return productNotFoundResponse;
-  }
-
-  // Connecting to the database
   const isConnected = await connectToDatabase();
-  if (!isConnected) {
-    return dbConnectionErrorResponse;
-  }
+  if (!isConnected) return failedToConnectToDatabaseResponse();
 
   try {
     const product = await getProductById(id);
-    const response = {
-      message: "Product fetched successfully",
-      status: 200,
-      success: true,
-      payLoad: product,
-    };
-
-    return NextResponse.json(
-      {
-        body: response,
-      },
-      { status: 200 }
+    return getSuccessResponse<ProductType>(
+      product,
+      PRODUCT_CREATED_SUCCESSFULLY
     );
   } catch (error) {
-    return productNotFoundResponse;
+    return productNotFoundResponse();
   }
 };
 
@@ -67,35 +60,21 @@ export const PUT = async (
   }
 ) => {
   const { id } = params;
-  const product = await req.json();
+  const product = (await req.json()) as ProductType;
 
-  if (!id || !product) {
-    return productNotFoundResponse;
-  }
+  if (!id || !product) return productUpdateFailedResponse();
 
-  // Connecting to the database
   const isConnected = await connectToDatabase();
-  if (!isConnected) {
-    return dbConnectionErrorResponse;
-  }
+  if (!isConnected) return failedToConnectToDatabaseResponse();
 
   try {
     const updatedProduct = await updateProduct(id, product);
-    const response = {
-      message: "Product updated successfully",
-      status: 200,
-      success: true,
-      payLoad: updatedProduct,
-    };
-
-    return NextResponse.json(
-      {
-        body: response,
-      },
-      { status: 200 }
+    return getSuccessResponse<ProductType>(
+      updatedProduct,
+      PRODUCT_UPDATED_SUCCESSFULLY
     );
   } catch (error) {
-    return productNotFoundResponse;
+    return productUpdateFailedResponse();
   }
 };
 
@@ -111,32 +90,18 @@ export const DELETE = async (
   }
 ) => {
   const { id } = params;
+  if (!id) return productDeletionFailedResponse();
 
-  if (!id) {
-    return productDeletionFailedResponse;
-  }
-
-  // Connecting to the database
   const isConnected = await connectToDatabase();
-  if (!isConnected) {
-    return dbConnectionErrorResponse;
-  }
+  if (!isConnected) return failedToConnectToDatabaseResponse();
 
   try {
-    await deleteProduct(id);
-    const response = {
-      message: "Product deleted successfully",
-      status: 200,
-      success: true,
-    };
-
-    return NextResponse.json(
-      {
-        body: response,
-      },
-      { status: 200 }
+    const deletedProduct = await deleteProduct(id);
+    return getSuccessResponse<ProductType>(
+      deletedProduct,
+      PRODUCT_DELETED_SUCCESSFULLY
     );
   } catch (error) {
-    return productDeletionFailedResponse;
+    return productDeletionFailedResponse();
   }
 };
