@@ -1,40 +1,27 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 import { createProduct } from "@/backend/controllers/product-controller";
+import { getSuccessResponse } from "@/backend/utils/responses";
+import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import { productCreationFailedResponse } from "@/backend/utils/responses/product";
-import { Response } from "@/types";
+import { PRODUCT_CREATED_SUCCESSFULLY } from "@/contants/successMsgs";
 import { ProductType } from "@/types/api/product";
 import { connectToDatabase } from "@/utils/database";
-import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
 export async function POST(req: NextRequest) {
-  // Connecting to the database
-  const isConnected = await connectToDatabase();
-  if (!isConnected) {
-    return dbConnectionErrorResponse;
-  }
-
   const product: ProductType = await req.json();
-  if (!product) {
-    return productCreationFailedResponse;
-  }
+  if (!product) return productCreationFailedResponse();
+
+  const isConnected = await connectToDatabase();
+  if (!isConnected) return failedToConnectToDatabaseResponse();
+
   try {
     const createdProduct = await createProduct(product);
-
-    const response: Response<ProductType> = {
-      message: "Product created successfully",
-      status: 201,
-      success: true,
-      payLoad: createdProduct,
-    };
-
-    return NextResponse.json(
-      {
-        body: response,
-      },
-      { status: 201 }
+    return getSuccessResponse<ProductType>(
+      createdProduct,
+      PRODUCT_CREATED_SUCCESSFULLY
     );
   } catch (error) {
-    return productCreationFailedResponse;
+    return productCreationFailedResponse();
   }
 }

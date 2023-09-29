@@ -1,33 +1,22 @@
-import { NextResponse } from "next/server";
-
 import { getAllProducts } from "@/backend/controllers/product-controller";
+import { getSuccessResponse } from "@/backend/utils/responses";
+import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import { failedToFetchProductsResponse } from "@/backend/utils/responses/product";
+import { PRODUCTS_FETCHED_SUCCESSFULLY } from "@/contants/successMsgs";
+import { ProductType } from "@/types/api/product";
 import { connectToDatabase } from "@/utils/database";
-import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
 export const GET = async () => {
-  // Connecting to the database
   const isConnected = await connectToDatabase();
-  if (!isConnected) {
-    return dbConnectionErrorResponse;
-  }
+  if (!isConnected) return failedToConnectToDatabaseResponse();
 
   try {
     const products = await getAllProducts();
-    const response = {
-      message: "Products fetched successfully",
-      status: 200,
-      success: true,
-      payLoad: products,
-    };
-
-    return NextResponse.json(
-      {
-        body: response,
-      },
-      { status: 200 }
+    return getSuccessResponse<ProductType[]>(
+      products,
+      PRODUCTS_FETCHED_SUCCESSFULLY
     );
   } catch (error) {
-    return failedToFetchProductsResponse;
+    return failedToFetchProductsResponse();
   }
 };
