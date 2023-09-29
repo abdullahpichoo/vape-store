@@ -25,13 +25,11 @@ const AddressSchema = new Schema({
     type: String,
     required: true,
   },
-
-  user: {
+  userId: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: "User",
   },
-
   createdAt: {
     type: Date,
     default: Date.now,
