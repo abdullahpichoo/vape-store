@@ -1,5 +1,4 @@
 import Product from "@/backend/models/product";
-import { ProductType } from "@/types/api/product";
 import {
   FAILED_TO_CREATE_PRODUCT,
   FAILED_TO_DELETE_PRODUCT,
@@ -8,6 +7,7 @@ import {
   FAILED_TO_UPDATE_PRODUCT,
   PRODUCT_NOT_FOUND,
 } from "@/contants/errorMsgs";
+import { ProductType } from "@/types/api/product";
 
 // Create a new product
 export async function createProduct(data: ProductType) {

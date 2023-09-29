@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { createUser } from "@/backend/controllers/retailer-controller";
 import User from "@/backend/models/user";
-import { Response } from "@/types";
-import { UserType } from "@/types/api/user";
-import { connectToDatabase } from "@/utils/database";
-import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 import {
   userAlreadyExistsResponse,
   userCreationFailedResponse,
 } from "@/backend/utils/responses/user";
-import { createUser } from "@/backend/controllers/retailer-controller";
+import { Response } from "@/types";
+import { UserType } from "@/types/api/user";
+import { connectToDatabase } from "@/utils/database";
+import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
 export async function POST(req: NextRequest) {
   // Connecting to the database

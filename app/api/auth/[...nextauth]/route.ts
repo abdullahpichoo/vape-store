@@ -1,11 +1,11 @@
-import { INVALID_CREDENTIALS } from "@/contants/errorMsgs";
-import User from "@/backend/models/user";
-import { connectToDatabase } from "@/utils/database";
-
+import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+
+import User from "@/backend/models/user";
+import { INVALID_CREDENTIALS } from "@/contants/errorMsgs";
+import { connectToDatabase } from "@/utils/database";
 
 export const authOptions: NextAuthOptions = {
   providers: [

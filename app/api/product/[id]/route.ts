@@ -1,15 +1,16 @@
-import { connectToDatabase } from "@/utils/database";
-import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 import { NextRequest, NextResponse } from "next/server";
-import {
-  productDeletionFailedResponse,
-  productNotFoundResponse,
-} from "@/backend/utils/responses/product";
+
 import {
   deleteProduct,
   getProductById,
   updateProduct,
 } from "@/backend/controllers/product-controller";
+import {
+  productDeletionFailedResponse,
+  productNotFoundResponse,
+} from "@/backend/utils/responses/product";
+import { connectToDatabase } from "@/utils/database";
+import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
 // GET /api/product/:id
 export const GET = async (
@@ -66,8 +67,9 @@ export const PUT = async (
   }
 ) => {
   const { id } = params;
+  const product = await req.json();
 
-  if (!id) {
+  if (!id || !product) {
     return productNotFoundResponse;
   }
 
@@ -75,11 +77,6 @@ export const PUT = async (
   const isConnected = await connectToDatabase();
   if (!isConnected) {
     return dbConnectionErrorResponse;
-  }
-
-  const product = await req.json();
-  if (!product) {
-    return productNotFoundResponse;
   }
 
   try {

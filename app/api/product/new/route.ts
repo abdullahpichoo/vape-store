@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { createProduct } from "@/backend/controllers/product-controller";
 import { productCreationFailedResponse } from "@/backend/utils/responses/product";
+import { Response } from "@/types";
+import { ProductType } from "@/types/api/product";
 import { connectToDatabase } from "@/utils/database";
 import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
-import { ProductType } from "@/types/api/product";
-import { Response } from "@/types";
 
 export async function POST(req: NextRequest) {
   // Connecting to the database

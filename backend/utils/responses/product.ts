@@ -1,4 +1,4 @@
-import { responseGenerator } from ".";
+import { NextResponse } from "next/server";
 
 import {
   FAILED_TO_CREATE_PRODUCT,
@@ -7,7 +7,8 @@ import {
   FAILED_TO_UPDATE_PRODUCT,
   PRODUCT_NOT_FOUND,
 } from "@/contants/errorMsgs";
-import { NextResponse } from "next/server";
+
+import { responseGenerator } from ".";
 
 export const productCreationFailedResponse = NextResponse.json(
   responseGenerator(FAILED_TO_CREATE_PRODUCT),

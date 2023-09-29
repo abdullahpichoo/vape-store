@@ -1,17 +1,17 @@
-import User from "@/backend/models/user";
-import { Response } from "@/types";
-import { UserType } from "@/types/api/user";
-import { connectToDatabase } from "@/utils/database";
-import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
-import {
-  userNotFoundResponse,
-  userUpdateFailedResponse,
-} from "@/backend/utils/responses/user";
 import { NextRequest, NextResponse } from "next/server";
+
 import {
   getUserById,
   updateUser,
 } from "@/backend/controllers/retailer-controller";
+import {
+  userNotFoundResponse,
+  userUpdateFailedResponse,
+} from "@/backend/utils/responses/user";
+import { Response } from "@/types";
+import { UserType } from "@/types/api/user";
+import { connectToDatabase } from "@/utils/database";
+import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
 // GET api/admin/retailers/:id
 export const GET = async (

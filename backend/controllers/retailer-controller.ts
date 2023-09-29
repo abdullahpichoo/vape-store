@@ -1,13 +1,13 @@
 import bcrypt from "bcryptjs";
 
 import User from "@/backend/models/user";
-import { UserType } from "@/types/api/user";
 import {
   FAILED_TO_CREATE_USER,
   FAILED_TO_FETCH_USERS,
   FAILED_TO_UPDATE_USER,
   USER_NOT_FOUND,
 } from "@/contants/errorMsgs";
+import { UserType } from "@/types/api/user";
 
 // GET api/admin/retailers
 export async function getAllUsers() {

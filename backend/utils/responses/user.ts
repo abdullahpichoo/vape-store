@@ -1,5 +1,5 @@
-import { responseGenerator } from ".";
 import { NextResponse } from "next/server";
+
 import {
   USER_ALREADY_EXISTS,
   USER_NOT_FOUND,
@@ -7,6 +7,8 @@ import {
   FAILED_TO_CREATE_USER,
   FAILED_TO_FETCH_USERS,
 } from "@/contants/errorMsgs";
+
+import { responseGenerator } from ".";
 
 export const userAlreadyExistsResponse = NextResponse.json(
   responseGenerator(USER_ALREADY_EXISTS),
