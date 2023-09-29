@@ -5,11 +5,11 @@ import {
   getErrorResponse,
   getSuccessResponse,
 } from "@/backend/utils/responses";
+import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import { FAILED_TO_CREATE_ADDRESS } from "@/contants/errorMsgs";
 import { ADDRESS_CREATED_SUCCESSFULLY } from "@/contants/successMsgs";
 import { AddressType } from "@/types/api/address";
 import { connectToDatabase } from "@/utils/database";
-import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
 export const POST = async (
   req: NextRequest,
@@ -30,7 +30,7 @@ export const POST = async (
   console.log("address", address);
 
   const isConnected = await connectToDatabase();
-  if (!isConnected) return dbConnectionErrorResponse;
+  if (!isConnected) return failedToConnectToDatabaseResponse();
 
   try {
     const newAddress = await createAddress(address);

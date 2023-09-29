@@ -10,7 +10,7 @@ import {
 import { UserType } from "@/types/api/user";
 
 // GET api/admin/retailers
-export async function getAllUsers() {
+export async function getAllUsers(): Promise<UserType[]> {
   try {
     return await User.find({});
   } catch (error) {
@@ -19,7 +19,7 @@ export async function getAllUsers() {
 }
 
 // GET api/admin/retailers/:id
-export async function getUserById(id: string) {
+export async function getUserById(id: string): Promise<UserType> {
   try {
     const user = (await User.findById(id)) as UserType;
     if (!user) {
@@ -32,7 +32,10 @@ export async function getUserById(id: string) {
 }
 
 // PUT api/admin/retailers/:id
-export async function updateUser(id: string, data: UserType) {
+export async function updateUser(
+  id: string,
+  data: UserType
+): Promise<UserType> {
   try {
     const updatedUser = await User.findByIdAndUpdate(id, data, { new: true });
     if (!updatedUser) {
@@ -45,7 +48,7 @@ export async function updateUser(id: string, data: UserType) {
 }
 
 // POST api/admin/retailers/new
-export async function createUser(data: UserType) {
+export async function createUser(data: UserType): Promise<UserType> {
   try {
     const { password } = data;
     const hashedPassword = await bcrypt.hash(password, 12);

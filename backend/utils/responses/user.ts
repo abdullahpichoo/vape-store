@@ -1,5 +1,3 @@
-import { NextResponse } from "next/server";
-
 import {
   USER_ALREADY_EXISTS,
   USER_NOT_FOUND,
@@ -8,29 +6,24 @@ import {
   FAILED_TO_FETCH_USERS,
 } from "@/contants/errorMsgs";
 
-import { responseGenerator } from ".";
+import { getErrorResponse } from ".";
 
-export const userAlreadyExistsResponse = NextResponse.json(
-  responseGenerator(USER_ALREADY_EXISTS),
-  { status: 400 }
-);
+export const userAlreadyExistsResponse = () => {
+  return getErrorResponse(USER_ALREADY_EXISTS);
+};
 
-export const userCreationFailedResponse = NextResponse.json(
-  responseGenerator(FAILED_TO_CREATE_USER),
-  { status: 400 }
-);
+export const userCreationFailedResponse = () => {
+  return getErrorResponse(FAILED_TO_CREATE_USER);
+};
 
-export const userUpdateFailedResponse = NextResponse.json(
-  responseGenerator(FAILED_TO_UPDATE_USER),
-  { status: 400 }
-);
+export const userUpdateFailedResponse = () => {
+  return getErrorResponse(FAILED_TO_UPDATE_USER);
+};
 
-export const userNotFoundResponse = NextResponse.json(
-  responseGenerator(USER_NOT_FOUND),
-  { status: 400 }
-);
+export const userNotFoundResponse = () => {
+  return getErrorResponse(USER_NOT_FOUND);
+};
 
-export const failedToFetchUsersResponse = NextResponse.json(
-  responseGenerator(FAILED_TO_FETCH_USERS),
-  { status: 400 }
-);
+export const failedToFetchUsersResponse = () => {
+  return getErrorResponse(FAILED_TO_FETCH_USERS);
+};

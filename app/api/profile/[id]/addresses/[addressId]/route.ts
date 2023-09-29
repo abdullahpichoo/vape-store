@@ -8,6 +8,7 @@ import {
   getErrorResponse,
   getSuccessResponse,
 } from "@/backend/utils/responses";
+import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import {
   FAILED_TO_DELETE_ADDRESS,
   FAILED_TO_UPDATE_ADDRESS,
@@ -18,7 +19,6 @@ import {
 } from "@/contants/successMsgs";
 import { AddressType } from "@/types/api/address";
 import { connectToDatabase } from "@/utils/database";
-import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
 export const PUT = async (
   req: NextRequest,
@@ -38,7 +38,7 @@ export const PUT = async (
   if (!address || !addressId) return getErrorResponse(FAILED_TO_UPDATE_ADDRESS);
 
   const isConnected = await connectToDatabase();
-  if (!isConnected) return dbConnectionErrorResponse;
+  if (!isConnected) return failedToConnectToDatabaseResponse();
 
   try {
     const updatedAddress = await updateAddress(addressId, address);
@@ -59,7 +59,7 @@ export const DELETE = async (
   if (!addressId) return getErrorResponse(FAILED_TO_DELETE_ADDRESS);
 
   const isConnected = await connectToDatabase();
-  if (!isConnected) return dbConnectionErrorResponse;
+  if (!isConnected) return failedToConnectToDatabaseResponse();
 
   try {
     const address = await deleteAddress(addressId);

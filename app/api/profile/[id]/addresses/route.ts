@@ -3,11 +3,12 @@ import {
   getErrorResponse,
   getSuccessResponse,
 } from "@/backend/utils/responses";
+import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import { profileNotFoundResponse } from "@/backend/utils/responses/profile";
 import { FAILED_TO_GET_ADDRESSES } from "@/contants/errorMsgs";
+import { ADDRESSES_FETCHED_SUCCESSFULLY } from "@/contants/successMsgs";
 import { AddressType } from "@/types/api/address";
 import { connectToDatabase } from "@/utils/database";
-import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
 export const GET = async (
   _: any,
@@ -23,13 +24,13 @@ export const GET = async (
   if (!userId) return profileNotFoundResponse;
 
   const isConnected = await connectToDatabase();
-  if (!isConnected) return dbConnectionErrorResponse;
+  if (!isConnected) return failedToConnectToDatabaseResponse();
 
   try {
     const userAddresses = await getAddresses(userId);
     return getSuccessResponse<AddressType>(
       userAddresses,
-      "Address for user fetched successfully!"
+      ADDRESSES_FETCHED_SUCCESSFULLY
     );
   } catch (err) {
     return getErrorResponse(FAILED_TO_GET_ADDRESSES);

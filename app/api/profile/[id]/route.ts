@@ -1,14 +1,14 @@
-import { getUserById } from "@/backend/controllers/retailer-controller";
+import { getUserById } from "@/backend/controllers/user-controller";
 import {
   getErrorResponse,
   getSuccessResponse,
 } from "@/backend/utils/responses";
+import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import { profileNotFoundResponse } from "@/backend/utils/responses/profile";
 import { PROFILE_NOT_FOUND } from "@/contants/errorMsgs";
 import { PROFILE_FETCHED_SUCCESSFULLY } from "@/contants/successMsgs";
 import { UserType } from "@/types/api/user";
 import { connectToDatabase } from "@/utils/database";
-import { dbConnectionErrorResponse } from "@/utils/server/responseHandlers";
 
 export const GET = async (
   _: any,
@@ -24,7 +24,7 @@ export const GET = async (
   if (!id) return profileNotFoundResponse;
 
   const isConnected = await connectToDatabase();
-  if (!isConnected) return dbConnectionErrorResponse;
+  if (!isConnected) return failedToConnectToDatabaseResponse();
 
   try {
     const user = await getUserById(id);
