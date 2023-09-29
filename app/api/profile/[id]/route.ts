@@ -10,6 +10,7 @@ import { PROFILE_FETCHED_SUCCESSFULLY } from "@/contants/successMsgs";
 import { UserType } from "@/types/api/user";
 import { connectToDatabase } from "@/utils/database";
 
+// GET: /api/profile/[id]
 export const GET = async (
   _: any,
   {

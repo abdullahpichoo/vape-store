@@ -45,6 +45,7 @@ export const authOptions: NextAuthOptions = {
           name: dbuser.username,
           email: dbuser.email,
           role: dbuser.role,
+          cartId: dbuser.cartId,
         };
         return user;
       },

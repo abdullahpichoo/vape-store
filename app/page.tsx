@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import Login from "@/components/Login";
 import { authOptions } from "./api/auth/[...nextauth]/route";
+import Cart from "@/components/Cart";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -15,6 +16,7 @@ export default async function Home() {
       ) : (
         <p>Not Logged In</p>
       )}
+      {/* <Cart /> */}
       <Login />
     </main>
   );

@@ -22,3 +22,10 @@ export const USER_UPDATED_SUCCESSFULLY = "User updated successfully!";
 export const USER_DELETED_SUCCESSFULLY = "User deleted successfully!";
 export const USERS_FETCHED_SUCCESSFULLY = "Loaded all users successfully!";
 export const USER_FETCHED_SUCCESSFULLY = "Loaded user successfully!";
+
+// Cart Success Messages
+export const CART_CREATED_SUCCESSFULLY = "Cart created successfully!";
+export const CART_FETCHED_SUCCESSFULLY = "Loaded cart successfully!";
+export const CART_ITEM_ADDED_SUCCESSFULLY = "Item added to cart successfully!";
+export const CART_ITEM_REMOVED_SUCCESSFULLY =
+  "Item removed from cart successfully!";

@@ -41,3 +41,14 @@ export const FAILED_TO_GET_PRODUCTS =
   "Could not load all products! Please try again later.";
 export const FAILED_TO_GET_PRODUCT =
   "Could not load product! Please try again later.";
+
+// Cart Errors
+export const CART_NOT_FOUND = "Cart not found";
+export const FAILED_TO_FETCH_CART =
+  "Could not load cart! Please try again later.";
+export const FAILED_TO_CREATE_CART =
+  "Failed to create cart! Please try again later.";
+export const FAILED_TO_ADD_ITEM_TO_CART =
+  "Failed to add item to cart! Please try again later.";
+export const FAILED_TO_REMOVE_ITEM_FROM_CART =
+  "Failed to remove item from cart! Please try again later.";

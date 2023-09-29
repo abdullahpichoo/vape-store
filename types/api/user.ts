@@ -7,5 +7,6 @@ export interface UserType {
   username: string;
   email: string;
   password: string;
+  cartId: string;
   role: string;
 }

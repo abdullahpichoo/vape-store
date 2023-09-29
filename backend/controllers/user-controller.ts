@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 
 import User from "@/backend/models/user";
 import {
+  FAILED_TO_CREATE_CART,
   FAILED_TO_CREATE_USER,
   FAILED_TO_FETCH_USERS,
   FAILED_TO_UPDATE_USER,
@@ -9,7 +10,9 @@ import {
 } from "@/contants/errorMsgs";
 import { UserType } from "@/types/api/user";
 
-// GET api/admin/retailers
+import { createCart } from "./cart-controller";
+
+// GET api/admin/users
 export async function getAllUsers(): Promise<UserType[]> {
   try {
     return await User.find({});
@@ -18,7 +21,7 @@ export async function getAllUsers(): Promise<UserType[]> {
   }
 }
 
-// GET api/admin/retailers/:id
+// GET api/admin/users/:id
 export async function getUserById(id: string): Promise<UserType> {
   try {
     const user = (await User.findById(id)) as UserType;
@@ -47,14 +50,21 @@ export async function updateUser(
   }
 }
 
-// POST api/admin/retailers/new
+// POST api/admin/users/new
 export async function createUser(data: UserType): Promise<UserType> {
   try {
     const { password } = data;
     const hashedPassword = await bcrypt.hash(password, 12);
     data.password = hashedPassword;
 
-    const user = await User.create(data);
+    const user = (await User.create(data)) as UserType;
+
+    try {
+      const cart = await createCart(user._id);
+      user.cartId = cart._id;
+    } catch (err) {
+      throw new Error(FAILED_TO_CREATE_CART as string);
+    }
     return user;
   } catch (error) {
     throw new Error(FAILED_TO_CREATE_USER as string);

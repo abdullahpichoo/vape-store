@@ -18,6 +18,9 @@ const UserSchema = new Schema({
     type: String,
     default: "retailer",
   },
+  cartId: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
