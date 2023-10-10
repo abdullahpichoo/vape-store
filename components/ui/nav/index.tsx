@@ -6,7 +6,7 @@ import Link from "next/link";
 import Img from "@/components/ui/image";
 
 import BrowseItems from "./browse-items";
-import CartBtn from "./cartBtn";
+import CartBtn from "./cart-btn";
 import Dot from "./dot";
 import HamburgerMenu from "./hamburger-menu";
 import NavSearch from "./nav-search";

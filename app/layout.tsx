@@ -4,6 +4,7 @@ import { Montserrat } from "next/font/google";
 import NavBar from "@/components/ui/nav";
 
 import "./globals.css";
+import Footer from "@/components/ui/footer";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -24,9 +25,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className={montserrat.className}>
-        <NavBar />
+      <body
+        suppressHydrationWarning={true}
+        className={`${montserrat.className} flex flex-col min-h-screen`}
+      >
+        <div className="mb-8">
+          <NavBar />
+        </div>
+
         {children}
+        <div className="mt-auto">
+          <Footer />
+        </div>
       </body>
     </html>
   );
