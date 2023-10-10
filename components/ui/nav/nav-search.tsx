@@ -7,7 +7,7 @@ const NavSearch = () => {
     <div className="search-bar relative z-20 w-full">
       <input
         type="text"
-        className="w-full ps-16 md:ps-20 py-4 rounded-xl bg-transparent text-[1.2rem] sm:text-[1.4rem] md:text-[1.6rem]"
+        className="w-full ps-16 md:ps-20 py-4 rounded-xl text-[1.2rem] sm:text-[1.4rem] md:text-[1.6rem]"
         placeholder="Search for products..."
       />
 
