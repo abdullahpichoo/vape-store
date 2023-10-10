@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 
+import Footer from "@/components/ui/footer";
 import NavBar from "@/components/ui/nav";
 
 import "./globals.css";
-import Footer from "@/components/ui/footer";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -34,6 +34,7 @@ export default function RootLayout({
         </div>
 
         {children}
+
         <div className="mt-auto">
           <Footer />
         </div>
