@@ -15,7 +15,6 @@ html {
 }
 
 body {
-  font-family: "Gabarito", sans-serif;
   font-size: 1.6rem;
 }
 
@@ -25,5 +24,24 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Montserrat", sans-serif;
+}
+
+.font-gab {
+  font-family: "Gabarito", sans-serif !important;
+}
+.font-mon {
+  font-family: "Montserrat", sans-serif !important;
+}
+
+p {
+  @apply font-medium font-gab;
+}
+
+.flex-center {
+  @apply flex justify-center items-center;
+}
+
+/* Nav Search Bar */
+.search-bar::after {
+  @apply absolute content-[""] w-full h-full bg-orange-1 -z-10 -bottom-3.5 left-0 rounded-xl;
 }

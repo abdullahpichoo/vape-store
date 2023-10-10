@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import { Montserrat } from "next/font/google";
 
 import NavBar from "@/components/ui/nav";
 
 import "./globals.css";
+
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Elite Wholesale",
@@ -21,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true}>
+      <body suppressHydrationWarning={true} className={montserrat.className}>
         <NavBar />
         {children}
       </body>
