@@ -5,17 +5,17 @@ import Link from "next/link";
 const BrowseItems = () => {
   return (
     <>
-      <div className="browse-items-by w-full bg-orange-1 flex justify-around">
+      <div className="hidden browse-items-by w-full px-5 py-3.5 bg-orange-1 lg:flex justify-around">
         <Link href={"/"}>
-          <div className="shop-by px-5 py-2 flex-center gap-3">
+          <div className="shop-by flex-center gap-3">
             <FontAwesomeIcon icon={faChevronDown} className="w-8" />
-            <h5>Shop By Brands</h5>
+            <h6 className="uppercase">Shop By Products</h6>
           </div>
         </Link>
         <Link href={"/"}>
-          <div className="shop-by px-5 py-2 flex-center gap-3">
+          <div className="shop-by flex-center gap-3">
             <FontAwesomeIcon icon={faChevronDown} className="w-8" />
-            <h5>Shop By Products</h5>
+            <h6 className="uppercase">Shop By Brands</h6>
           </div>
         </Link>
       </div>

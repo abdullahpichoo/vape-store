@@ -3,14 +3,14 @@ import Image from "next/image";
 const Img = ({
   src,
   alt,
-  width,
+  className,
 }: {
-  width: string;
+  className: string;
   src: string;
   alt: string;
 }) => {
   return (
-    <div className={`logo-container w-${width}`}>
+    <div className={className}>
       <Image
         src={src}
         alt={alt}

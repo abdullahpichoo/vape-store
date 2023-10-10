@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CartBtn = () => {
   return (
-    <div className="cart-btn bg-orange-3 flex gap-8 px-8 py-4 rounded-xl group hover:cursor-pointer">
+    <div className="cart-btn bg-orange-3 flex gap-8 px-8 py-3.5 rounded-xl group hover:cursor-pointer">
       <div className="flex items-center gap-3">
         <FontAwesomeIcon
           icon={faCartShopping}
