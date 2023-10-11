@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { getServerSession } from "next-auth/next";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 import User from "@/backend/models/user";
 import { INVALID_CREDENTIALS } from "@/contants/errorMsgs";
