@@ -3,7 +3,7 @@
 import ErrorPage from "@/components/error";
 
 const error = () => {
-  return <ErrorPage message="Failed To Load Sign In Page" />;
+  return <ErrorPage message="Your Request Could Not Be Processed" />;
 };
 
 export default error;

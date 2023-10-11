@@ -33,10 +33,10 @@ const Footer = () => {
       </div>
       <div className="my-8 w-full content-[''] h-[1px] bg-white text-white" />
       <div className="flex justify-between text-white">
-        <p className="text-[1rem] sm:text-[1.6rem]">
+        <p className="text-[1rem] sm:text-[1.6rem] text-white">
           @2023 Elite Wholesale. All Right Reserved
         </p>
-        <p className="text-[1rem] sm:text-[1.6rem]">000-000-000</p>
+        <p className="text-[1rem] sm:text-[1.6rem] text-white">000-000-000</p>
       </div>
     </footer>
   );

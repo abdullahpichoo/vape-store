@@ -13,7 +13,7 @@ const HamburgerMenu = () => {
     <div className="hamburger-menu lg:hidden">
       <FontAwesomeIcon
         icon={faBars}
-        className="w-12 text-white"
+        className="text-[3rem] text-white cursor-pointer"
         onClick={() => setDrawerOpen(true)}
       />
       <div
@@ -23,14 +23,14 @@ const HamburgerMenu = () => {
       />
 
       <div
-        className={`top-0 right-0 w-[80vw] bg-white px-20 py-14 text-white fixed h-full z-40 ease-in-out duration-300 transition-all transform ${
+        className={`top-0 right-0 w-[40vw] bg-white px-20 py-14 text-white fixed h-full z-40 ease-in-out duration-300 transition-all transform ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex justify-start">
           <FontAwesomeIcon
             icon={faClose}
-            className=" text-black"
+            className="text-[3rem] text-black cursor-pointer"
             onClick={() => setDrawerOpen(false)}
           />
         </div>
@@ -41,7 +41,7 @@ const HamburgerMenu = () => {
           <Link href={"/"}>
             <h4 className="uppercase">Shop By Brands</h4>
           </Link>
-          <Link href={"/"}>
+          <Link href={"/account"}>
             <h4 className="uppercase">My Account</h4>
           </Link>
         </div>

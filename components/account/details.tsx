@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 
@@ -21,9 +22,17 @@ const AccountDetails = () => {
         </div>
       </div>
 
-      <Button size="sm" variant="black" onClick={() => signOut()}>
-        Logout
-      </Button>
+      <div className="flex justify-between">
+        <Link href={"/admin/dashboard"}>
+          <Button size="sm" variant="orange">
+            Dashboard
+          </Button>
+        </Link>
+
+        <Button size="sm" variant="black" onClick={() => signOut()}>
+          Logout
+        </Button>
+      </div>
     </section>
   );
 };

@@ -125,7 +125,7 @@
   }
 
   p {
-    @apply font-medium font-hind;
+    @apply font-medium font-hind text-gray-600 leading-relaxed;
   }
 
   .flex-center {

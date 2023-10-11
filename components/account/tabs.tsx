@@ -1,15 +1,17 @@
 "use client";
-import { useState } from "react";
 
-import Card from "@/components/ui/card";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAddressBook,
   faClockRotateLeft,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import AccountDetails from "./details";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+
+import Card from "@/components/ui/card";
+
 import AddressBook from "./address-book";
+import AccountDetails from "./details";
 import OrderHistory from "./order-history";
 
 const accountTabs = [
@@ -44,6 +46,7 @@ export default function AccountTabs() {
           {accountTabs.map((tab) => {
             return (
               <h5
+                key={tab.name}
                 className={`flex items-center gap-4 px-2 md:px-8 py-2 hover:bg-gray-200 rounded-xl cursor-pointer transition-all duration-200 ease-in-out ${
                   activeTab.name === tab.name
                     ? "bg-orange-3 hover:bg-orange-3"
