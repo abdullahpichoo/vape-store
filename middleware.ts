@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-
 import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
 
 export default withAuth(
