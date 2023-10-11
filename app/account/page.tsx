@@ -1,5 +1,10 @@
-import { serverSession } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+
+import AccountTabs from "@/components/account/tabs";
+import Heading from "@/components/ui/heading";
+
+import { serverSession } from "../api/auth/[...nextauth]/route";
+
 export default async function AccountPage() {
   const session = await serverSession();
 
@@ -8,10 +13,9 @@ export default async function AccountPage() {
   }
 
   return (
-    <div>
-      <h1>Account Page</h1>
-      <p>Welcome, {session && session.user?.name}!</p>
-      <p>Email: {session && session.user?.email}</p>
-    </div>
+    <section className="w-full">
+      <Heading size="lg">My Account</Heading>
+      <AccountTabs />
+    </section>
   );
 }

@@ -1,9 +1,9 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-
 import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 import { SignInFormValues } from "@/types/client/auth";
 import { SignInSchema } from "@/types/client/auth";
@@ -14,6 +14,7 @@ import { useToast } from "../ui/toast/use-toast";
 
 const SignInCard = () => {
   const { toast } = useToast();
+  const [signingIn, setSigningIn] = useState(false);
 
   const {
     handleSubmit,
@@ -24,12 +25,15 @@ const SignInCard = () => {
   });
 
   const onSubmit = async (data: SignInFormValues) => {
+    setSigningIn(true);
+
     const result = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false,
     });
-    console.log("Result", result);
+
+    setSigningIn(false);
 
     if (result?.error) {
       toast({
@@ -75,7 +79,9 @@ const SignInCard = () => {
           error={errors.password}
         />
         <div className="text-center my-5">
-          <Button variant="orange">Sign In</Button>
+          <Button disabled={signingIn} size="md" variant="orange">
+            {signingIn ? "Signing In..." : "Sign In"}
+          </Button>
         </div>
       </form>
     </div>

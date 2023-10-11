@@ -3,9 +3,10 @@ import { Montserrat } from "next/font/google";
 
 import Footer from "@/components/ui/footer";
 import NavBar from "@/components/ui/nav";
+import { Toaster } from "@/components/ui/toast/toaster";
+import Providers from "@/providers";
 
 import "./globals.css";
-import { Toaster } from "@/components/ui/toast/toaster";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -33,7 +34,11 @@ export default function RootLayout({
         <div className="mb-8">
           <NavBar />
         </div>
-        <main>{children}</main>
+        <Providers>
+          <main className="px-5 sm:px-24 md:px-36 xl:px-[30rem]">
+            {children}
+          </main>
+        </Providers>
         <Toaster />
         <div className="mt-auto">
           <Footer />
