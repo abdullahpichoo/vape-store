@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="w-full bg-black px-16 py-12">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-5">
         <Img
-          src="assets/logo.svg"
+          src="/assets/logo.svg"
           alt="elite wholesale logo"
           className="w-[20rem] md:w-[30rem]"
         />
@@ -15,15 +15,15 @@ const Footer = () => {
           <Dot size="bg" />
         </div>
 
-        <div className="footer-details text-white font-gab flex justify-center gap-5 md:gap-20 text-[1.6rem] md:text-[1.8rem]">
-          <ul className="company-details">
+        <div className="footer-details text-white font-hind flex justify-center gap-5 md:gap-20 text-[1.6rem] md:text-[1.8rem]">
+          <ul className="company-details text-[1.5rem]">
             <li className="font-bold mb-3 text-[1.7rem]">Company</li>
             <li>About Us</li>
             <li>Contact Us</li>
             <li>Shipping & Returns</li>
           </ul>
 
-          <ul className="features-details">
+          <ul className="features-details text-[1.5rem]">
             <li className="font-bold mb-3 text-[1.7rem]">Features</li>
             <li>Products</li>
             <li>Brands</li>

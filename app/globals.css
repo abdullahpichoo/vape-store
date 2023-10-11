@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap");
 
 @layer base {
   :root {
@@ -117,15 +117,15 @@
     @apply font-bold text-black;
   }
 
-  .font-gab {
-    font-family: "Gabarito", sans-serif !important;
+  .font-hind {
+    font-family: "Hind", sans-serif !important;
   }
   .font-mon {
     font-family: "Montserrat", sans-serif !important;
   }
 
   p {
-    @apply font-medium font-gab;
+    @apply font-medium font-hind;
   }
 
   .flex-center {

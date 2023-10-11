@@ -5,6 +5,7 @@ import Footer from "@/components/ui/footer";
 import NavBar from "@/components/ui/nav";
 
 import "./globals.css";
+import { Toaster } from "@/components/ui/toast/toaster";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -32,9 +33,8 @@ export default function RootLayout({
         <div className="mb-8">
           <NavBar />
         </div>
-
-        {children}
-
+        <main>{children}</main>
+        <Toaster />
         <div className="mt-auto">
           <Footer />
         </div>

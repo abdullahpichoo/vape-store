@@ -5,9 +5,9 @@ const Img = ({
   alt,
   className,
 }: {
-  className: string;
   src: string;
   alt: string;
+  className: string;
 }) => {
   return (
     <div className={className}>
