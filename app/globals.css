@@ -1,3 +1,148 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap");
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 62.5%;
+  }
+
+  body {
+    font-size: 1.6rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold text-black;
+  }
+
+  h1 {
+    @apply text-[2.4rem] md:text-[3.2rem] lg:text-[3.6rem];
+  }
+  h2 {
+    @apply text-[2rem] md:text-[2.8rem] lg:text-[3.2rem];
+  }
+  h3 {
+    @apply text-[1.8rem] md:text-[2.4rem] lg:text-[2.8rem];
+  }
+  h4 {
+    @apply text-[1.4rem] md:text-[2rem] lg:text-[2.4rem];
+  }
+  h5 {
+    @apply text-[1.2rem] md:text-[1.8rem] lg:text-[2rem];
+  }
+  h6 {
+    @apply font-bold text-black;
+  }
+
+  .font-hind {
+    font-family: "Hind", sans-serif !important;
+  }
+  .font-mon {
+    font-family: "Montserrat", sans-serif !important;
+  }
+
+  p {
+    @apply font-medium font-hind text-gray-600 leading-relaxed;
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  /* Nav Search Bar */
+  .search-bar::after {
+    @apply absolute content-[""] w-full h-full bg-orange-1 -z-10 -bottom-3.5 left-0 rounded-xl;
+  }
+
+  /* Heading */
+  .heading::after {
+    @apply absolute content-[""] w-full h-[50%] bg-orange-2 -z-10 top-[45%] left-0;
+  }
+
+  .drop-shadow {
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+  }
+}

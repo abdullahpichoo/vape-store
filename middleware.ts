@@ -1,15 +1,22 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
 
-export async function middleware(request: NextRequest) {
-  const cookies = request.cookies;
-  // console.log("Cookies", cookies);
-  // console.log("Auth Token", cookies.get("next-auth.session-token"));
-
-  // console.log("URL", request.nextUrl.pathname);
-  return NextResponse.next();
-}
+export default withAuth(
+  function middleware(request: NextRequestWithAuth) {
+    if (
+      request.nextUrl.pathname.startsWith("/admin") &&
+      request.nextauth.token?.role !== "admin"
+    ) {
+      return NextResponse.rewrite(new URL("/access-denied", request.url));
+    }
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => !!token,
+    },
+  }
+);
 
 export const config = {
-  matcher: "/((?!_next/static|_next/image|favicon.ico).*)",
+  matcher: ["/account", "/admin/dashboard"],
 };

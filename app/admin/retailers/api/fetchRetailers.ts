@@ -1,16 +1,16 @@
-const baseUrl = process.env.LOCAL_BASE_URL;
+// const baseUrl = process.env.LOCAL_BASE_URL;
 
-async function getRetailers() {
-  const url = `${baseUrl}/api/retailers`;
+// async function getRetailers() {
+//   const url = `${baseUrl}/api/retailers`;
 
-  const res = await fetch(url);
+//   const res = await fetch(url);
 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
+//   if (!res.ok) {
+//     // This will activate the closest `error.js` Error Boundary
+//     throw new Error("Failed to fetch data");
+//   }
 
-  return res.json();
-}
+//   return res.json();
+// }
 
-export default getRetailers;
+// export default getRetailers;

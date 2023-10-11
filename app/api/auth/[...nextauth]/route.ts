@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import User from "@/backend/models/user";
@@ -64,11 +65,15 @@ export const authOptions: NextAuthOptions = {
     },
   },
 
-  //   pages: {
-  //     signIn: "/auth/signIn",
-  //   },
+  pages: {
+    signIn: "/auth/sign-in",
+  },
 };
 
 const handler = NextAuth(authOptions);
+
+export const serverSession = async () => {
+  return await getServerSession(authOptions);
+};
 
 export { handler as GET, handler as POST };
