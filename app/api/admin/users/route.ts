@@ -1,12 +1,18 @@
 import { getAllUsers } from "@/backend/controllers/user-controller";
 import { getSuccessResponse } from "@/backend/utils/responses";
+import { unauthenticatedResponse } from "@/backend/utils/responses/auth";
 import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import { failedToFetchUsersResponse } from "@/backend/utils/responses/user";
 import { USERS_FETCHED_SUCCESSFULLY } from "@/contants/successMsgs";
 import { UserType } from "@/types/api/user";
 import { connectToDatabase } from "@/utils/database";
 
+import { serverSession } from "../../auth/[...nextauth]/route";
+
 export const GET = async () => {
+  const session = await serverSession();
+  if (!session) return unauthenticatedResponse();
+
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();
 

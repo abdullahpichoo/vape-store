@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 
+import { UserRole } from "@/types/client/auth";
+
 import Button from "../ui/btn";
 
 const AccountDetails = () => {
@@ -23,11 +25,13 @@ const AccountDetails = () => {
       </div>
 
       <div className="flex justify-between">
-        <Link href={"/admin/dashboard"}>
-          <Button size="sm" variant="orange">
-            Dashboard
-          </Button>
-        </Link>
+        {session?.data?.user?.role === UserRole.ADMIN && (
+          <Link href={"/admin/dashboard"}>
+            <Button size="sm" variant="orange">
+              Admin Dashboard
+            </Button>
+          </Link>
+        )}
 
         <Button size="sm" variant="black" onClick={() => signOut()}>
           Logout

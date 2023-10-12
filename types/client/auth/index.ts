@@ -1,6 +1,15 @@
 import { FieldValues } from "react-hook-form";
 import * as yup from "yup";
 
+export enum ROLE {
+  ADMIN = "admin",
+  USER = "user",
+}
+
+export const UserRole = {
+  ADMIN: "admin",
+  USER: "user",
+};
 export interface AuthUserState {
   id: string;
   name: string;
