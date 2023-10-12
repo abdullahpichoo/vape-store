@@ -12,7 +12,13 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token,
+      authorized: ({ token }) => {
+        console.log("Middleware Token: ", token);
+        return !!token;
+      },
+    },
+    pages: {
+      signIn: "/auth/signin",
     },
   }
 );
