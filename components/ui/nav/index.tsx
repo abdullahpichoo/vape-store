@@ -2,7 +2,6 @@ import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
-import { serverSession } from "@/app/api/auth/[...nextauth]/route";
 import Img from "@/components/ui/image";
 
 import BrowseItems from "./browse-items";
@@ -14,8 +13,8 @@ import NavSearch from "./nav-search";
 const NavBar = () => {
   return (
     <>
-      <nav className="bg-black px-16 py-8 ">
-        <div className="flex justify-between items-centergap-10">
+      <nav className="bg-black px-16 py-8">
+        <div className="flex justify-between items-center gap-10">
           <Link href={"/"}>
             <Img
               src="/assets/logo.svg"

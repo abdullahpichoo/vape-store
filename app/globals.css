@@ -105,16 +105,16 @@
     @apply text-[2rem] md:text-[2.8rem] lg:text-[3.2rem];
   }
   h3 {
-    @apply text-[1.8rem] md:text-[2.4rem] lg:text-[2.8rem];
+    @apply text-[1.8rem] md:text-[2.2rem] lg:text-[2.6rem];
   }
   h4 {
-    @apply text-[1.4rem] md:text-[2rem] lg:text-[2.4rem];
+    @apply text-[1.4rem] md:text-[1.8rem] lg:text-[2.2rem];
   }
   h5 {
-    @apply text-[1.2rem] md:text-[1.8rem] lg:text-[2rem];
+    @apply text-[1.2rem] md:text-[1.6rem] lg:text-[2rem];
   }
   h6 {
-    @apply font-bold text-black;
+    @apply text-[1.2rem] md:text-[1.4rem] lg:text-[1.6rem];
   }
 
   .font-hind {
@@ -125,7 +125,13 @@
   }
 
   p {
-    @apply font-medium font-hind text-gray-600 leading-relaxed;
+    @apply font-medium font-hind text-gray-600 leading-relaxed text-[1.2rem] md:text-[1.6rem];
+  }
+  th {
+    @apply font-bold  text-[1.4rem] md:text-[1.8rem];
+  }
+  td {
+    @apply font-medium text-[1.2rem] md:text-[1.6rem];
   }
 
   .flex-center {

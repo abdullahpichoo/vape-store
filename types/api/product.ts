@@ -1,7 +1,9 @@
 export type ProductType = {
+  _id: string;
   name: string;
   description: string;
   price: number;
+  discountPrice?: number;
   images: {
     public_id: string;
     url: string;
@@ -10,4 +12,5 @@ export type ProductType = {
   brand: string;
   rating: number;
   countInStock: number;
+  trending: boolean;
 };
