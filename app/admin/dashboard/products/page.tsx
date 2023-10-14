@@ -3,6 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
+import {
+  product as productTag,
+  products as productsTag,
+} from "@/contants/tags";
 import { ProductType } from "@/types/api/product";
 
 import { columns } from "./columns";
@@ -10,13 +14,13 @@ import { columns } from "./columns";
 async function getData(): Promise<ProductType[]> {
   try {
     const res = await fetch(`${process.env.LOCAL_BASE_URL}/api/products`, {
-      cache: "no-store",
+      next: { revalidate: 3600, tags: [productsTag, productTag] },
     });
     const data = await res.json();
     const products = data.body.payLoad.map((product: ProductType) => {
       return {
         ...product,
-        images: product.images.map((image) => image.url),
+        images: product.images?.map((image) => image.url),
       };
     });
     console.log("Products", products);

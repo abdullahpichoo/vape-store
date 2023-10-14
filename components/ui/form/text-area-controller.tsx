@@ -9,7 +9,7 @@ import {
   RegisterOptions,
 } from "react-hook-form";
 
-interface InputControllerProps<T extends FieldValues> {
+interface TextAreaControllerProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
   type: string;
@@ -20,7 +20,7 @@ interface InputControllerProps<T extends FieldValues> {
   rules?: RegisterOptions;
 }
 
-const InputController = <T extends FieldValues>({
+const TextAreaController = <T extends FieldValues>({
   name,
   control,
   type,
@@ -29,7 +29,7 @@ const InputController = <T extends FieldValues>({
   defaultValue,
   error,
   rules,
-}: InputControllerProps<T>) => {
+}: TextAreaControllerProps<T>) => {
   return (
     <div className="form-item flex flex-col gap-2">
       <label
@@ -42,9 +42,8 @@ const InputController = <T extends FieldValues>({
         control={control}
         name={name}
         render={({ field }) => (
-          <input
+          <textarea
             id={name}
-            type={type}
             className="px-8 py-4 rounded-xl text-[1.4rem] md:text-[1.6rem]"
             placeholder={placeholder}
             defaultValue={defaultValue}
@@ -60,4 +59,4 @@ const InputController = <T extends FieldValues>({
   );
 };
 
-export default InputController;
+export default TextAreaController;

@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 
 import {
   DropdownMenu,
@@ -79,10 +80,12 @@ export const columns: ColumnDef<ProductType>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-yellow-600">
-              <span className="mr-2">
-                <FontAwesomeIcon icon={faEdit} />
-              </span>
-              Edit
+              <Link href={`/admin/dashboard/products/${product._id}/edit`}>
+                <span className="mr-2">
+                  <FontAwesomeIcon icon={faEdit} />
+                </span>
+                Edit
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="text-red-600">
               <span className="mr-2">
