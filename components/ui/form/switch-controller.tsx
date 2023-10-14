@@ -14,6 +14,7 @@ interface SwitchControllerProps<T extends FieldValues> {
   name: Path<T>;
   label: string;
   control: Control<T>;
+  value?: boolean;
   error?: FieldError;
   rules?: RegisterOptions;
 }
@@ -22,14 +23,15 @@ const SwitchController = <T extends FieldValues>({
   name,
   label,
   control,
+  value,
   error,
   rules,
 }: SwitchControllerProps<T>) => {
   return (
-    <div className="form-item flex gap-3">
+    <div className="form-item flex flex-col gap-3">
       <label
         htmlFor={name}
-        className="font-semibold text-neutral-600 mb-2 ms-1 text-[1.6rem] md:text-[1.8rem]"
+        className="font-semibold text-neutral-600 mb-2 ms-1 text-[1.4rem] md:text-[1.6rem]"
       >
         {label}
       </label>
@@ -37,7 +39,7 @@ const SwitchController = <T extends FieldValues>({
         control={control}
         name={name}
         render={({ field }) => (
-          <Switch checked={field.value} onCheckedChange={field.onChange} />
+          <Switch checked={value} onCheckedChange={field.onChange} />
         )}
         rules={rules}
       />

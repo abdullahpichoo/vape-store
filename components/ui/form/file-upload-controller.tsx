@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Control,
   Controller,
@@ -9,27 +7,19 @@ import {
   RegisterOptions,
 } from "react-hook-form";
 
-interface InputControllerProps<T extends FieldValues> {
-  name: Path<T>;
-  control: Control<T>;
-  type: string;
-  label: string;
-  placeholder: string;
-  defaultValue?: string;
-  error?: FieldError;
-  rules?: RegisterOptions;
-}
-
-const InputController = <T extends FieldValues>({
+const FileUploadController = <T extends FieldValues>({
   name,
   control,
-  type,
   label,
-  placeholder,
-  defaultValue,
   error,
   rules,
-}: InputControllerProps<T>) => {
+}: {
+  name: Path<T>;
+  control: Control<T>;
+  label: string;
+  error?: FieldError;
+  rules?: RegisterOptions;
+}) => {
   return (
     <div className="form-item flex flex-col gap-2">
       <label
@@ -39,16 +29,17 @@ const InputController = <T extends FieldValues>({
         {label}
       </label>
       <Controller
-        control={control}
         name={name}
+        control={control}
         render={({ field }) => (
           <input
-            id={name}
-            type={type}
-            className="px-8 py-4 rounded-xl text-[1.4rem] md:text-[1.6rem]"
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            {...field}
+            type="file"
+            onChange={(e) => {
+              const files = e.target.files;
+              field.onChange(files);
+            }}
+            multiple
+            accept="image/png, image/jpeg, image/jpg, image/webp"
           />
         )}
         rules={rules}
@@ -60,4 +51,4 @@ const InputController = <T extends FieldValues>({
   );
 };
 
-export default InputController;
+export default FileUploadController;

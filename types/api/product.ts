@@ -8,9 +8,9 @@ export type ProductType = {
   price: number;
   category: string;
   brand: string;
-  rating: number;
   countInStock: number;
-  trending: boolean;
+  rating?: number;
+  trending?: boolean;
   discountPrice?: number;
   images?: {
     public_id?: string;
@@ -34,11 +34,11 @@ export const ProductSchema = yup.object().shape({
   discountPrice: yup.number(),
   category: yup.string().required("Please enter the category of your product!"),
   brand: yup.string().required("Please enter the brand of your product!"),
-  rating: yup.number().required("Please enter the rating of your product!"),
+  rating: yup.number(),
   countInStock: yup
     .number()
     .required("Please enter the count in stock of your product!"),
-  trending: yup.boolean().required(),
+  trending: yup.boolean(),
   images: yup.array().of(
     yup.object().shape({
       public_id: yup.string(),

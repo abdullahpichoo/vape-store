@@ -1,7 +1,7 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/btn";
@@ -10,22 +10,12 @@ import SwitchController from "@/components/ui/form/switch-controller";
 import TextAreaController from "@/components/ui/form/text-area-controller";
 import Spinner from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/toast/use-toast";
-import { FAILED_TO_UPDATE_PRODUCT } from "@/contants/errorMsgs";
-import { PRODUCT_UPDATED_SUCCESSFULLY } from "@/contants/successMsgs";
-import { updateProductApiRoute } from "@/routes/api";
-import {
-  ProductFormValues,
-  ProductSchema,
-  ProductType,
-} from "@/types/api/product";
+import { ProductFormValues, ProductSchema } from "@/types/api/product";
 
-interface ProductEditFormProps {
-  productData: ProductType;
-}
+const ProductAddForm = () => {
+  const [isAdding, setIsAdding] = useState(false);
+  const [imageFiles, setImageFiles] = useState<FileList | null>();
 
-const ProductEditForm = (props: ProductEditFormProps) => {
-  const { productData } = props;
-  const [isUpdating, setIsUpdating] = useState(false);
   const { toast } = useToast();
 
   const {
@@ -33,57 +23,21 @@ const ProductEditForm = (props: ProductEditFormProps) => {
     control,
     formState: { errors },
   } = useForm<ProductFormValues>({
-    defaultValues: {
-      name: productData.name,
-      price: productData.price,
-      description: productData.description,
-      countInStock: productData.countInStock,
-      category: productData.category,
-      brand: productData.brand,
-      trending: productData.trending,
-      images: productData.images,
-      rating: productData.rating,
-    },
     mode: "onBlur",
     resolver: yupResolver(ProductSchema),
   });
 
   const onSubmit = async (data: ProductFormValues) => {
-    setIsUpdating(true);
-
-    const payload = {
-      ...data,
-      rating: productData.rating,
-    };
-    const url = `${process.env.LOCAL_BASE_URL}/api/products/${productData._id}`;
-    console.log("URL", url);
-    try {
-      const res = await fetch(updateProductApiRoute(productData._id), {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      console.log("Res", res);
-      toast({
-        title: PRODUCT_UPDATED_SUCCESSFULLY,
-        description: "The requested product has been updated successfully!",
-      });
-      setIsUpdating(false);
-      setTimeout(
-        () => window.location.replace("/admin/dashboard/products"),
-        1000
-      );
-    } catch (err) {
-      setIsUpdating(false);
-      toast({
-        variant: "destructive",
-        title: "Update Failed",
-        description: FAILED_TO_UPDATE_PRODUCT + err,
-      });
-    }
+    console.log("DATA", data);
   };
+
+  useEffect(() => {
+    console.log("Errors", errors);
+  }, [errors]);
+
+  useEffect(() => {
+    console.log("Image Files", imageFiles);
+  }, [imageFiles]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -182,35 +136,44 @@ const ProductEditForm = (props: ProductEditFormProps) => {
             control={control}
             label="Trending"
             name="trending"
+            value={false}
             rules={{
               required: "Please Enter Product Brand!",
             }}
-            error={errors.brand}
+            error={errors.trending}
           />
         </div>
 
         <div className="col-span-12 md:col-span-6">
-          <InputController
-            control={control}
-            label="Rating"
-            name="rating"
-            type="number"
-            placeholder=""
-            rules={{
-              required: "Please Enter Rating!",
-            }}
-            error={errors.brand}
-          />
+          <div className="form-item flex flex-col gap-2">
+            <label
+              htmlFor={"images"}
+              className="font-semibold text-neutral-600 ms-1 text-[1.2rem] md:text-[1.6rem]"
+            >
+              Image Upload
+            </label>
+
+            <input
+              id="images"
+              type="file"
+              onChange={(e) => {
+                const files = e.target.files;
+                setImageFiles(files);
+              }}
+              multiple
+              accept="image/png, image/jpeg, image/jpg, image/webp"
+            />
+          </div>
         </div>
       </div>
-      <div className="my-5 text-center">
-        <Button type="submit" variant="black" size="sm" disabled={isUpdating}>
-          {isUpdating && <Spinner size="sm" color="black" />}
-          {isUpdating ? "Updating" : "Update Product"}
+      <div className="my-10 text-center">
+        <Button type="submit" variant="black" size="sm" disabled={isAdding}>
+          {isAdding && <Spinner size="sm" color="black" />}
+          {isAdding ? "Adding" : "Add Product"}
         </Button>
       </div>
     </form>
   );
 };
 
-export default ProductEditForm;
+export default ProductAddForm;

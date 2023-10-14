@@ -20,7 +20,7 @@ async function getData(productId: string): Promise<ProductType> {
 const ProductEdit = async ({ params }: { params: { productId: string } }) => {
   const productData = await getData(params.productId);
   return (
-    <section className="">
+    <section className="flex flex-col gap-8">
       <h2>Edit Your Product</h2>
       <ProductEditForm productData={productData} />
     </section>

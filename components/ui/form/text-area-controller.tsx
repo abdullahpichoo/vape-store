@@ -34,7 +34,7 @@ const TextAreaController = <T extends FieldValues>({
     <div className="form-item flex flex-col gap-2">
       <label
         htmlFor={name}
-        className="font-semibold text-neutral-600 ms-1 text-[1.6rem] md:text-[1.8rem]"
+        className="font-semibold text-neutral-600 ms-1 text-[1.3rem] md:text-[1.6rem]"
       >
         {label}
       </label>

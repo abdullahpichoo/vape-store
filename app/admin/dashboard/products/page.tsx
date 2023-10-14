@@ -1,5 +1,6 @@
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
@@ -37,9 +38,11 @@ export default async function DashboardProducts() {
     <div className="container mx-auto py-5">
       <div className="flex justify-between items-center mb-4">
         <h2>Products</h2>
-        <Button size={"lg"}>
-          <FontAwesomeIcon icon={faPlusCircle} className="mr-2" /> Add Product
-        </Button>
+        <Link href={"/admin/dashboard/products/add"}>
+          <Button size={"lg"}>
+            <FontAwesomeIcon icon={faPlusCircle} className="mr-2" /> Add Product
+          </Button>
+        </Link>
       </div>
       <DataTable columns={columns} data={productsData} />
     </div>
