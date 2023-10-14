@@ -1,9 +1,9 @@
-import { getServerSession } from "next-auth/next";
-
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import HeroSection from "@/components/hero-section";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
-
-  return <main className="">Main Page</main>;
+  return (
+    <>
+      <HeroSection />
+    </>
+  );
 }

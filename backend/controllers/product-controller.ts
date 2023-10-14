@@ -21,7 +21,9 @@ export async function createProduct(data: ProductType) {
 
 export async function getAllProducts(): Promise<ProductType[]> {
   try {
-    return await Product.find({});
+    const products = await Product.find({});
+
+    return products;
   } catch (error) {
     throw new Error(FAILED_TO_GET_PRODUCTS as string);
   }

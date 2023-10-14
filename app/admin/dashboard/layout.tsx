@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Card from "@/components/ui/card";
 import Heading from "@/components/ui/heading";
@@ -42,6 +42,15 @@ const dashboardTabs = [
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [activeTab, setActiveTab] = useState(dashboardTabs[0]);
+
+  useEffect(() => {
+    const tab = dashboardTabs.find(
+      (tab) => tab.href === window.location.pathname
+    );
+    if (tab) {
+      setActiveTab(tab);
+    }
+  }, []);
 
   return (
     <section className="px-5 sm:-mx-20 md:-mx-32 xl:-mx-[28rem] overflow-x-auto">

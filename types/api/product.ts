@@ -13,4 +13,6 @@ export type ProductType = {
   rating: number;
   countInStock: number;
   trending: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 };
