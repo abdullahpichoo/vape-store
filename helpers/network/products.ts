@@ -1,4 +1,8 @@
-import { addProductApiRoute } from "@/routes/api";
+import {
+  product as productTag,
+  products as productsTag,
+} from "@/contants/tags";
+import { addProductApiRoute, productsApiRoute } from "@/routes/api";
 import { ProductFormValues } from "@/types/api/product";
 
 export const uploadImage = async (image: File) => {
@@ -55,6 +59,19 @@ export const addProduct = async (
       headers: {
         "Content-Type": "application/json",
       },
+    });
+
+    const data = await response.json();
+    return data.body.payLoad;
+  } catch {
+    throw new Error();
+  }
+};
+
+export const getProducts = async () => {
+  try {
+    const response = await fetch(productsApiRoute, {
+      next: { revalidate: 3600, tags: [productsTag, productTag] },
     });
 
     const data = await response.json();

@@ -3,23 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { DataTable } from "@/components/ui/data-table";
 import { FAILED_TO_GET_PRODUCTS } from "@/contants/errorMsgs";
-import {
-  product as productTag,
-  products as productsTag,
-} from "@/contants/tags";
+import { getProducts } from "@/helpers/network/products";
 import { ProductType } from "@/types/api/product";
 
 import { columns } from "./columns";
+import { DataTable } from "./data-table";
 
 async function getData(): Promise<ProductType[]> {
   try {
-    const res = await fetch(`${process.env.LOCAL_BASE_URL}/api/products`, {
-      next: { revalidate: 3600, tags: [productsTag, productTag] },
-    });
-    const data = await res.json();
-    const products = data.body.payLoad.map((product: ProductType) => {
+    const payloadProducts = await getProducts();
+    const products = payloadProducts.map((product: ProductType) => {
       return {
         ...product,
         images: product.images?.map((image) => image.url),
@@ -41,7 +35,8 @@ export default async function DashboardProducts() {
         <h2>Products</h2>
         <Link href={"/admin/dashboard/products/add"}>
           <Button size={"lg"}>
-            <FontAwesomeIcon icon={faPlusCircle} className="mr-2" /> Add Product
+            <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />{" "}
+            <span className="hidden sm:inline-block">Add Product</span>
           </Button>
         </Link>
       </div>

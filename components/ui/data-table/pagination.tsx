@@ -18,10 +18,10 @@ export function DataTablePagination<TData>({
 }: DataTablePaginationProps<TData>) {
   return (
     <div className="flex items-center justify-between px-8 py-5 border-neutral-100 border-2 rounded-lg font-hind">
-      <div className="flex-1 text-2xl text-muted-foreground">
+      {/* <div className="flex-1 text-2xl text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
-      </div>
+      </div> */}
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex w-[100px] text-muted-foreground items-center justify-center text-2xl font-medium">
           Page {table.getState().pagination.pageIndex + 1} of{" "}

@@ -53,7 +53,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <section className="px-5 sm:-mx-20 md:-mx-32 xl:-mx-[28rem] overflow-x-auto">
+    <section className="px-5 sm:-mx-20 md:-mx-32 xl:-mx-[28rem]">
       <Heading size="lg">Admin Dashboard</Heading>
       <div className="flex flex-col sm:flex-row gap-5">
         <Card className="tabs flex flex-row sm:flex-col justify-around sm:justify-start items-start gap-10 w-full sm:w-fit ">
@@ -76,7 +76,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           })}
         </Card>
 
-        <Card className="w-full">{children}</Card>
+        <Card className="w-full  overflow-x-auto">{children}</Card>
       </div>
     </section>
   );

@@ -13,6 +13,7 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 
+import { DataTablePagination } from "@/components/ui/data-table/pagination";
 import {
   Table,
   TableBody,
@@ -21,8 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { DataTablePagination } from "./pagination";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,6 +52,44 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
+      <div className="flex flex-col sm:flex-row gap-10 mb-5">
+        <div className="form-item flex flex-col gap-2">
+          <label
+            htmlFor="name"
+            className="font-semibold text-neutral-600 ms-1 text-[1.2rem] md:text-[1.6rem]"
+          >
+            Search by Name
+          </label>
+          <input
+            id="name"
+            type="text"
+            className="px-8 py-2 rounded-xl text-[1.4rem] md:text-[1.6rem]"
+            placeholder="Enter Product Name"
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+          />
+        </div>
+        <div className="form-item flex flex-col gap-2">
+          <label
+            htmlFor="brand"
+            className="font-semibold text-neutral-600 ms-1 text-[1.2rem] md:text-[1.6rem]"
+          >
+            Search by Brand
+          </label>
+          <input
+            id="brand"
+            type="text"
+            className="px-8 py-2 rounded-xl text-[1.4rem] md:text-[1.6rem]"
+            placeholder="Enter Product Brand"
+            value={(table.getColumn("brand")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("brand")?.setFilterValue(event.target.value)
+            }
+          />
+        </div>
+      </div>
       <div className="rounded-md border mb-3">
         <Table>
           <TableHeader>
