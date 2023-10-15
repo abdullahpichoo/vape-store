@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 import { revalidateTag } from "next/cache";
 
 import Product from "@/backend/models/product";
@@ -64,10 +66,59 @@ export async function updateProduct(id: string, data: ProductType) {
 export async function deleteProduct(id: string) {
   // TODO: When a product is deleted, all of the cart items related to that product should also be deleted and its reviews should also be deleted
   try {
+    const product = (await Product.findById(id)) as ProductType;
+    if (!product) {
+      throw new Error(PRODUCT_NOT_FOUND as string);
+    }
+    if (product.images) {
+      for (const image of product.images) {
+        image.public_id && (await deleteImage(image.public_id));
+      }
+    }
     const res = await Product.findByIdAndDelete(id);
     revalidateTag(productTag);
     return res;
   } catch (error) {
     throw new Error(FAILED_TO_DELETE_PRODUCT as string);
   }
+}
+
+async function deleteImage(publicId: string) {
+  const timestamp = new Date().getTime();
+  const apiKey = process.env.CLOUDINARY_API_KEY as string;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET as string;
+  const signature = generateSHA1(generateSignature(publicId, apiSecret));
+  try {
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${
+        process.env.CLOUDINARY_CLOUD_NAME as string
+      }/image/destroy`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          public_id: publicId,
+          api_key: apiKey,
+          timestamp,
+          signature,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res;
+  } catch {
+    throw new Error();
+  }
+}
+
+function generateSHA1(data: any) {
+  const hash = crypto.createHash("sha1");
+  hash.update(data);
+  return hash.digest("hex");
+}
+
+function generateSignature(publicId: string, apiSecret: string) {
+  const timestamp = new Date().getTime();
+  return `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
 }

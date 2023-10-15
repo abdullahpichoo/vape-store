@@ -13,3 +13,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
   isLoggedIn: false,
   setAuthUser: (authUser) => set({ authUser }),
 }));
+
+interface TableLoadingType {
+  isTableLoading: boolean;
+  setIsTableLoading: (isLoading: boolean) => void;
+}
+
+export const useTableLoadingStore = create<TableLoadingType>((set) => ({
+  isTableLoading: false,
+  setIsTableLoading: (isLoading: boolean) => set({ isTableLoading: isLoading }),
+}));

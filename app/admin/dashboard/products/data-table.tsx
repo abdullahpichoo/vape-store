@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 
 import { DataTablePagination } from "@/components/ui/data-table/pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -90,6 +91,7 @@ export function DataTable<TData, TValue>({
           />
         </div>
       </div>
+
       <div className="rounded-md border mb-3">
         <Table>
           <TableHeader>

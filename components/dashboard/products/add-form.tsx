@@ -233,8 +233,10 @@ const ProductAddForm = () => {
           size="sm"
           disabled={isAdding || !imageFiles || imageFiles?.length === 0}
         >
-          {isAdding && <Spinner size="sm" color="black" />}
-          {isAdding ? "Adding" : "Add Product"}
+          <div className="flex items-center justify-center gap-4">
+            {isAdding && <Spinner size="sm" color="black" />}
+            {isAdding ? "Adding" : "Add Product"}
+          </div>
         </Button>
       </div>
     </form>

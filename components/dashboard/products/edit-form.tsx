@@ -8,11 +8,12 @@ import Button from "@/components/ui/btn";
 import InputController from "@/components/ui/form/input-controller";
 import SwitchController from "@/components/ui/form/switch-controller";
 import TextAreaController from "@/components/ui/form/text-area-controller";
+import Img from "@/components/ui/image";
 import Spinner from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { FAILED_TO_UPDATE_PRODUCT } from "@/contants/errorMsgs";
 import { PRODUCT_UPDATED_SUCCESSFULLY } from "@/contants/successMsgs";
-import { updateProductApiRoute } from "@/routes/api";
+import { updateProduct } from "@/helpers/network/products";
 import {
   ProductFormValues,
   ProductSchema,
@@ -25,12 +26,14 @@ interface ProductEditFormProps {
 
 const ProductEditForm = (props: ProductEditFormProps) => {
   const { productData } = props;
+  console.log("Product", productData);
   const [isUpdating, setIsUpdating] = useState(false);
   const { toast } = useToast();
 
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<ProductFormValues>({
     defaultValues: {
@@ -51,37 +54,25 @@ const ProductEditForm = (props: ProductEditFormProps) => {
   const onSubmit = async (data: ProductFormValues) => {
     setIsUpdating(true);
 
-    const payload = {
-      ...data,
-      rating: productData.rating,
-    };
-    const url = `${process.env.LOCAL_BASE_URL}/api/products/${productData._id}`;
-    console.log("URL", url);
     try {
-      const res = await fetch(updateProductApiRoute(productData._id), {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      console.log("Res", res);
+      await updateProduct(data, productData._id);
       toast({
         title: PRODUCT_UPDATED_SUCCESSFULLY,
         description: "The requested product has been updated successfully!",
       });
-      setIsUpdating(false);
+      reset();
       setTimeout(
         () => window.location.replace("/admin/dashboard/products"),
         1000
       );
     } catch (err) {
-      setIsUpdating(false);
       toast({
         variant: "destructive",
         title: "Update Failed",
         description: FAILED_TO_UPDATE_PRODUCT + err,
       });
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -188,25 +179,40 @@ const ProductEditForm = (props: ProductEditFormProps) => {
             error={errors.brand}
           />
         </div>
-
         <div className="col-span-12 md:col-span-6">
-          <InputController
-            control={control}
-            label="Rating"
-            name="rating"
-            type="number"
-            placeholder=""
-            rules={{
-              required: "Please Enter Rating!",
-            }}
-            error={errors.brand}
-          />
+          <div className="form-item flex flex-col gap-3">
+            <label
+              htmlFor="images"
+              className="font-semibold text-neutral-600 mb-2 ms-1 text-[1.4rem] md:text-[1.6rem]"
+            >
+              Images
+            </label>
+            <div className="flex justify-start gap-5 items-center">
+              {productData?.images && productData?.images.length > 0
+                ? productData.images.map((image) =>
+                    image.public_id &&
+                    image.url &&
+                    image.url.includes("cloudinary") ? (
+                      <Img
+                        key={image.public_id}
+                        src={image.url}
+                        alt={productData.name}
+                        className="w-20"
+                      />
+                    ) : null
+                  )
+                : "No images uploaded"}
+            </div>
+          </div>
         </div>
       </div>
+
       <div className="my-5 text-center">
         <Button type="submit" variant="black" size="sm" disabled={isUpdating}>
-          {isUpdating && <Spinner size="sm" color="black" />}
-          {isUpdating ? "Updating" : "Update Product"}
+          <div className="flex items-center justify-center gap-4">
+            {isUpdating && <Spinner size="sm" color="black" />}
+            {isUpdating ? "Updating" : "Update Product"}
+          </div>
         </Button>
       </div>
     </form>

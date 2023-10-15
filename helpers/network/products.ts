@@ -2,7 +2,12 @@ import {
   product as productTag,
   products as productsTag,
 } from "@/contants/tags";
-import { addProductApiRoute, productsApiRoute } from "@/routes/api";
+import {
+  addProductApiRoute,
+  deleteProductApiRoute,
+  productsApiRoute,
+  updateProductApiRoute,
+} from "@/routes/api";
 import { ProductFormValues } from "@/types/api/product";
 
 export const uploadImage = async (image: File) => {
@@ -68,10 +73,56 @@ export const addProduct = async (
   }
 };
 
+export const updateProduct = async (
+  product: ProductFormValues,
+  productId: string
+) => {
+  try {
+    const response = await fetch(updateProductApiRoute(productId), {
+      method: "PUT",
+      body: JSON.stringify(product),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    return data.body.payLoad;
+  } catch {
+    throw new Error();
+  }
+};
+
+export const deleteProduct = async (productId: string) => {
+  try {
+    const response = await fetch(deleteProductApiRoute(productId), {
+      method: "DELETE",
+    });
+
+    const data = await response.json();
+    return data.body.payLoad;
+  } catch {
+    throw new Error();
+  }
+};
+
 export const getProducts = async () => {
   try {
     const response = await fetch(productsApiRoute, {
       next: { revalidate: 3600, tags: [productsTag, productTag] },
+    });
+
+    const data = await response.json();
+    return data.body.payLoad;
+  } catch {
+    throw new Error();
+  }
+};
+
+export const getProduct = async (id: string) => {
+  try {
+    const response = await fetch(`${productsApiRoute}/${id}`, {
+      cache: "no-store",
     });
 
     const data = await response.json();

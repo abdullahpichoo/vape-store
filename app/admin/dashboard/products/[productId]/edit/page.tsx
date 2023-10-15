@@ -1,17 +1,10 @@
 import ProductEditForm from "@/components/dashboard/products/edit-form";
+import { getProduct } from "@/helpers/network/products";
 import { ProductType } from "@/types/api/product";
 
 async function getData(productId: string): Promise<ProductType> {
   try {
-    const res = await fetch(
-      `${process.env.LOCAL_BASE_URL}/api/products/${productId}`,
-      {
-        cache: "no-store",
-      }
-    );
-    const data = await res.json();
-    const product = data.body.payLoad;
-    return product;
+    return await getProduct(productId);
   } catch {
     throw new Error();
   }

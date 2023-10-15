@@ -63,38 +63,42 @@ export const columns: ColumnDef<ProductType>[] = [
       const product = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div className="text-xl text-center w-fit px-5 py-1.5 rounded-lg hover:bg-neutral-200 ease-in duration-200 cursor-pointer">
-              <FontAwesomeIcon icon={faEllipsis} />
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              onClick={() => console.log("Product Id", product._id)}
-            >
-              <span className="mr-2">
-                <FontAwesomeIcon icon={faLocationArrow} />
-              </span>
-              <span className="font-semibold text-black">View</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-yellow-600">
-              <Link href={`/admin/dashboard/products/${product._id}/edit`}>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="text-xl text-center w-fit px-5 py-1.5 rounded-lg hover:bg-neutral-200 ease-in duration-200 cursor-pointer">
+                <FontAwesomeIcon icon={faEllipsis} />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => console.log("Product Id", product._id)}
+              >
                 <span className="mr-2">
-                  <FontAwesomeIcon icon={faEdit} />
+                  <FontAwesomeIcon icon={faLocationArrow} />
                 </span>
-                Edit
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">
-              <span className="mr-2">
-                <FontAwesomeIcon icon={faTrash} />
-              </span>
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                <span className="font-semibold text-black">View</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-yellow-600">
+                <Link href={`/admin/dashboard/products/${product._id}/edit`}>
+                  <span className="mr-2">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </span>
+                  Edit
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-red-600">
+                <Link href={`/admin/dashboard/products/${product._id}/delete`}>
+                  <span className="mr-2">
+                    <FontAwesomeIcon icon={faTrash} />
+                  </span>
+                  Delete
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
       );
     },
   },
