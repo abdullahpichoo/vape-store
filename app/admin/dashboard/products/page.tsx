@@ -22,7 +22,6 @@ async function getData(): Promise<ProductType[]> {
         images: product.images?.map((image) => image.url),
       };
     });
-    console.log("Products", products);
     return products;
   } catch {
     throw new Error(FAILED_TO_GET_PRODUCTS);
