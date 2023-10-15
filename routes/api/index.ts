@@ -1,5 +1,7 @@
-const base_url = process.env.BASE_URL || "http://localhost:3000";
-
+const base_url =
+  process.env.DEPLOYMENT === "production"
+    ? process.env.VERCEL_URL
+    : "http://localhost:3000";
 // Products
 export const updateProductApiRoute = (productId: string) =>
   `${base_url}/api/products/${productId}`;
