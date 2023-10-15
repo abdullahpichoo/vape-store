@@ -1,4 +1,7 @@
+import { NextRequest } from "next/server";
+
 import { getAllUsers } from "@/backend/controllers/user-controller";
+import { isAdmin } from "@/backend/middleware";
 import { getSuccessResponse } from "@/backend/utils/responses";
 import { unauthenticatedResponse } from "@/backend/utils/responses/auth";
 import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
@@ -7,11 +10,9 @@ import { USERS_FETCHED_SUCCESSFULLY } from "@/contants/successMsgs";
 import { UserType } from "@/types/api/user";
 import { connectToDatabase } from "@/utils/database";
 
-import { serverSession } from "../../auth/[...nextauth]/route";
-
-export const GET = async () => {
-  const session = await serverSession();
-  if (!session) return unauthenticatedResponse();
+export const GET = async (req: NextRequest) => {
+  const admin = await isAdmin(req);
+  if (!admin) return unauthenticatedResponse();
 
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();

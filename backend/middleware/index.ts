@@ -1,38 +1,18 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { connectToDatabase } from "@/utils/database";
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { decode } from "next-auth/jwt";
 
-export const connectToDB = async () => {
-  const isConnected = await connectToDatabase();
-  if (isConnected) {
-    return NextResponse.next();
-  }
-  return NextResponse.json({
-    body: {
-      success: false,
-      status: 500,
-      message: "Failed to connect to database",
-    },
+export const isAdmin = async (req: NextRequest) => {
+  const sessionToken = req.cookies.get("next-auth.session-token")?.value;
+  if (!sessionToken) return false;
+
+  const session = await decode({
+    token: sessionToken,
+    secret: process.env.NEXTAUTH_SECRET as string,
   });
-};
 
-export const isAuthenticated = async () => {
-  const session = await getServerSession(authOptions);
+  if (!session) return false;
 
-  if (session) {
-    return NextResponse.next();
-  }
+  if (session.role === "admin") return true;
 
-  return NextResponse.redirect("/api/auth/signin");
-};
-
-export const isAdmin = async () => {
-  const session = await getServerSession(authOptions);
-
-  if (session && session?.user?.email === "admin@admin.com") {
-    return NextResponse.next();
-  }
-
-  return NextResponse.redirect("/");
+  return false;
 };
