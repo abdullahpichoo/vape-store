@@ -1,14 +1,12 @@
-const base_url =
-  process.env.DEPLOYMENT === "production"
-    ? "https://" + process.env.VERCEL_URL
-    : "http://localhost:3000";
+export const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL;
+
 // Products
 export const updateProductApiRoute = (productId: string) =>
-  `${base_url}/api/products/${productId}`;
+  `${baseUrl}/api/products/${productId}`;
 export const deleteProductApiRoute = (productId: string) =>
-  `${base_url}/api/products/${productId}`;
-export const addProductApiRoute = `${base_url}/api/products/new`;
-export const productsApiRoute = `${base_url}/api/products`;
+  `${baseUrl}/api/products/${productId}`;
+export const addProductApiRoute = `${baseUrl}/api/products/new`;
+export const productsApiRoute = `${baseUrl}/api/products`;
 
 // Users
-export const usersApiRoute = `${base_url}/api/admin/users`;
+export const usersApiRoute = `${baseUrl}/api/admin/users`;

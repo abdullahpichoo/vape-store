@@ -5,15 +5,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FAILED_TO_GET_PRODUCTS } from "@/contants/errorMsgs";
 import { getProducts } from "@/helpers/network/products";
-import { productsApiRoute } from "@/routes/api";
+import { baseUrl } from "@/routes/api";
 import { ProductType } from "@/types/api/product";
 
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 async function getData(): Promise<ProductType[]> {
-  console.log("Product API Route", productsApiRoute);
-
   try {
     const payloadProducts = await getProducts();
     const products = payloadProducts.map((product: ProductType) => {
@@ -29,6 +27,10 @@ async function getData(): Promise<ProductType[]> {
 }
 
 export default async function DashboardProducts() {
+  if (!baseUrl) {
+    return null;
+  }
+
   const productsData = await getData();
 
   return (

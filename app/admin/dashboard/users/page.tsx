@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FAILED_TO_FETCH_USERS } from "@/contants/errorMsgs";
 import { getUsers } from "@/helpers/network/users";
+import { baseUrl } from "@/routes/api";
 import { UserType } from "@/types/api/user";
 
 import { columns } from "./columns";
@@ -20,6 +21,10 @@ async function getData(): Promise<UserType[]> {
 }
 
 export default async function DashboardUsers() {
+  if (!baseUrl) {
+    return null;
+  }
+
   const usersData = await getData();
 
   return (
