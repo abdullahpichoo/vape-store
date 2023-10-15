@@ -11,8 +11,8 @@ import { UserType } from "@/types/api/user";
 import { connectToDatabase } from "@/utils/database";
 
 export const GET = async (req: NextRequest) => {
-  const admin = await isAdmin(req);
-  if (!admin) return unauthenticatedResponse();
+  // const admin = await isAdmin(req);
+  // if (!admin) return unauthenticatedResponse();
 
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();
