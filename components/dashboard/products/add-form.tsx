@@ -10,6 +10,9 @@ import SwitchController from "@/components/ui/form/switch-controller";
 import TextAreaController from "@/components/ui/form/text-area-controller";
 import Spinner from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/toast/use-toast";
+import { FAILED_TO_CREATE_PRODUCT } from "@/contants/errorMsgs";
+import { PRODUCT_CREATED_SUCCESSFULLY } from "@/contants/successMsgs";
+import { addProduct } from "@/helpers/network/products";
 import { ProductFormValues, ProductSchema } from "@/types/api/product";
 
 const ProductAddForm = () => {
@@ -21,19 +24,54 @@ const ProductAddForm = () => {
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<ProductFormValues>({
+    defaultValues: {
+      name: "",
+      description: "",
+      countInStock: 0,
+      price: 0,
+      discountPrice: 0,
+      category: "",
+      brand: "",
+      trending: false,
+    },
     mode: "onBlur",
     resolver: yupResolver(ProductSchema),
   });
 
   const onSubmit = async (data: ProductFormValues) => {
-    console.log("DATA", data);
-  };
+    setIsAdding(true);
+    if (!imageFiles || imageFiles?.length === 0) {
+      toast({
+        title: "Failed to Add Product!",
+        description: "Please Upload Product Images!",
+      });
+      setIsAdding(false);
+      return;
+    }
 
-  useEffect(() => {
-    console.log("Errors", errors);
-  }, [errors]);
+    try {
+      const product = await addProduct(data, imageFiles);
+      toast({
+        title: PRODUCT_CREATED_SUCCESSFULLY,
+        description: `Product ${product.name} has been added successfully!`,
+      });
+      reset();
+      setTimeout(
+        () => window.location.replace("/admin/dashboard/products"),
+        1000
+      );
+    } catch {
+      toast({
+        title: FAILED_TO_CREATE_PRODUCT,
+        description: "Something went wrong! Please try again later.",
+      });
+    } finally {
+      setIsAdding(false);
+    }
+  };
 
   useEffect(() => {
     console.log("Image Files", imageFiles);
@@ -78,6 +116,10 @@ const ProductAddForm = () => {
             placeholder="Enter Product Count In Stock"
             rules={{
               required: "Please Enter Product Count In Stock!",
+              min: {
+                value: 0,
+                message: "Count In Stock should be greater than 0!",
+              },
             }}
             error={errors.countInStock}
           />
@@ -91,6 +133,10 @@ const ProductAddForm = () => {
             placeholder="Enter Product Price"
             rules={{
               required: "Please Enter Product Price!",
+              min: {
+                value: 0,
+                message: "Price should be greater than 0!",
+              },
             }}
             error={errors.price}
           />
@@ -102,6 +148,12 @@ const ProductAddForm = () => {
             name="discountPrice"
             type="number"
             placeholder="Enter Discounted Price"
+            rules={{
+              min: {
+                value: 0,
+                message: "Discount should be greater than 0!",
+              },
+            }}
             error={errors.discountPrice}
           />
         </div>
@@ -163,11 +215,24 @@ const ProductAddForm = () => {
               multiple
               accept="image/png, image/jpeg, image/jpg, image/webp"
             />
+
+            {imageFiles &&
+              imageFiles.length > 0 &&
+              Array.from(imageFiles).map((image, i) => (
+                <span key={i} className="text-gray-500 text-[1.2rem]">
+                  {image.name}
+                </span>
+              ))}
           </div>
         </div>
       </div>
       <div className="my-10 text-center">
-        <Button type="submit" variant="black" size="sm" disabled={isAdding}>
+        <Button
+          type="submit"
+          variant="black"
+          size="sm"
+          disabled={isAdding || !imageFiles || imageFiles?.length === 0}
+        >
           {isAdding && <Spinner size="sm" color="black" />}
           {isAdding ? "Adding" : "Add Product"}
         </Button>

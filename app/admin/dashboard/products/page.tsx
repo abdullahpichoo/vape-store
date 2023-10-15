@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
+import { FAILED_TO_GET_PRODUCTS } from "@/contants/errorMsgs";
 import {
   product as productTag,
   products as productsTag,
@@ -27,7 +28,7 @@ async function getData(): Promise<ProductType[]> {
     console.log("Products", products);
     return products;
   } catch {
-    throw new Error();
+    throw new Error(FAILED_TO_GET_PRODUCTS);
   }
 }
 

@@ -1,4 +1,3 @@
-import { FieldValues } from "react-hook-form";
 import * as yup from "yup";
 
 export type ProductType = {
@@ -16,6 +15,8 @@ export type ProductType = {
     public_id?: string;
     url?: string;
   }[];
+  numReviews?: number;
+  sales?: number;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -30,14 +31,18 @@ export const ProductSchema = yup.object().shape({
   description: yup
     .string()
     .required("Please enter the description of your product!"),
-  price: yup.number().required("Please enter the price of your product!"),
-  discountPrice: yup.number(),
+  price: yup
+    .number()
+    .min(1)
+    .required("Please enter the price of your product!"),
   category: yup.string().required("Please enter the category of your product!"),
   brand: yup.string().required("Please enter the brand of your product!"),
-  rating: yup.number(),
   countInStock: yup
     .number()
+    .min(1)
     .required("Please enter the count in stock of your product!"),
+  discountPrice: yup.number(),
+  rating: yup.number(),
   trending: yup.boolean(),
   images: yup.array().of(
     yup.object().shape({
