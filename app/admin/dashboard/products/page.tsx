@@ -31,20 +31,26 @@ export default async function DashboardProducts() {
     return null;
   }
 
+  let data: ProductType[] = [];
   const productsData = await getData();
+  if (productsData && productsData.length > 0) {
+    data = productsData;
+  }
 
   return (
-    <div className="container mx-auto py-5">
-      <div className="flex justify-between items-center mb-4">
-        <h2>Products</h2>
-        <Link href={"/admin/dashboard/products/add"}>
-          <Button size={"lg"}>
-            <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />{" "}
-            <span className="hidden sm:inline-block">Add Product</span>
-          </Button>
-        </Link>
+    <>
+      <div className="container mx-auto py-5">
+        <div className="flex justify-between items-center mb-4">
+          <h2>Products</h2>
+          <Link href={"/admin/dashboard/products/add"}>
+            <Button size={"lg"}>
+              <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />{" "}
+              <span className="hidden sm:inline-block">Add Product</span>
+            </Button>
+          </Link>
+        </div>
+        <DataTable columns={columns} data={data} />
       </div>
-      <DataTable columns={columns} data={productsData} />
-    </div>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-// import { headers, cookies } from "next/headers";
+import { headers, cookies } from "next/headers";
 
 import { userTag, usersTag } from "@/contants/tags";
 import { usersApiRoute } from "@/routes/api";
@@ -6,6 +6,7 @@ import { usersApiRoute } from "@/routes/api";
 export const getUsers = async () => {
   try {
     const response = await fetch(usersApiRoute, {
+      headers: headers(),
       next: { revalidate: 3600, tags: [usersTag, userTag] },
     });
 

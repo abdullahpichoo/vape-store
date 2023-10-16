@@ -14,7 +14,6 @@ import {
 import { useState } from "react";
 
 import { DataTablePagination } from "@/components/ui/data-table/pagination";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,

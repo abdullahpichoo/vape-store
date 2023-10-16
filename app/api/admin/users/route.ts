@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { getAllUsers } from "@/backend/controllers/user-controller";
 import { isAdmin } from "@/backend/middleware";
@@ -11,8 +11,17 @@ import { UserType } from "@/types/api/user";
 import { connectToDatabase } from "@/utils/database";
 
 export const GET = async (req: NextRequest) => {
-  // const admin = await isAdmin(req);
-  // if (!admin) return unauthenticatedResponse();
+  if (!!process.env.DEPLOYED !== true) {
+    console.log("Not Deployed");
+    const users: UserType[] = [];
+    return getSuccessResponse<UserType[]>(
+      users,
+      "Empty User List Fetched for Deployment Check"
+    );
+  }
+
+  const admin = await isAdmin(req);
+  if (!admin) return unauthenticatedResponse();
 
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();

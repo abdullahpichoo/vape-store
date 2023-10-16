@@ -25,20 +25,27 @@ export default async function DashboardUsers() {
     return null;
   }
 
+  let data: UserType[] = [];
   const usersData = await getData();
 
+  if (usersData && usersData.length > 0) {
+    data = usersData;
+  }
+
   return (
-    <div className="container mx-auto py-5">
-      <div className="flex justify-between items-center mb-4">
-        <h2>Users</h2>
-        <Link href={"/admin/dashboard/users/add"}>
-          <Button size={"lg"}>
-            <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />{" "}
-            <span className="hidden sm:inline-block">Add User</span>
-          </Button>
-        </Link>
+    <>
+      <div className="container mx-auto py-5">
+        <div className="flex justify-between items-center mb-4">
+          <h2>Users</h2>
+          <Link href={"/admin/dashboard/users/add"}>
+            <Button size={"lg"}>
+              <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />{" "}
+              <span className="hidden sm:inline-block">Add User</span>
+            </Button>
+          </Link>
+        </div>
+        <DataTable columns={columns} data={data} />
       </div>
-      <DataTable columns={columns} data={usersData} />
-    </div>
+    </>
   );
 }
