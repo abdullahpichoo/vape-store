@@ -1,18 +1,13 @@
 import { NextRequest } from "next/server";
-import { decode } from "next-auth/jwt";
+import { decode, getToken } from "next-auth/jwt";
 
 export const isAdmin = async (req: NextRequest) => {
-  const sessionToken = req.cookies.get("next-auth.session-token")?.value;
-  if (!sessionToken) return false;
+  const token = await getToken({ req });
+  console.log("JWT", token);
 
-  const session = await decode({
-    token: sessionToken,
-    secret: process.env.NEXTAUTH_SECRET as string,
-  });
+  if (!token) return false;
 
-  if (!session) return false;
-
-  if (session.role === "admin") return true;
+  if (token.role === "admin") return true;
 
   return false;
 };
