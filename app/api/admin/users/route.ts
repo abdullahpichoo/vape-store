@@ -11,7 +11,7 @@ import { UserType } from "@/types/api/user";
 import { connectToDatabase } from "@/utils/database";
 
 export const GET = async (req: NextRequest) => {
-  console.log("cookies", req.cookies);
+  console.log("Header Cookies", req.cookies);
 
   const admin = await isAdmin(req);
   if (!admin) return unauthenticatedResponse();

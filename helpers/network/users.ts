@@ -6,6 +6,7 @@ import { usersApiRoute } from "@/routes/api";
 export const getUsers = async () => {
   try {
     const response = await fetch(usersApiRoute, {
+      credentials: "include",
       next: { revalidate: 3600, tags: [usersTag, userTag] },
     });
 
