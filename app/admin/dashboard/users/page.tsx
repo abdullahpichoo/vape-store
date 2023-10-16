@@ -1,11 +1,16 @@
+"use client";
+
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
+import ErrorPage from "@/components/error";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { FAILED_TO_FETCH_USERS } from "@/contants/errorMsgs";
+import { usersTag } from "@/contants/tags";
 import { getUsers } from "@/helpers/network/users";
-import { baseUrl } from "@/routes/api";
+import { useQuery } from "@/lib/react-query";
 import { UserType } from "@/types/api/user";
 
 import { columns } from "./columns";
@@ -20,16 +25,20 @@ async function getData(): Promise<UserType[]> {
   }
 }
 
-export default async function DashboardUsers() {
-  if (!baseUrl) {
-    return null;
+export default function DashboardUsers() {
+  const { data: usersData, isLoading, error } = useQuery([usersTag], getData);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Skeleton className="w-full h-[5rem]" />
+        <Skeleton className="w-full h-[30rem]" />
+      </div>
+    );
   }
 
-  let data: UserType[] = [];
-  const usersData = await getData();
-
-  if (usersData && usersData.length > 0) {
-    data = usersData;
+  if (error) {
+    return <ErrorPage message={FAILED_TO_FETCH_USERS} />;
   }
 
   return (
@@ -44,7 +53,11 @@ export default async function DashboardUsers() {
             </Button>
           </Link>
         </div>
-        <DataTable columns={columns} data={data} />
+        {usersData && usersData.length > 0 ? (
+          <DataTable columns={columns} data={usersData} />
+        ) : (
+          <DataTable columns={columns} data={[]} />
+        )}
       </div>
     </>
   );

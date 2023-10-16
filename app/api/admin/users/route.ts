@@ -11,14 +11,7 @@ import { UserType } from "@/types/api/user";
 import { connectToDatabase } from "@/utils/database";
 
 export const GET = async (req: NextRequest) => {
-  if (!!process.env.DEPLOYED !== true) {
-    console.log("Not Deployed");
-    const users: UserType[] = [];
-    return getSuccessResponse<UserType[]>(
-      users,
-      "Empty User List Fetched for Deployment Check"
-    );
-  }
+  console.log("cookies", req.cookies);
 
   const admin = await isAdmin(req);
   if (!admin) return unauthenticatedResponse();
