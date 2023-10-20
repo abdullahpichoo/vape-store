@@ -47,6 +47,8 @@ const EditUser = (props: EditUserProps) => {
 
     setIsUpdating(true);
 
+    console.log("Data", data);
+
     try {
       const res = await fetch(updateUserApiRoute(user._id), {
         credentials: "include",
@@ -105,7 +107,7 @@ const EditUser = (props: EditUserProps) => {
               Please save this password somewhere safe and share it with your
               user.
             </p>
-            <div className="text-right my-2">
+            {/* <div className="text-right my-2">
               <Button
                 variant="orange"
                 size="sm"
@@ -119,7 +121,7 @@ const EditUser = (props: EditUserProps) => {
               >
                 Generate
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="my-10 text-center">
