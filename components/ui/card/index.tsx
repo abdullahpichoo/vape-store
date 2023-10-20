@@ -6,7 +6,7 @@ const Card = (props: CardProps) => {
   const { children, className } = props;
   return (
     <div
-      className={`bg-slate-100 px-10 py-6 rounded-2xl drop-shadow ${className}`}
+      className={`bg-neutral-50 border-2 border-neutral-100 px-5 md:px-10 py-6 rounded-2xl shadow-lg ${className}`}
     >
       {children}
     </div>

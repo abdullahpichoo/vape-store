@@ -5,7 +5,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = (props: ButtonProps) => {
-  const { variant, size } = props;
+  const { variant, size, disabled } = props;
   const btnSize =
     size && size === "sm"
       ? "text-[1rem] md:text-[1.2rem]"
@@ -19,6 +19,7 @@ const Button = (props: ButtonProps) => {
           ? "bg-orange-1 text-black hover:bg-orange-2"
           : "bg-black text-white hover:bg-grey"
       }
+      ${disabled && "opacity-60 cursor-not-allowed "}
       px-24 py-4 w-fit font-bold transition-all duration-150 ease-in-out ${btnSize} ${
         props.className
       }`}

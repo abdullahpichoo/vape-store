@@ -23,7 +23,7 @@ const HamburgerMenu = () => {
       />
 
       <div
-        className={`top-0 right-0 w-[40vw] bg-white px-20 py-14 text-white fixed h-full z-40 ease-in-out duration-300 transition-all transform ${
+        className={`top-0 right-0 w-[60vw] md:w-[40vw] bg-white px-20 py-14 text-white fixed h-full z-40 ease-in-out duration-300 transition-all transform ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

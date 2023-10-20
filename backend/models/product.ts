@@ -14,6 +14,9 @@ const ProductSchema = new Schema(
       type: Number,
       required: [true, "Please provide a price for this product."],
     },
+    discountPrice: {
+      type: Number,
+    },
     images: [
       {
         public_id: {
@@ -22,7 +25,7 @@ const ProductSchema = new Schema(
         url: {
           type: String,
         },
-      }
+      },
     ],
     category: {
       type: String,
@@ -32,13 +35,25 @@ const ProductSchema = new Schema(
       type: String,
       required: [true, "Please provide a brand for this product."],
     },
-    rating: {
-      type: Number,
-      required: [true, "Please provide a rating for this product."],
-    },
     countInStock: {
       type: Number,
       required: [true, "Please provide a count in stock for this product."],
+    },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    trending: {
+      type: Boolean,
+      default: false,
+    },
+    numReviews: {
+      type: Number,
+      default: 0,
+    },
+    sales: {
+      type: Number,
+      default: 0,
     },
   },
   {

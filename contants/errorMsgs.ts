@@ -4,6 +4,8 @@ export const MONGODB_CONNECTION_ERROR =
 
 // Auth Errors
 export const INVALID_CREDENTIALS = "Invalid email or password";
+export const UNAUTHENTICATED = "You are not authenticated!";
+export const UNAUTHORIZED = "You are not authorized to perform this action!";
 
 // User Errors
 export const USER_NOT_FOUND = "User not found";

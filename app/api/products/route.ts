@@ -12,6 +12,7 @@ export const GET = async () => {
 
   try {
     const products = await getAllProducts();
+
     return getSuccessResponse<ProductType[]>(
       products,
       PRODUCTS_FETCHED_SUCCESSFULLY

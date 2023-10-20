@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 
+import { UserRole } from "@/types/client/auth";
+
 import Button from "../ui/btn";
 
 const AccountDetails = () => {
@@ -14,20 +16,22 @@ const AccountDetails = () => {
         <hr />
       </div>
       <div className="grid grid-cols-12">
-        <div className="col-span-6 flex items-center gap-3">
+        <div className="col-span-12 md:col-span-6 flex items-center gap-3">
           <h6>Name:</h6> <p>{session?.data?.user?.name}</p>
         </div>
-        <div className="col-span-6 flex items-center gap-3">
+        <div className="col-span-12 md:col-span-6 flex items-center gap-3">
           <h6>Email Address:</h6> <p>{session?.data?.user?.email}</p>
         </div>
       </div>
 
-      <div className="flex justify-between">
-        <Link href={"/admin/dashboard"}>
-          <Button size="sm" variant="orange">
-            Dashboard
-          </Button>
-        </Link>
+      <div className="flex justify-between flex-col sm:flex-row gap-5">
+        {session?.data?.user?.role === UserRole.ADMIN && (
+          <Link href={"/admin/dashboard"}>
+            <Button size="sm" variant="orange">
+              Admin Dashboard
+            </Button>
+          </Link>
+        )}
 
         <Button size="sm" variant="black" onClick={() => signOut()}>
           Logout

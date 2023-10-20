@@ -34,12 +34,14 @@ export default function RootLayout({
         <div className="mb-8">
           <NavBar />
         </div>
+
         <Providers>
           <main className="px-5 sm:px-24 md:px-36 xl:px-[30rem]">
             {children}
           </main>
         </Providers>
         <Toaster />
+
         <div className="mt-auto">
           <Footer />
         </div>

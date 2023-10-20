@@ -105,16 +105,16 @@
     @apply text-[2rem] md:text-[2.8rem] lg:text-[3.2rem];
   }
   h3 {
-    @apply text-[1.8rem] md:text-[2.4rem] lg:text-[2.8rem];
+    @apply text-[1.8rem] md:text-[2.2rem] lg:text-[2.6rem];
   }
   h4 {
-    @apply text-[1.4rem] md:text-[2rem] lg:text-[2.4rem];
+    @apply text-[1.4rem] md:text-[1.8rem] lg:text-[2.2rem];
   }
   h5 {
-    @apply text-[1.2rem] md:text-[1.8rem] lg:text-[2rem];
+    @apply text-[1.2rem] md:text-[1.6rem] lg:text-[2rem];
   }
   h6 {
-    @apply font-bold text-black;
+    @apply text-[1.2rem] md:text-[1.4rem] lg:text-[1.6rem];
   }
 
   .font-hind {
@@ -125,7 +125,13 @@
   }
 
   p {
-    @apply font-medium font-hind text-gray-600 leading-relaxed;
+    @apply font-medium font-hind text-gray-600 leading-relaxed text-[1.2rem] md:text-[1.4rem];
+  }
+  th {
+    @apply font-bold  text-[1.4rem] md:text-[1.8rem];
+  }
+  td {
+    @apply font-medium text-[1.2rem] md:text-[1.6rem];
   }
 
   .flex-center {
@@ -136,6 +142,13 @@
   .search-bar::after {
     @apply absolute content-[""] w-full h-full bg-orange-1 -z-10 -bottom-3.5 left-0 rounded-xl;
   }
+  /* Nav My Account CTA */
+  .account-cta::after {
+    @apply content-[""] w-[0%] h-1 rounded-full bg-orange-1 transition-all duration-300 ease-in-out;
+  }
+  .account-cta:hover::after {
+    @apply w-full;
+  }
 
   /* Heading */
   .heading::after {
@@ -144,5 +157,21 @@
 
   .drop-shadow {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+  }
+
+  /* Product Gallery */
+  .product-gallery-swiper-thumbs .swiper-slide {
+    @apply opacity-40;
+  }
+
+  .product-gallery-swiper .swiper-button-prev {
+    @apply text-orange-1;
+  }
+  .product-gallery-swiper .swiper-button-next {
+    @apply text-orange-1;
+  }
+
+  .product-gallery-swiper-thumbs .swiper-slide-thumb-active {
+    @apply opacity-100 border-2 border-orange-1;
   }
 }

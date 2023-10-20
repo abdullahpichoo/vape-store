@@ -40,6 +40,10 @@ export async function updateUser(
   data: UserType
 ): Promise<UserType> {
   try {
+    const { password } = data;
+    const hashedPassword = await bcrypt.hash(password, 12);
+    data.password = hashedPassword;
+
     const updatedUser = await User.findByIdAndUpdate(id, data, { new: true });
     if (!updatedUser) {
       throw new Error(USER_NOT_FOUND as string);

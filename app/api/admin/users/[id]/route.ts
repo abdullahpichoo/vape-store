@@ -1,7 +1,9 @@
 import { NextRequest } from "next/server";
 
+import { serverSession } from "@/app/api/auth/[...nextauth]/route";
 import { getUserById, updateUser } from "@/backend/controllers/user-controller";
 import { getSuccessResponse } from "@/backend/utils/responses";
+import { unauthenticatedResponse } from "@/backend/utils/responses/auth";
 import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import {
   userNotFoundResponse,
@@ -27,6 +29,9 @@ export const GET = async (
 ) => {
   const { id } = params;
   if (!id) return userNotFoundResponse();
+
+  const session = await serverSession();
+  if (!session) return unauthenticatedResponse();
 
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();

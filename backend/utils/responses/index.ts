@@ -15,13 +15,14 @@ export const responseGenerator = (message: string) => {
 
 export function getSuccessResponse<T>(
   payLoad: T | T[],
-  message: string
+  message: string,
+  status?: number
 ): TNextResponse<{
   body: Response<T>;
 }> {
   const response: Response<T> = {
     success: true,
-    status: 200,
+    status: status ? status : 200,
     message: message,
     payLoad: payLoad,
   };
@@ -29,7 +30,7 @@ export function getSuccessResponse<T>(
     {
       body: response,
     },
-    { status: 200 }
+    { status: status ? status : 200 }
   );
   return res;
 }
