@@ -21,7 +21,7 @@ async function getData(): Promise<ProductCardType[]> {
     throw new Error(FAILED_TO_GET_PRODUCTS);
   }
 }
-const Featured = async () => {
+const FeaturedProducts = async () => {
   if (!baseUrl) {
     return null;
   }
@@ -57,4 +57,4 @@ const Featured = async () => {
   );
 };
 
-export default Featured;
+export default FeaturedProducts;

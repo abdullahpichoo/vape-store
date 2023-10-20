@@ -1,5 +1,6 @@
 import BestSelling from "@/components/best-selling";
-import Featured from "@/components/featured-products-section";
+import FeaturedBrands from "@/components/featured-brands-section";
+import FeaturedProducts from "@/components/featured-products-section";
 import Features from "@/components/features-section";
 import HeroSection from "@/components/hero-section";
 
@@ -10,7 +11,8 @@ export default async function Home() {
         <HeroSection />
         <BestSelling />
         <Features />
-        <Featured />
+        <FeaturedProducts />
+        <FeaturedBrands />
       </div>
     </>
   );
