@@ -22,6 +22,7 @@ const Product = async ({ params }: { params: { productId: string } }) => {
   const productData = await getData(params.productId);
 
   console.log("Product", productData);
+
   return (
     <section className="grid grid-cols-12">
       <div className="images-area col-span-12 md:col-span-6">
