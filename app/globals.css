@@ -158,4 +158,20 @@
   .drop-shadow {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
   }
+
+  /* Product Gallery */
+  .product-gallery-swiper-thumbs .swiper-slide {
+    @apply opacity-40;
+  }
+
+  .product-gallery-swiper .swiper-button-prev {
+    @apply text-orange-1;
+  }
+  .product-gallery-swiper .swiper-button-next {
+    @apply text-orange-1;
+  }
+
+  .product-gallery-swiper-thumbs .swiper-slide-thumb-active {
+    @apply opacity-100 border-2 border-orange-1;
+  }
 }

@@ -5,7 +5,8 @@ import { ProductCardType, ProductType } from "@/types/api/product";
 
 import Button from "../ui/btn";
 import Heading from "../ui/heading";
-import ProductCard from "../ui/product-card";
+
+import ProductsSwiper from "./products-swiper";
 
 async function getData(): Promise<ProductCardType[]> {
   try {
@@ -36,19 +37,8 @@ const BestSelling = async () => {
         </h3>
         <Heading size="xl">Best Selling</Heading>
       </div>
-      <div className="grid grid-cols-12 lg:grid-cols-5 gap-3">
-        {productsData &&
-          productsData.length > 0 &&
-          productsData.map((product) => (
-            <div
-              key={product._id}
-              className="col-span-6 sm:col-span-3 lg:col-span-1"
-            >
-              <ProductCard product={product} />
-            </div>
-          ))}
-      </div>
-      <div className="view-more my-5">
+      <ProductsSwiper products={productsData} />
+      <div className="view-more my-5 text-center">
         <Button size="md" variant="orange">
           View More
         </Button>

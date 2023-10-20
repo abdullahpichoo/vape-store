@@ -48,7 +48,7 @@ const FeaturedProducts = async () => {
             </div>
           ))}
       </div>
-      <div className="view-more my-5">
+      <div className="view-more my-5 text-center">
         <Button size="md" variant="orange">
           View More
         </Button>

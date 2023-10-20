@@ -49,17 +49,17 @@ const FeaturedBrands = () => {
           modules={[Navigation, Scrollbar, A11y, Autoplay]}
           spaceBetween={50}
           slidesPerView={2}
-          navigation
-          autoplay={{ delay: 2500, disableOnInteraction: true }}
+          autoplay={{ delay: 1500, disableOnInteraction: true }}
           scrollbar={{ draggable: true }}
           breakpoints={{
             640: {
               slidesPerView: 3,
-              spaceBetween: 50,
             },
             768: {
               slidesPerView: 4,
-              spaceBetween: 50,
+            },
+            1024: {
+              slidesPerView: 5,
             },
           }}
         >
