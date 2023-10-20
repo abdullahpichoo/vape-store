@@ -64,7 +64,7 @@ export function DataTable<TData, TValue>({
             id="username"
             type="text"
             className="px-8 py-2 rounded-xl text-[1.4rem] md:text-[1.6rem]"
-            placeholder="Enter Product Name"
+            placeholder="Enter Username"
             value={
               (table.getColumn("username")?.getFilterValue() as string) ?? ""
             }
@@ -84,7 +84,7 @@ export function DataTable<TData, TValue>({
             id="email"
             type="text"
             className="px-8 py-2 rounded-xl text-[1.4rem] md:text-[1.6rem]"
-            placeholder="Enter Product Brand"
+            placeholder="Enter Email"
             value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("email")?.setFilterValue(event.target.value)

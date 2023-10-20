@@ -10,3 +10,8 @@ export const productsApiRoute = `${baseUrl}/api/products`;
 
 // Users
 export const usersApiRoute = `${baseUrl}/api/admin/users`;
+export const addUserApiRoute = `${baseUrl}/api/admin/users/new`;
+export const updateUserApiRoute = (userId: string) =>
+  `${baseUrl}/api/admin/users/${userId}`;
+export const deleteUserApiRoute = (userId: string) =>
+  `${baseUrl}/api/admin/users/${userId}`;

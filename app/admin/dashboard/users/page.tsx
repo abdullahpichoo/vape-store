@@ -2,10 +2,18 @@
 
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
 
+import AddUser from "@/components/dashboard/users/add-user";
 import ErrorPage from "@/components/error";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FAILED_TO_FETCH_USERS } from "@/contants/errorMsgs";
 import { usersTag } from "@/contants/tags";
@@ -46,12 +54,25 @@ export default function DashboardUsers() {
       <div className="container mx-auto py-5">
         <div className="flex justify-between items-center mb-4">
           <h2>Users</h2>
-          <Link href={"/admin/dashboard/users/add"}>
-            <Button size={"lg"}>
-              <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />{" "}
-              <span className="hidden sm:inline-block">Add User</span>
-            </Button>
-          </Link>
+          {/* <Link href={"/admin/dashboard/users/add"}> */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button size={"lg"}>
+                <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />{" "}
+                <span className="hidden sm:inline-block">Add User</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  <h4>Create a New User</h4>
+                </DialogTitle>
+              </DialogHeader>
+              <AddUser />
+            </DialogContent>
+          </Dialog>
+
+          {/* </Link> */}
         </div>
         {usersData && usersData.length > 0 ? (
           <DataTable columns={columns} data={usersData} />

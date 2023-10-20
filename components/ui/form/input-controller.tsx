@@ -45,7 +45,7 @@ const InputController = <T extends FieldValues>({
           <input
             id={name}
             type={type}
-            className="px-8 py-4 rounded-xl text-[1.4rem] md:text-[1.6rem]"
+            className="px-8 py-4 rounded-xl text-[1.4rem] md:text-[1.6rem] border border-neutral-200 focus:outline-orange-1"
             placeholder={placeholder}
             defaultValue={defaultValue}
             {...field}

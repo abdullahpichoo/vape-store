@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();
 
-  const existingUser = await User.findOne({ username: user.username });
+  const existingUser = await User.findOne({ email: user.email });
   if (existingUser) return userAlreadyExistsResponse();
 
   try {

@@ -60,9 +60,6 @@ export const PUT = async (
 
   if (!user || !id) return userNotFoundResponse();
 
-  const session = await serverSession();
-  if (!session) return unauthenticatedResponse();
-
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();
 
