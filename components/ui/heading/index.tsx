@@ -18,7 +18,7 @@ const Heading = (props: HeadingProps) => {
 
   return (
     <h1
-      className={`heading relative w-fit uppercase font-extrabold my-5 ${headingSize}`}
+      className={`heading relative w-fit uppercase font-extrabold mb-5 ${headingSize}`}
     >
       {children}
     </h1>

@@ -21,6 +21,10 @@ export type ProductType = {
   updatedAt?: string;
 };
 
+export type ProductCardType = Omit<ProductType, "images"> & {
+  images: string[];
+};
+
 export type ProductFormValues = Omit<
   ProductType,
   "_id" | "createdAt" | "updatedAt"

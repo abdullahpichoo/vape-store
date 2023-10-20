@@ -47,9 +47,7 @@ export const columns: ColumnDef<UserType>[] = [
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>
-                    <h4>Update Password</h4>
-                  </DialogTitle>
+                  <h4>Update Password</h4>
                 </DialogHeader>
                 <EditUser user={user} />
               </DialogContent>

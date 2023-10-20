@@ -64,9 +64,7 @@ export default function DashboardUsers() {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>
-                  <h4>Create a New User</h4>
-                </DialogTitle>
+                <h4>Create a New User</h4>
               </DialogHeader>
               <AddUser />
             </DialogContent>
