@@ -2,12 +2,12 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
-import { ProductCardType } from "@/types/api/product";
+import { ProductType } from "@/types/api/product";
 
 import Img from "../image";
 
 interface ProductCardProps {
-  product: ProductCardType;
+  product: ProductType;
 }
 
 const ProductCard = (props: ProductCardProps) => {
@@ -17,7 +17,7 @@ const ProductCard = (props: ProductCardProps) => {
       <div className="w-full h-full border-2 border-gray-200 px-5 py-3 group rounded-2xl hover:border-orange-1 duration-200 ease-in-out cursor-pointer">
         <div className="product-image mb-2 group-hover:scale-105 duration-200 ease-in-out">
           <Img
-            src={product.images[0]}
+            src={product.images ? (product.images[0].url as string) : ""}
             alt={product.name}
             className="w-full min-h-[15rem] md:min-h-[20rem] lg:min-h-[15rem] "
           />

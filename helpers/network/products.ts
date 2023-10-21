@@ -8,7 +8,7 @@ import {
   productsApiRoute,
   updateProductApiRoute,
 } from "@/routes/api";
-import { ProductFormValues } from "@/types/api/product";
+import { ProductFormValues, ProductType } from "@/types/api/product";
 
 export const uploadImage = async (image: File) => {
   if (image == null) throw new Error("No image provided.");
@@ -106,7 +106,7 @@ export const deleteProduct = async (productId: string) => {
   }
 };
 
-export const getProducts = async () => {
+export const getProducts = async (): Promise<ProductType[]> => {
   try {
     const response = await fetch(productsApiRoute, {
       next: { revalidate: 3600, tags: [productsTag, productTag] },

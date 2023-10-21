@@ -10,7 +10,7 @@ import { Navigation, Scrollbar, A11y, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SwiperRef } from "swiper/react";
 
-import { ProductCardType } from "@/types/api/product";
+import { ProductCardType, ProductType } from "@/types/api/product";
 
 import "swiper/css";
 import "swiper/css/autoplay";
@@ -18,7 +18,7 @@ import "swiper/css/autoplay";
 import ProductCard from "../ui/product-card";
 
 interface ProductsSwiperProps {
-  products: ProductCardType[];
+  products: ProductType[];
 }
 
 const ProductsSwiper = (props: ProductsSwiperProps) => {
