@@ -106,7 +106,7 @@ export const deleteProduct = async (productId: string) => {
   }
 };
 
-export const getProducts = async (): Promise<ProductType[]> => {
+export const getProducts = async () => {
   try {
     const response = await fetch(productsApiRoute, {
       next: { revalidate: 3600, tags: [productsTag, productTag] },

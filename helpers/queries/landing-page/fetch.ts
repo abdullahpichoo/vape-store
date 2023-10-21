@@ -8,7 +8,7 @@ export const useBestSellingProducts = (inView: boolean) =>
   useQuery<ProductType[]>(
     [bestSelling],
     async () => {
-      const payloadProducts = await getProducts();
+      const payloadProducts = (await getProducts()) as ProductType[];
       return payloadProducts;
     },
     {
@@ -21,7 +21,7 @@ export const useFeaturedProducts = (inView: boolean) =>
   useQuery<ProductType[]>(
     [featured],
     async () => {
-      const payloadProducts = await getProducts();
+      const payloadProducts = (await getProducts()) as ProductType[];
       return payloadProducts;
     },
     {
