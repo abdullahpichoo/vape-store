@@ -3,10 +3,14 @@ import {
   FAILED_TO_ADD_ITEM_TO_CART,
   FAILED_TO_CREATE_CART,
   FAILED_TO_REMOVE_ITEM_FROM_CART,
+  ITEM_NOT_IN_STOCK,
+  PRODUCT_NOT_FOUND,
 } from "@/contants/errorMsgs";
 import { CartItemType, CartType } from "@/types/api/cart";
+import { ProductType } from "@/types/api/product";
 
 import Cart from "../models/cart";
+import Product from "../models/product";
 
 export const createCart = async (userId: string): Promise<CartType> => {
   try {
@@ -34,13 +38,35 @@ export const addItem = async (
 ): Promise<CartType> => {
   try {
     const cart = await Cart.findById(cartId);
+    const product = (await Product.findById(cartItem.productId)) as ProductType;
+
+    if (!product) {
+      throw new Error(PRODUCT_NOT_FOUND);
+    }
     if (!cart) {
       throw new Error(CART_NOT_FOUND);
+    }
+
+    console.log("Cart Item Quantity", cartItem.quantity, product.countInStock);
+    if (cartItem.quantity > product.countInStock) {
+      console.log("Item Not In Stock");
+      throw new Error(ITEM_NOT_IN_STOCK);
     }
 
     const existingItem = cart.items?.find(
       (item: CartItemType) => item.productId.toString() === cartItem.productId
     );
+    console.log(
+      "Existing Cart Item Quantity",
+      cartItem.quantity,
+      product.countInStock
+    );
+
+    if (existingItem && existingItem.quantity >= product.countInStock) {
+      console.log("Item Not In Stock");
+      throw new Error(ITEM_NOT_IN_STOCK);
+    }
+
     if (existingItem) {
       existingItem.quantity += cartItem.quantity;
     } else {

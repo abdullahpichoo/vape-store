@@ -1,5 +1,5 @@
 export interface CartItemType {
-  _id: string;
+  _id?: string;
   productId: string;
   productName: string;
   productPrice: number;
@@ -10,5 +10,5 @@ export interface CartItemType {
 export interface CartType {
   _id: string;
   userId: string;
-  items?: CartItemType[];
+  items: CartItemType[];
 }

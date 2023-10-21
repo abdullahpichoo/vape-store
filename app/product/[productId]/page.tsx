@@ -21,8 +21,6 @@ const Product = async ({ params }: { params: { productId: string } }) => {
 
   const productData = await getData(params.productId);
 
-  console.log("Product", productData);
-
   return (
     <section className="grid grid-cols-12">
       <div className="images-area col-span-12 md:col-span-6">
@@ -66,7 +64,15 @@ const Product = async ({ params }: { params: { productId: string } }) => {
           </div>
         </div>
 
-        <AddToCart product={productData} />
+        {productData.countInStock > 0 ? (
+          <AddToCart product={productData} />
+        ) : (
+          <>
+            <h6 className="text-red-500">
+              This item is out of stock. Please check again later!
+            </h6>
+          </>
+        )}
       </div>
     </section>
   );

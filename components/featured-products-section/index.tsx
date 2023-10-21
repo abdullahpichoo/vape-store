@@ -42,7 +42,7 @@ const FeaturedProducts = async () => {
           productsData.map((product) => (
             <div
               key={product._id}
-              className="col-span-6 sm:col-span-3 lg:col-span-1"
+              className="col-span-6 sm:col-span-4 lg:col-span-1"
             >
               <ProductCard product={product} />
             </div>

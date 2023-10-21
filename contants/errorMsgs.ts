@@ -46,6 +46,7 @@ export const FAILED_TO_GET_PRODUCT =
 
 // Cart Errors
 export const CART_NOT_FOUND = "Cart not found";
+export const ITEM_NOT_IN_STOCK = "Item is out of stock";
 export const FAILED_TO_FETCH_CART =
   "Could not load cart! Please try again later.";
 export const FAILED_TO_CREATE_CART =

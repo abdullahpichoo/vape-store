@@ -188,7 +188,6 @@ const ProductAddForm = () => {
             control={control}
             label="Trending"
             name="trending"
-            value={false}
             rules={{
               required: "Please Enter Product Brand!",
             }}

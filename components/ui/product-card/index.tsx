@@ -14,9 +14,13 @@ const ProductCard = (props: ProductCardProps) => {
   const { product } = props;
   return (
     <Link href={`/product/${product._id}`}>
-      <div className="w-full border-2 border-gray-200 px-5 py-3 group rounded-2xl hover:border-orange-1 duration-200 ease-in-out cursor-pointer">
+      <div className="w-full h-full border-2 border-gray-200 px-5 py-3 group rounded-2xl hover:border-orange-1 duration-200 ease-in-out cursor-pointer">
         <div className="product-image mb-2 group-hover:scale-105 duration-200 ease-in-out">
-          <Img src={product.images[0]} alt={product.name} className="w-full" />
+          <Img
+            src={product.images[0]}
+            alt={product.name}
+            className="w-full min-h-[15rem] md:min-h-[20rem] lg:min-h-[15rem] "
+          />
         </div>
         <div className="product-details flex flex-col gap-2">
           <h5 className="product-name font-hind font-semibold line-clamp-2 text-neutral-700 h-[3.5rem] md:h-[4.5rem] lg:h-[6.5rem]">

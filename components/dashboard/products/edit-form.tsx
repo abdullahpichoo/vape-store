@@ -26,7 +26,6 @@ interface ProductEditFormProps {
 
 const ProductEditForm = (props: ProductEditFormProps) => {
   const { productData } = props;
-  console.log("Product", productData);
   const [isUpdating, setIsUpdating] = useState(false);
   const { toast } = useToast();
 

@@ -15,3 +15,11 @@ export const updateUserApiRoute = (userId: string) =>
   `${baseUrl}/api/admin/users/${userId}`;
 export const deleteUserApiRoute = (userId: string) =>
   `${baseUrl}/api/admin/users/${userId}`;
+
+// Cart
+export const cartApiRoute = (userId: string) =>
+  `${baseUrl}/api/profile/${userId}/cart`;
+export const addToCartApiRoute = (userId: string, cartId: string) =>
+  `${baseUrl}/api/profile/${userId}/cart/${cartId}/add-item`;
+export const removeItemFromCartApi = (userId: string, cartId: string) =>
+  `${baseUrl}/api/profile/${userId}/cart/${cartId}/delete-item`;
