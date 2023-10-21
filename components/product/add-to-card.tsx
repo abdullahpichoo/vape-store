@@ -61,8 +61,10 @@ const AddToCart = (props: AddToCartProps) => {
       productName: product.name,
       productBrand: product.brand,
       productPrice: product.price,
+      productImage: product.images ? (product.images[0].url as string) : "",
       quantity: itemCount === 0 ? 1 : itemCount,
     };
+    console.log("cart Item to be added", cartItem);
     await addToCartMutation(cartItem);
   };
 

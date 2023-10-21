@@ -8,6 +8,7 @@ import { useState } from "react";
 import ShoppingCart from "@/components/shopping-cart";
 
 import Button from "../btn";
+import { Separator } from "../separator";
 import { Skeleton } from "../skeleton";
 
 const CartBtn = () => {
@@ -22,29 +23,29 @@ const CartBtn = () => {
     <>
       <div
         role="button"
-        className="cart-btn bg-orange-3 flex gap-8 px-8 py-3.5 rounded-xl group hover:cursor-pointer"
+        className="cart-btn bg-orange-3 flex gap-3 lg:gap-8 px-4 py-2 lg:px-8 lg:py-3.5 rounded-xl group hover:cursor-pointer"
         onClick={() => setDrawerOpen(true)}
       >
         <div className="flex items-center gap-3">
           <FontAwesomeIcon
             icon={faCartShopping}
-            className="w-9 group-hover:scale-110 transition-all ease-in-out duration-200"
+            className=" group-hover:scale-110 transition-all ease-in-out duration-200"
           />
-          <h6 className="font-medium">Cart</h6>
+          <h6 className="font-medium hidden lg:block">Cart</h6>
         </div>
-        <div className="items-count text-white px-5 py-2 bg-black rounded-full group-hover:scale-110 transition-all ease-in-out duration-200">
+        <div className="items-count text-[1rem] lg:text-[1.2rem] text-white px-4 py-2 bg-black rounded-full group-hover:scale-110 transition-all ease-in-out duration-200">
           0
         </div>
       </div>
 
       <div
-        className={`backdrop absolute top-0 left-0 z-30 w-[100vw] h-[100vh] bg-black opacity-50 ease-in-out duration-300 transition-all ${
+        className={`backdrop absolute top-0 left-0 z-30 w-full h-[100vh] bg-black opacity-50 ease-in-out duration-300 transition-all ${
           drawerOpen ? "block" : "hidden"
         }`}
       />
 
       <div
-        className={`top-0 right-0 w-[60vw] md:w-[40vw] bg-white px-20 py-14 text-white fixed h-full z-40 ease-in-out duration-300 transition-all transform ${
+        className={`top-0 right-0 w-[70vw] sm:w-[60vw] lg:w-[40vw] bg-white px-10 py-14 text-white fixed h-[100vh] overflow-y-auto z-40 ease-in-out duration-300 transition-all transform ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -53,11 +54,15 @@ const CartBtn = () => {
           <div className="flex justify-start">
             <FontAwesomeIcon
               icon={faClose}
-              className="text-[3rem] text-black cursor-pointer"
+              className="text-[2.5rem] text-black cursor-pointer"
               onClick={() => setDrawerOpen(false)}
             />
           </div>
         </div>
+        <div className="mt-5 mb-10">
+          <Separator />
+        </div>
+
         {session && session.status === "authenticated" && session.data?.user ? (
           <ShoppingCart userId={session.data.user.id} />
         ) : (

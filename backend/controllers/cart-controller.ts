@@ -47,23 +47,17 @@ export const addItem = async (
       throw new Error(CART_NOT_FOUND);
     }
 
-    console.log("Cart Item Quantity", cartItem.quantity, product.countInStock);
     if (cartItem.quantity > product.countInStock) {
-      console.log("Item Not In Stock");
+      console.log("cart item", cartItem, cart);
       throw new Error(ITEM_NOT_IN_STOCK);
     }
 
     const existingItem = cart.items?.find(
       (item: CartItemType) => item.productId.toString() === cartItem.productId
     );
-    console.log(
-      "Existing Cart Item Quantity",
-      cartItem.quantity,
-      product.countInStock
-    );
 
     if (existingItem && existingItem.quantity >= product.countInStock) {
-      console.log("Item Not In Stock");
+      console.log("cart item existing", cartItem, cart);
       throw new Error(ITEM_NOT_IN_STOCK);
     }
 

@@ -51,7 +51,10 @@ const NavBar = () => {
               </Link>
             </div>
 
-            <HamburgerMenu />
+            <div className="flex items-center gap-5 lg:hidden">
+              <CartBtn />
+              <HamburgerMenu />
+            </div>
           </div>
           <div className="md:hidden mt-8">
             <NavSearch />
