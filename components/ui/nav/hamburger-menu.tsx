@@ -17,9 +17,11 @@ const HamburgerMenu = () => {
         onClick={() => setDrawerOpen(true)}
       />
       <div
+        role="button"
         className={`backdrop absolute top-0 left-0 z-30 w-[100vw] h-[100vh] bg-black opacity-50 ease-in-out duration-300 transition-all ${
           drawerOpen ? "block" : "hidden"
         }`}
+        onClick={() => setDrawerOpen(false)}
       />
 
       <div
@@ -35,13 +37,13 @@ const HamburgerMenu = () => {
           />
         </div>
         <div className="flex flex-col gap-5 mt-16">
-          <Link href={"/"}>
+          <Link href={"/"} onClick={() => setDrawerOpen(false)}>
             <h4 className="uppercase">Shop By Products</h4>
           </Link>
-          <Link href={"/"}>
+          <Link href={"/"} onClick={() => setDrawerOpen(false)}>
             <h4 className="uppercase">Shop By Brands</h4>
           </Link>
-          <Link href={"/account"}>
+          <Link href={"/account"} onClick={() => setDrawerOpen(false)}>
             <h4 className="uppercase">My Account</h4>
           </Link>
         </div>

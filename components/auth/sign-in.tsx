@@ -54,7 +54,6 @@ const SignInCard = () => {
 
   return (
     <div className="signin-card px-10 py-8 bg-slate-100 border w-full md:w-[70%] rounded-xl drop-shadow">
-      <>{console.log("Errors", errors)}</>
       <h1 className="text-center uppercase">Sign In</h1>
 
       <form

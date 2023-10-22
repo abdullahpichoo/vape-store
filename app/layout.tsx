@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${montserrat.className} flex flex-col min-h-screen`}
+        className={`${montserrat.className} flex flex-col min-h-screen relative`}
       >
         <div className="mb-8">
           <NavBar />

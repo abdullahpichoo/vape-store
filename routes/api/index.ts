@@ -23,3 +23,11 @@ export const addToCartApiRoute = (userId: string, cartId: string) =>
   `${baseUrl}/api/profile/${userId}/cart/${cartId}/add-item`;
 export const removeItemFromCartApi = (userId: string, cartId: string) =>
   `${baseUrl}/api/profile/${userId}/cart/${cartId}/delete-item`;
+
+// Addresses
+export const addressesApiRoute = (userId: string) =>
+  `${baseUrl}/api/profile/${userId}/addresses`;
+export const addAddressApiRoute = (userId: string) =>
+  `${baseUrl}/api/profile/${userId}/addresses/new`;
+export const updateAddressApiRoute = (userId: string, addressId: string) =>
+  `${baseUrl}/api/profile/${userId}/addresses/${addressId}`;

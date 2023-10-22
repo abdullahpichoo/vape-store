@@ -19,10 +19,11 @@ import TotalBillDetails from "./total-bill-details";
 
 interface ShoppingCartProps {
   userId: string;
+  closeDrawer: () => void;
 }
 
 const ShoppingCart = (props: ShoppingCartProps) => {
-  const { userId } = props;
+  const { userId, closeDrawer } = props;
   const setCart = useCartStore((state) => state.setCart);
   const { toast } = useToast();
 
@@ -112,7 +113,7 @@ const ShoppingCart = (props: ShoppingCartProps) => {
               removeItemFromCart={removeItemFromCart}
               deletable={true}
             />
-            <TotalBillDetails cartData={cartData} />
+            <TotalBillDetails cartData={cartData} closeDrawer={closeDrawer} />
           </div>
         </>
       ) : (

@@ -10,7 +10,7 @@ import { useState } from "react";
 
 import Card from "@/components/ui/card";
 
-import AddressBook from "./address-book";
+import AddressBook from "./address/address-book";
 import AccountDetails from "./details";
 import OrderHistory from "./order-history";
 

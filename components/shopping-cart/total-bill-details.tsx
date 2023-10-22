@@ -6,10 +6,11 @@ import Button from "../ui/btn";
 
 interface TotalBillDetailsProps {
   cartData: CartType;
+  closeDrawer: () => void;
 }
 
 const TotalBillDetails = (props: TotalBillDetailsProps) => {
-  const { cartData } = props;
+  const { cartData, closeDrawer } = props;
 
   return (
     <>
@@ -44,7 +45,7 @@ const TotalBillDetails = (props: TotalBillDetailsProps) => {
           </h4>
         </div>
         <div className="flex justify-end mt-5">
-          <Link href={"/checkout"}>
+          <Link href={"/checkout"} onClick={() => closeDrawer()}>
             <Button size="sm" variant="orange">
               Checkout
             </Button>

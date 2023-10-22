@@ -66,7 +66,12 @@ const CartBtn = () => {
         </div>
 
         {session && session.status === "authenticated" && session.data?.user ? (
-          <ShoppingCart userId={session.data.user.id} />
+          <ShoppingCart
+            userId={session.data.user.id}
+            closeDrawer={() => {
+              setDrawerOpen(false);
+            }}
+          />
         ) : (
           <div className="flex flex-col gap-5 items-center justify-center h-full">
             <h1>Your Cart is Empty</h1>

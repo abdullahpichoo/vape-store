@@ -7,3 +7,5 @@ export const usersTag = "users";
 export const userTag = "user";
 
 export const cart = "cart";
+
+export const addresses = "addresses";
