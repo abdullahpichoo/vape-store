@@ -12,7 +12,6 @@ export const useBestSellingProducts = (inView: boolean) =>
       return payloadProducts;
     },
     {
-      retry: 5,
       enabled: inView,
     }
   );
@@ -25,7 +24,6 @@ export const useFeaturedProducts = (inView: boolean) =>
       return payloadProducts;
     },
     {
-      retry: 5,
       enabled: inView,
     }
   );

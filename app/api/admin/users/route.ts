@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 import { getAllUsers } from "@/backend/controllers/user-controller";
-import { isAdmin } from "@/backend/middleware";
 import { getSuccessResponse } from "@/backend/utils/responses";
 import { unauthenticatedResponse } from "@/backend/utils/responses/auth";
 import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
@@ -12,12 +11,9 @@ import { UserType } from "@/types/api/user";
 import { connectToDatabase } from "@/utils/database";
 
 export const GET = async (req: NextRequest) => {
-  // console.log("Header Cookies", req.cookies);
-
   const token = await getToken({ req });
-  console.log("Token", token);
-  // const admin = await isAdmin(req);
-  // if (!admin) return unauthenticatedResponse();
+  console.log("Token", token, token?.role);
+  if (!token || token.role === "user") return unauthenticatedResponse();
 
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();

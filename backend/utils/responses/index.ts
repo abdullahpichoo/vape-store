@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextResponse as TNextResponse } from "next/server";
 
-import { Response } from "@/types";
+import { Pagination, Response } from "@/types";
 
 export const responseGenerator = (message: string) => {
   return {
@@ -16,6 +16,7 @@ export const responseGenerator = (message: string) => {
 export function getSuccessResponse<T>(
   payLoad: T | T[],
   message: string,
+  pagination?: Pagination,
   status?: number
 ): TNextResponse<{
   body: Response<T>;
@@ -26,6 +27,8 @@ export function getSuccessResponse<T>(
     message: message,
     payLoad: payLoad,
   };
+  if (pagination) response.pagination = pagination;
+
   const res = NextResponse.json(
     {
       body: response,

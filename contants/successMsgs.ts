@@ -29,3 +29,10 @@ export const CART_FETCHED_SUCCESSFULLY = "Loaded cart successfully!";
 export const CART_ITEM_ADDED_SUCCESSFULLY = "Item added to cart successfully!";
 export const CART_ITEM_REMOVED_SUCCESSFULLY =
   "Item removed from cart successfully!";
+
+// Order Success Messages
+export const ORDER_CREATED_SUCCESSFULLY = "Order created successfully!";
+export const ORDER_UPDATED_SUCCESSFULLY = "Order updated successfully!";
+export const ORDER_DELETED_SUCCESSFULLY = "Order deleted successfully!";
+export const ORDERS_FETCHED_SUCCESSFULLY = "Loaded all orders successfully!";
+export const ORDER_FETCHED_SUCCESSFULLY = "Loaded order successfully!";

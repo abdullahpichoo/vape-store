@@ -14,6 +14,7 @@ export const useAddItemToCart = (
   useMutation({
     mutationFn: async (cartItem: CartItemType) => {
       if (!userId) return;
+      console.log("CartData", cartData);
       const res = await addToCart(userId, cartData._id, cartItem);
       return res;
     },

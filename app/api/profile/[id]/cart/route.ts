@@ -28,6 +28,7 @@ export const GET = async (
 
   try {
     const cart = await Cart.findOne({ userId: userId });
+    if (!cart) return cartNotFoundResponse();
     return getSuccessResponse<CartType>(cart, CART_FETCHED_SUCCESSFULLY);
   } catch (err) {
     return cartFetchFailedResponse();

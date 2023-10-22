@@ -1,6 +1,12 @@
 import { Schema, model, models } from "mongoose";
 
-const CartSchema = new Schema({
+enum OrderStatus {
+  ORDERED = "ORDERED",
+  PROCESSING = "PROCESSING",
+  DELIVERED = "DELIVERED",
+}
+
+const OrderSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -36,8 +42,24 @@ const CartSchema = new Schema({
       },
     },
   ],
+  status: {
+    type: String,
+    enum: Object.values(OrderStatus),
+    default: OrderStatus.ORDERED,
+  },
+  totalPrice: {
+    type: Number,
+    required: true,
+  },
+  shippingAddress: {
+    type: Object,
+    required: true,
+  },
+  deliveredAt: {
+    type: Date,
+  },
 });
 
-const Cart = models.Cart || model("Cart", CartSchema);
+const Order = models.Order || model("Order", OrderSchema);
 
-export default Cart;
+export default Order;

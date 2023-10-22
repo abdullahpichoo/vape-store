@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 import ShoppingCart from "@/components/shopping-cart";
+import useCartStore from "@/context/cartStore";
 
 import Button from "../btn";
 import { Separator } from "../separator";
@@ -13,6 +14,7 @@ import { Skeleton } from "../skeleton";
 
 const CartBtn = () => {
   const session = useSession();
+  const cart = useCartStore((state) => state.cart);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -34,7 +36,7 @@ const CartBtn = () => {
           <h6 className="font-medium hidden lg:block">Cart</h6>
         </div>
         <div className="items-count text-[1rem] lg:text-[1.2rem] text-white px-4 py-2 bg-black rounded-full group-hover:scale-110 transition-all ease-in-out duration-200">
-          0
+          {cart.items.length}
         </div>
       </div>
 

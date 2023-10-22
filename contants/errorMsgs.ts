@@ -55,3 +55,16 @@ export const FAILED_TO_ADD_ITEM_TO_CART =
   "Failed to add item to cart! Please try again later.";
 export const FAILED_TO_REMOVE_ITEM_FROM_CART =
   "Failed to remove item from cart! Please try again later.";
+
+// Order Errors
+export const ORDER_NOT_FOUND = "Order not found";
+export const FAILED_TO_FETCH_ORDER =
+  "Could not load order! Please try again later.";
+export const FAILED_TO_FETCH_ORDERS =
+  "Could not load orders! Please try again later.";
+export const FAILED_TO_CREATE_ORDER =
+  "Failed to create order! Please try again later.";
+export const FAILED_TO_UPDATE_ORDER =
+  "Failed to update order! Please try again later.";
+export const FAILED_TO_DELETE_ORDER =
+  "Failed to delete order! Please try again later.";

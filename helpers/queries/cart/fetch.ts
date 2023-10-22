@@ -18,5 +18,6 @@ export const useFetchCart = (
     {
       onSuccess,
       onError,
+      refetchInterval: 1000 * 60 * 5,
     }
   );

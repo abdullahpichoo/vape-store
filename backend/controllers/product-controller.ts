@@ -17,13 +17,14 @@ import {
 } from "@/contants/tags";
 import { ProductType } from "@/types/api/product";
 
+import Cart from "../models/cart";
+
 export async function createProduct(data: ProductType) {
   try {
     const product = await Product.create(data);
     revalidateTag(productsTag);
     return product;
   } catch (error) {
-    console.log(error);
     throw new Error(FAILED_TO_CREATE_PRODUCT as string);
   }
 }
@@ -64,7 +65,6 @@ export async function updateProduct(id: string, data: ProductType) {
 }
 
 export async function deleteProduct(id: string) {
-  // TODO: When a product is deleted, all of the cart items related to that product should also be deleted and its reviews should also be deleted
   try {
     const product = (await Product.findById(id)) as ProductType;
     if (!product) {
@@ -75,7 +75,13 @@ export async function deleteProduct(id: string) {
         image.public_id && (await deleteImage(image.public_id));
       }
     }
+    await Cart.updateMany(
+      { "items.productId": product._id },
+      { $pull: { items: { productId: product._id } } }
+    );
+
     const res = await Product.findByIdAndDelete(id);
+
     revalidateTag(productTag);
     return res;
   } catch (error) {

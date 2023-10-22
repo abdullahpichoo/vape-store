@@ -8,7 +8,9 @@ import Spinner from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { FAILED_TO_DELETE_PRODUCT } from "@/contants/errorMsgs";
 import { PRODUCT_DELETED_SUCCESSFULLY } from "@/contants/successMsgs";
+import { cart } from "@/contants/tags";
 import { deleteProduct } from "@/helpers/network/products";
+import { queryClient } from "@/lib/react-query";
 
 const DeleteProduct = ({ params }: { params: { productId: string } }) => {
   const { toast } = useToast();
@@ -18,6 +20,7 @@ const DeleteProduct = ({ params }: { params: { productId: string } }) => {
     setIsDeleting(true);
     try {
       await deleteProduct(params.productId);
+      await queryClient.invalidateQueries([cart]);
       toast({
         title: PRODUCT_DELETED_SUCCESSFULLY,
         description: "The requested product has been deleted successfully!",
