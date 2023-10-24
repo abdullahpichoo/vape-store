@@ -1,4 +1,5 @@
 import OrdersTable from "@/components/dashboard/orders/orders-table";
+import { fetchAdminOrders } from "@/helpers/network/order";
 import { adminOrdersApiRoute } from "@/routes/api";
 import { Pagination as PaginationT, SearchParams } from "@/types";
 import { OrderTableType, OrderType } from "@/types/api/order";
@@ -12,15 +13,8 @@ const getData = async (
 }> => {
   try {
     const urlParams = convertSearchParamsToURL("", params);
-    const url = adminOrdersApiRoute(urlParams);
-    console.log("URL", url);
-    const response = await fetch(adminOrdersApiRoute(urlParams), {
-      credentials: "include",
-      cache: "no-cache",
-    });
-    console.log("Response", response);
-
-    const res = await response.json();
+    const res = await fetchAdminOrders(urlParams);
+    console.log("Res", res);
 
     const filteredOrders: OrderTableType[] = res.body.payLoad.map(
       (order: OrderType) => {
@@ -35,6 +29,8 @@ const getData = async (
         };
       }
     );
+
+    console.log("filtetedOrders", filteredOrders);
 
     return {
       orders: filteredOrders,

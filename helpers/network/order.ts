@@ -13,8 +13,8 @@ export const fetchAdminOrders = async (params: string) => {
 
     const responseData = await response.json();
     return responseData;
-  } catch {
-    throw new Error();
+  } catch (err) {
+    throw new Error(err as string);
   }
 };
 
