@@ -128,7 +128,7 @@ export const getOrdersByUserId = async (
   userId: string
 ): Promise<OrderType[]> => {
   try {
-    const orders = await Order.find({ user: userId });
+    const orders = await Order.find({ "user.userId": userId });
 
     return orders;
   } catch (err) {

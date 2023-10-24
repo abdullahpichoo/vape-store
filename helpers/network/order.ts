@@ -1,5 +1,8 @@
-import { addOrderApiRoute, adminOrdersApiRoute } from "@/routes/api";
-import { Pagination } from "@/types";
+import {
+  addOrderApiRoute,
+  adminOrdersApiRoute,
+  ordersApiRoute,
+} from "@/routes/api";
 import { OrderPayloadType, OrderType } from "@/types/api/order";
 
 export const fetchAdminOrders = async (params: string) => {
@@ -10,6 +13,19 @@ export const fetchAdminOrders = async (params: string) => {
 
     const responseData = await response.json();
     return responseData;
+  } catch {
+    throw new Error();
+  }
+};
+
+export const fetchUserOrders = async (userId: string): Promise<OrderType[]> => {
+  try {
+    const response = await fetch(ordersApiRoute(userId), {
+      credentials: "include",
+    });
+
+    const responseData = await response.json();
+    return responseData.body.payLoad;
   } catch {
     throw new Error();
   }
