@@ -12,10 +12,13 @@ const getData = async (
 }> => {
   try {
     const urlParams = convertSearchParamsToURL("", params);
+    const url = adminOrdersApiRoute(urlParams);
+    console.log("URL", url);
     const response = await fetch(adminOrdersApiRoute(urlParams), {
       credentials: "include",
       cache: "no-cache",
     });
+    console.log("Response", response);
 
     const res = await response.json();
 
