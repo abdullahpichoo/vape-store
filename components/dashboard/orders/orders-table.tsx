@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 import { Button } from "@/components/ui/button";
-import { Pagination } from "@/types";
+import { Pagination, SearchParams } from "@/types";
 import { OrderTableType } from "@/types/api/order";
 
 import { DataTable } from "./data-table";
@@ -22,15 +22,16 @@ import { DataTable } from "./data-table";
 interface OrdersTableProps {
   data: OrderTableType[];
   pagination: Pagination;
+  params: SearchParams;
 }
 
 const OrdersTable = (props: OrdersTableProps) => {
-  const { data, pagination } = props;
+  const { data, pagination, params: searchParams } = props;
 
   const [params, setParams] = useState({
-    sortBy: "createdAt",
-    orderBy: "asc",
-    searchBy: "",
+    sortBy: searchParams.sortBy ? searchParams.sortBy : "createdAt",
+    orderBy: searchParams.orderBy ? searchParams.orderBy : "desc",
+    searchBy: searchParams.searchBy ? searchParams.searchBy : "",
   });
 
   const [query] = useDebounce(params.searchBy, 750);
@@ -45,6 +46,7 @@ const OrdersTable = (props: OrdersTableProps) => {
         `/admin/dashboard/orders?pageNumber=${pagination.currentPage}&pageSize=10&sortBy=${params.sortBy}&orderBy=${params.orderBy}&searchBy=${query}`
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   const router = useRouter();
@@ -111,7 +113,7 @@ const OrdersTable = (props: OrdersTableProps) => {
                   pagination.currentPage
                 }&pageSize=10&sortBy=createdAt&orderBy=${
                   params.orderBy === "asc" ? "desc" : "asc"
-                }`
+                }&searchBy=${params.searchBy}`
               );
             }}
           >
@@ -149,6 +151,7 @@ const OrdersTable = (props: OrdersTableProps) => {
                 onChange={(e) => {
                   setParams({ ...params, searchBy: e.target.value });
                 }}
+                defaultValue={params.searchBy?.toString()}
               />
             </div>
           </div>
