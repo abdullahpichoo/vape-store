@@ -2,17 +2,11 @@
 
 import {
   ColumnDef,
-  getSortedRowModel,
-  SortingState,
   flexRender,
   getCoreRowModel,
-  getPaginationRowModel,
-  ColumnFiltersState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
 
-import { DataTablePagination } from "@/components/ui/data-table/pagination";
 import {
   Table,
   TableBody,

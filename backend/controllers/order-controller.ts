@@ -65,6 +65,8 @@ export const getAllOrdersServer = async (
   const limit = parseInt(params.get("pageSize") || "10");
   const sortBy = params.get("sortBy") || "createdAt";
   const orderBy = params.get("orderBy") || "desc";
+  const searchBy = params.get("searchBy") || "";
+
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
   const total = await Order.countDocuments();
@@ -85,11 +87,25 @@ export const getAllOrdersServer = async (
     pagination.prevPage = page - 1;
   }
 
+  const searchRegex = new RegExp(searchBy, "i");
+  console.log("search", searchRegex);
   try {
-    const orders = await Order.find()
-      .sort({ [sortBy]: orderBy === "desc" ? -1 : 1 })
-      .skip(startIndex)
-      .limit(limit);
+    let orders = [];
+    if (searchBy.length > 0) {
+      orders = await Order.find({
+        $or: [{ "user.email": { $regex: searchRegex } }],
+      })
+        .sort({ [sortBy]: orderBy === "desc" ? -1 : 1 })
+        .skip(startIndex)
+        .limit(limit)
+        .exec();
+    } else {
+      orders = await Order.find()
+        .sort({ [sortBy]: orderBy === "desc" ? -1 : 1 })
+        .skip(startIndex)
+        .limit(limit);
+    }
+
     return {
       orders,
       pagination,

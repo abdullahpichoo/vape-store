@@ -10,7 +10,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 import { Button } from "@/components/ui/button";
 import { Pagination } from "@/types";
@@ -32,9 +33,30 @@ const OrdersTable = (props: OrdersTableProps) => {
     searchBy: "",
   });
 
+  const [query] = useDebounce(params.searchBy, 750);
+
+  useEffect(() => {
+    if (!query) {
+      router.push(
+        `/admin/dashboard/orders?pageNumber=${pagination.currentPage}&pageSize=10&sortBy=${params.sortBy}&orderBy=${params.orderBy}&searchBy=`
+      );
+    } else {
+      router.push(
+        `/admin/dashboard/orders?pageNumber=${pagination.currentPage}&pageSize=10&sortBy=${params.sortBy}&orderBy=${params.orderBy}&searchBy=${query}`
+      );
+    }
+  }, [query]);
+
   const router = useRouter();
 
   const columns: ColumnDef<OrderTableType>[] = [
+    {
+      accessorKey: "_id",
+      header: "#",
+      cell: ({ row }) => {
+        return <p>{row.index + 1}</p>;
+      },
+    },
     {
       accessorKey: "user",
       header: "User",
@@ -111,6 +133,25 @@ const OrdersTable = (props: OrdersTableProps) => {
     <>
       {data && (
         <>
+          <div className="flex flex-col sm:flex-row gap-10 mb-5">
+            <div className="form-item flex flex-col gap-2">
+              <label
+                htmlFor="name"
+                className="font-semibold text-neutral-600 ms-1 text-[1.2rem] md:text-[1.6rem]"
+              >
+                Search by User
+              </label>
+              <input
+                id="name"
+                type="text"
+                className="px-8 py-2 rounded-xl text-[1.4rem] md:text-[1.6rem] focus:outline-orange-1"
+                placeholder="Enter User Email"
+                onChange={(e) => {
+                  setParams({ ...params, searchBy: e.target.value });
+                }}
+              />
+            </div>
+          </div>
           <DataTable data={data} columns={columns} />
           <div className="flex items-center justify-between px-8 py-5 border-neutral-100 border-2 rounded-lg font-hind">
             <div className="flex items-center space-x-6 lg:space-x-8">

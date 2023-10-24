@@ -12,7 +12,6 @@ const getData = async (
 }> => {
   try {
     const urlParams = convertSearchParamsToURL("", params);
-    console.log("url Params", urlParams);
     const response = await fetch(adminOrdersApiRoute(urlParams), {
       credentials: "include",
       cache: "no-cache",
@@ -48,9 +47,7 @@ const AdminOrders = async ({
 }: {
   searchParams: SearchParams;
 }) => {
-  console.log("searchParams", searchParams);
   const { orders, pagination } = await getData(searchParams);
-  console.log("pagination", pagination);
 
   return (
     <>
