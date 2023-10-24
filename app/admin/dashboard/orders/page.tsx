@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import OrdersTable from "@/components/dashboard/orders/orders-table";
 import ErrorPage from "@/components/error";
@@ -11,9 +11,15 @@ import { SearchParams } from "@/types";
 import { convertSearchParamsToURL } from "@/utils/client";
 
 const AdminOrders = ({ searchParams }: { searchParams: SearchParams }) => {
+  const [params, setParams] = useState(searchParams);
+
   const { data, isLoading, error } = useFetchAdminOrders(
-    convertSearchParamsToURL("", searchParams)
+    convertSearchParamsToURL("", params)
   );
+
+  useEffect(() => {
+    setParams(searchParams);
+  }, [searchParams]);
 
   const renderTable = useMemo(() => {
     return (
@@ -22,12 +28,12 @@ const AdminOrders = ({ searchParams }: { searchParams: SearchParams }) => {
           <OrdersTable
             data={data.orders}
             pagination={data.pagination}
-            params={searchParams}
+            params={params}
           />
         )}
       </>
     );
-  }, [data, searchParams]);
+  }, [data, params]);
 
   if (isLoading)
     return (

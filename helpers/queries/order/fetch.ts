@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 
 import { adminOrders, orders } from "@/contants/tags";
 import { fetchAdminOrders, fetchUserOrders } from "@/helpers/network/order";
+import { Pagination } from "@/types";
 import { OrderTableType, OrderType } from "@/types/api/order";
-import { Pagination, SearchParams } from "@/types";
-import { convertSearchParamsToURL, formatDate } from "@/utils/client";
+import { formatDate } from "@/utils/client";
 
 type AdminOrders = {
   orders: OrderTableType[];
