@@ -1,13 +1,19 @@
 import React from "react";
 
 interface SpinnerProps {
-  size: "lg" | "md" | "sm";
+  size: "xl" | "lg" | "md" | "sm";
   color: "black" | "white" | "orange";
 }
 
 const Spinner: React.FC<SpinnerProps> = ({ size, color }) => {
   const spinnerSize =
-    size === "lg" ? "w-12 h-12" : size === "md" ? "w-10 h-10" : "w-8 h-8";
+    size === "xl"
+      ? "w-20 h-20"
+      : size === "lg"
+      ? "w-12 h-12"
+      : size === "md"
+      ? "w-10 h-10"
+      : "w-8 h-8";
 
   const currentFill =
     color === "black"

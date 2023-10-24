@@ -9,3 +9,6 @@ export const userTag = "user";
 export const cart = "cart";
 
 export const addresses = "addresses";
+
+export const orders = "orders";
+export const adminOrders = "adminOrders";

@@ -4,12 +4,63 @@ import {
   FAILED_TO_UPDATE_ORDER,
   ORDER_NOT_FOUND,
 } from "@/contants/errorMsgs";
+import { Pagination, SearchParams } from "@/types";
 import { OrderType } from "@/types/api/order";
 
+import Cart from "../models/cart";
 import Order from "../models/order";
 import Product from "../models/product";
 
-export const getAllOrders = async (params: URLSearchParams) => {
+export const getAllOrders = async (
+  params: SearchParams
+): Promise<{
+  orders: OrderType[];
+  pagination: Pagination;
+}> => {
+  const page = parseInt(params.pageNumber || "1");
+  const limit = parseInt(params.pageSize || "10");
+  const sortBy = params.sortBy || "createdAt";
+  const orderBy = params.orderBy || "desc";
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const total = await Order.countDocuments();
+
+  const pagination: Pagination = {
+    currentPage: page,
+    totalPages: Math.ceil(total / limit),
+    totalItems: total,
+    nextPage: 0,
+    prevPage: 0,
+  };
+
+  if (endIndex < total) {
+    pagination.nextPage = page + 1;
+  }
+
+  if (startIndex > 0) {
+    pagination.prevPage = page - 1;
+  }
+
+  try {
+    const orders = await Order.find()
+      .sort({ [sortBy]: orderBy === "desc" ? -1 : 1 })
+      .skip(startIndex)
+      .limit(limit);
+    return {
+      orders,
+      pagination,
+    };
+  } catch (err) {
+    throw new Error(FAILED_TO_FETCH_ORDERS + err);
+  }
+};
+
+export const getAllOrdersServer = async (
+  params: URLSearchParams
+): Promise<{
+  orders: OrderType[];
+  pagination: Pagination;
+}> => {
   const page = parseInt(params.get("pageNumber") || "1");
   const limit = parseInt(params.get("pageSize") || "10");
   const sortBy = params.get("sortBy") || "createdAt";
@@ -18,10 +69,10 @@ export const getAllOrders = async (params: URLSearchParams) => {
   const endIndex = page * limit;
   const total = await Order.countDocuments();
 
-  const pagination = {
+  const pagination: Pagination = {
     currentPage: page,
     totalPages: Math.ceil(total / limit),
-    totalOrders: total,
+    totalItems: total,
     nextPage: 0,
     prevPage: 0,
   };
@@ -82,6 +133,8 @@ export const createOrder = async (data: OrderType): Promise<OrderType> => {
         await productToUpdate.save();
       }
     });
+
+    await Cart.findOneAndUpdate({ userId: data.user.userId }, { items: [] });
 
     return order;
   } catch (err) {

@@ -34,7 +34,6 @@ const ShoppingCart = (props: ShoppingCartProps) => {
   } = useFetchCart(
     userId,
     (data) => {
-      console.log("cart Data", data);
       setCart({
         _id: data._id,
         userId: data.userId,

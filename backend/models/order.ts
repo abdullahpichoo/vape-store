@@ -6,59 +6,70 @@ enum OrderStatus {
   DELIVERED = "DELIVERED",
 }
 
-const OrderSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
-  },
-  items: [
-    {
-      productId: {
+const OrderSchema = new Schema(
+  {
+    user: {
+      userId: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: "Product",
+        ref: "User",
       },
-      productImage: {
+      email: {
         type: String,
         required: true,
-      },
-      productName: {
-        type: String,
-        required: true,
-      },
-      productPrice: {
-        type: Number,
-        required: true,
-      },
-      productBrand: {
-        type: String,
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-        default: 1,
       },
     },
-  ],
-  status: {
-    type: String,
-    enum: Object.values(OrderStatus),
-    default: OrderStatus.ORDERED,
+    items: [
+      {
+        productId: {
+          type: Schema.Types.ObjectId,
+          required: true,
+          ref: "Product",
+        },
+        productImage: {
+          type: String,
+          required: true,
+        },
+        productName: {
+          type: String,
+          required: true,
+        },
+        productPrice: {
+          type: Number,
+          required: true,
+        },
+        productBrand: {
+          type: String,
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+          default: 1,
+        },
+      },
+    ],
+    status: {
+      type: String,
+      enum: Object.values(OrderStatus),
+      default: OrderStatus.ORDERED,
+    },
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
+    shippingAddress: {
+      type: Object,
+      required: true,
+    },
+    deliveredAt: {
+      type: Date,
+    },
   },
-  totalPrice: {
-    type: Number,
-    required: true,
-  },
-  shippingAddress: {
-    type: Object,
-    required: true,
-  },
-  deliveredAt: {
-    type: Date,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const Order = models.Order || model("Order", OrderSchema);
 

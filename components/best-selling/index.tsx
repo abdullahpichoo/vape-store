@@ -19,7 +19,7 @@ const BestSelling = () => {
     data: productsData,
     isLoading,
     isError,
-  } = useBestSellingProducts(true);
+  } = useBestSellingProducts(inView);
 
   return (
     <section ref={ref}>

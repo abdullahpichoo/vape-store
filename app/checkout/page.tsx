@@ -2,9 +2,10 @@
 
 import { useSession } from "next-auth/react";
 
+import ConfirmOrder from "@/components/checkout/confirm-order";
 import ErrorPage from "@/components/error";
 import CartItems from "@/components/shopping-cart/cart-items";
-import TotalBillDetails from "@/components/shopping-cart/total-bill-details";
+import Heading from "@/components/ui/heading";
 import { Skeleton } from "@/components/ui/skeleton";
 import useCartStore from "@/context/cartStore";
 
@@ -33,16 +34,30 @@ const Checkout = () => {
 
   return (
     <>
+      <Heading size="lg">Checkout</Heading>
       {session.data?.user?.id &&
         (cartData && cartData.items.length > 0 ? (
           <>
-            <div className="flex gap-10 justify-between items-start h-full">
-              <CartItems
-                cartData={cartData}
-                removeItemFromCart={() => {}}
-                deletable={false}
-              />
-              <TotalBillDetails cartData={cartData} />
+            <div className="grid grid-cols-12 gap-10">
+              <div className="col-span-6">
+                <h3 className="mb-5">Cart Items</h3>
+                <CartItems
+                  cartData={cartData}
+                  removeItemFromCart={() => {}}
+                  deletable={false}
+                />
+              </div>
+              <div className="col-span-6 place-self-start w-full">
+                {cartData && cartData.items?.length > 0 && (
+                  <ConfirmOrder
+                    cartData={cartData}
+                    user={{
+                      userId: session.data.user.id,
+                      email: session.data.user.email,
+                    }}
+                  />
+                )}
+              </div>
             </div>
           </>
         ) : (

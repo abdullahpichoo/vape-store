@@ -7,10 +7,12 @@ import Button from "../ui/btn";
 interface TotalBillDetailsProps {
   cartData: CartType;
   closeDrawer: () => void;
+  onCheckout?: () => void;
+  disableCheckout?: boolean;
 }
 
 const TotalBillDetails = (props: TotalBillDetailsProps) => {
-  const { cartData, closeDrawer } = props;
+  const { cartData, closeDrawer, onCheckout, disableCheckout } = props;
 
   return (
     <>
@@ -45,11 +47,23 @@ const TotalBillDetails = (props: TotalBillDetailsProps) => {
           </h4>
         </div>
         <div className="flex justify-end mt-5">
-          <Link href={"/checkout"} onClick={() => closeDrawer()}>
-            <Button size="sm" variant="orange">
-              Checkout
+          {onCheckout ? (
+            <Button
+              size="sm"
+              variant="orange"
+              onClick={() => onCheckout()}
+              className="mr-5"
+              disabled={disableCheckout}
+            >
+              Buy Now
             </Button>
-          </Link>
+          ) : (
+            <Link href={"/checkout"} onClick={() => closeDrawer()}>
+              <Button size="sm" variant="orange">
+                Checkout
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </>

@@ -16,7 +16,7 @@ const Img = ({
         alt={alt}
         width={0}
         height={0}
-        sizes="50vw"
+        sizes="auto"
         style={{ width: "100%", height: "auto" }}
       />
     </div>

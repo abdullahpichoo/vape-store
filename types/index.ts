@@ -9,7 +9,16 @@ export interface Response<T> {
 export interface Pagination {
   currentPage: number;
   totalPages: number;
-  totalOrders: number;
+  totalItems: number;
   nextPage?: number;
   prevPage?: number;
+}
+
+export interface SearchParams {
+  [key: string]: string | undefined;
+  pageNumber?: string;
+  pageSize?: string;
+  sortBy?: string;
+  orderBy?: string;
+  searchBy?: string;
 }

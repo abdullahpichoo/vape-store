@@ -1,4 +1,10 @@
-export const orderStatus = {
+import { AddressType } from "./address";
+
+type OrderStatus = {
+  [key: string]: "ORDERED" | "PROCESSING" | "DELIVERED";
+};
+
+export const orderStatus: OrderStatus = {
   ORDERED: "ORDERED",
   PROCESSING: "PROCESSING",
   DELIVERED: "DELIVERED",
@@ -16,7 +22,24 @@ export interface OrderItemType {
 
 export interface OrderType {
   _id: string;
-  userId: string;
+  user: {
+    userId: string;
+    email: string;
+  };
   items: OrderItemType[];
   status: keyof typeof orderStatus;
+  totalPrice: number;
+  shippingAddress: AddressType;
+  deliveredAt: Date;
+  createdAt?: Date;
 }
+
+export interface OrderTableType {
+  _id: string;
+  user: string;
+  status: keyof typeof orderStatus;
+  totalPrice: number;
+  createdAt?: string;
+}
+
+export type OrderPayloadType = Omit<OrderType, "_id" | "deliveredAt">;

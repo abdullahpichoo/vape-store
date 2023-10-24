@@ -31,3 +31,14 @@ export const addAddressApiRoute = (userId: string) =>
   `${baseUrl}/api/profile/${userId}/addresses/new`;
 export const updateAddressApiRoute = (userId: string, addressId: string) =>
   `${baseUrl}/api/profile/${userId}/addresses/${addressId}`;
+
+// Orders
+export const adminOrdersApiRoute = (params: string) =>
+  `${baseUrl}/api/admin/orders${params}`;
+export const adminOrdersApiRouteS = `${baseUrl}/api/admin/orders`;
+export const ordersApiRoute = (userId: string) =>
+  `${baseUrl}/api/profile/${userId}/orders`;
+export const addOrderApiRoute = (userId: string) =>
+  `${baseUrl}/api/profile/${userId}/orders/new`;
+export const updateOrderApiRoute = (orderId: string) =>
+  `${baseUrl}/api/admin/orders/${orderId}`;
