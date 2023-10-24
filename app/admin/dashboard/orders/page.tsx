@@ -37,8 +37,9 @@ const getData = async (
       orders: filteredOrders,
       pagination: res.body.pagination,
     };
-  } catch {
-    throw new Error();
+  } catch (err) {
+    console.log("Err", err);
+    throw new Error(err as string);
   }
 };
 
@@ -51,7 +52,7 @@ const AdminOrders = async ({
 
   return (
     <>
-      <OrdersTable data={orders} pagination={pagination} />
+      <OrdersTable data={orders} pagination={pagination} />{" "}
     </>
   );
 };
