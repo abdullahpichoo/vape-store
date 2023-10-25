@@ -4,11 +4,16 @@ import {
 } from "@/contants/tags";
 import {
   addProductApiRoute,
+  bestSellingProductsApiRoute,
   deleteProductApiRoute,
+  featuredProductsApiRoute,
   productsApiRoute,
+  productsApiRouteParams,
   updateProductApiRoute,
 } from "@/routes/api";
+import { Pagination, SearchParams } from "@/types";
 import { ProductFormValues, ProductType } from "@/types/api/product";
+import { convertSearchParamsToURL } from "@/utils/client";
 
 export const uploadImage = async (image: File) => {
   if (image == null) throw new Error("No image provided.");
@@ -109,11 +114,55 @@ export const deleteProduct = async (productId: string) => {
 export const getProducts = async () => {
   try {
     const response = await fetch(productsApiRoute, {
-      next: { revalidate: 3600, tags: [productsTag, productTag] },
+      cache: "no-store",
+    });
+
+    const data = await response.json();
+    console.log("getProducts", data);
+    return data.body.payLoad;
+  } catch {
+    throw new Error();
+  }
+};
+
+export const getBestSellingProducts = async () => {
+  try {
+    const response = await fetch(bestSellingProductsApiRoute, {
+      cache: "no-store",
     });
 
     const data = await response.json();
     return data.body.payLoad;
+  } catch (err) {
+    throw new Error(err as string);
+  }
+};
+
+export const getFeaturedProducts = async () => {
+  try {
+    const response = await fetch(featuredProductsApiRoute, {
+      cache: "no-store",
+    });
+
+    const data = await response.json();
+    return data.body.payLoad;
+  } catch (err) {
+    throw new Error(err as string);
+  }
+};
+
+export const getProductsPaginated = async (params: SearchParams) => {
+  const urlParams = convertSearchParamsToURL("", params);
+  try {
+    const response = await fetch(productsApiRouteParams(urlParams), {
+      cache: "no-store",
+    });
+
+    const data = await response.json();
+    return {
+      products: data.body.payLoad,
+      pagination: data.body.pagination,
+    };
   } catch {
     throw new Error();
   }

@@ -9,8 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ColumnDef } from "@tanstack/react-table";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useDebounce } from "use-debounce";
 
 import { Button } from "@/components/ui/button";
@@ -23,32 +23,11 @@ interface OrdersTableProps {
   data: OrderTableType[];
   pagination: Pagination;
   params: SearchParams;
+  setParams: (params: SearchParams) => void;
 }
 
 const OrdersTable = (props: OrdersTableProps) => {
-  const { data, pagination, params: searchParams } = props;
-
-  const [params, setParams] = useState({
-    sortBy: searchParams.sortBy ? searchParams.sortBy : "createdAt",
-    orderBy: searchParams.orderBy ? searchParams.orderBy : "desc",
-    searchBy: searchParams.searchBy ? searchParams.searchBy : "",
-  });
-
-  const [query] = useDebounce(params.searchBy, 750);
-
-  useEffect(() => {
-    if (!query) {
-      router.push(
-        `/admin/dashboard/orders?pageNumber=${pagination.currentPage}&pageSize=10&sortBy=${params.sortBy}&orderBy=${params.orderBy}&searchBy=`
-      );
-    } else {
-      router.push(
-        `/admin/dashboard/orders?pageNumber=${pagination.currentPage}&pageSize=10&sortBy=${params.sortBy}&orderBy=${params.orderBy}&searchBy=${query}`
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
-
+  const { data, pagination, params, setParams } = props;
   const router = useRouter();
 
   const columns: ColumnDef<OrderTableType>[] = [
@@ -135,26 +114,6 @@ const OrdersTable = (props: OrdersTableProps) => {
     <>
       {data && (
         <>
-          <div className="flex flex-col sm:flex-row gap-10 mb-5">
-            <div className="form-item flex flex-col gap-2">
-              <label
-                htmlFor="name"
-                className="font-semibold text-neutral-600 ms-1 text-[1.2rem] md:text-[1.6rem]"
-              >
-                Search by User
-              </label>
-              <input
-                id="name"
-                type="text"
-                className="px-8 py-2 rounded-xl text-[1.4rem] md:text-[1.6rem] focus:outline-orange-1"
-                placeholder="Enter User Email"
-                onChange={(e) => {
-                  setParams({ ...params, searchBy: e.target.value });
-                }}
-                defaultValue={params.searchBy?.toString()}
-              />
-            </div>
-          </div>
           <DataTable data={data} columns={columns} />
           <div className="flex items-center justify-between px-8 py-5 border-neutral-100 border-2 rounded-lg font-hind">
             <div className="flex items-center space-x-6 lg:space-x-8">
@@ -168,6 +127,10 @@ const OrdersTable = (props: OrdersTableProps) => {
                   onClick={() => {
                     router.push(`/admin/dashboard/orders?pageNumber=1
                     }&pageSize=10&sortBy=${params.sortBy}&orderBy=${params.orderBy}`);
+                    setParams({
+                      ...params,
+                      pageNumber: "1",
+                    });
                   }}
                   disabled={
                     pagination.currentPage === 1 || pagination.prevPage === 0
@@ -192,6 +155,12 @@ const OrdersTable = (props: OrdersTableProps) => {
                         params.orderBy
                       }`
                     );
+                    setParams({
+                      ...params,
+                      pageNumber: !!pagination.prevPage
+                        ? pagination.prevPage.toString()
+                        : pagination.totalPages.toString(),
+                    });
                   }}
                   disabled={
                     pagination.currentPage === 1 || pagination.prevPage === 0
@@ -211,6 +180,12 @@ const OrdersTable = (props: OrdersTableProps) => {
                         params.orderBy
                       }`
                     );
+                    setParams({
+                      ...params,
+                      pageNumber: !!pagination.nextPage
+                        ? pagination.nextPage.toString()
+                        : "1",
+                    });
                   }}
                   disabled={pagination.nextPage === 0}
                 >
@@ -228,6 +203,10 @@ const OrdersTable = (props: OrdersTableProps) => {
                         params.orderBy
                       }`
                     );
+                    setParams({
+                      ...params,
+                      pageNumber: pagination.totalPages.toString(),
+                    });
                   }}
                   disabled={pagination.nextPage === 0}
                 >

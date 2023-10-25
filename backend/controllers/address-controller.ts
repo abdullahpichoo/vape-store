@@ -10,7 +10,7 @@ import { AddressType } from "@/types/api/address";
 export const getAddresses = async (userId: string): Promise<AddressType[]> => {
   try {
     const addresses = (await Address.find({
-      user: userId,
+      userId: userId,
     })) as AddressType[];
     if (!addresses) {
       throw new Error(FAILED_TO_GET_ADDRESSES);

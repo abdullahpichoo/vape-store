@@ -15,6 +15,7 @@ import {
   products as productsTag,
   product as productTag,
 } from "@/contants/tags";
+import { Pagination } from "@/types";
 import { ProductType } from "@/types/api/product";
 
 import Cart from "../models/cart";
@@ -26,6 +27,66 @@ export async function createProduct(data: ProductType) {
     return product;
   } catch (error) {
     throw new Error(FAILED_TO_CREATE_PRODUCT as string);
+  }
+}
+
+export async function getPaginatedProducts(params: any): Promise<{
+  products: ProductType[];
+  pagination: Pagination;
+}> {
+  const page = params ? parseInt(params.get("pageNumber") ?? "1") : 1;
+  const limit = params ? parseInt(params.get("pageSize") ?? "10") : 10;
+  const sortBy = params ? params.get("sortBy") ?? "createdAt" : "createdAt";
+  const orderBy = params ? params.get("orderBy") ?? "desc" : "desc";
+  const searchBy = params ? params.get("searchBy") ?? "" : "";
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const total = await Product.countDocuments();
+
+  const pagination: Pagination = {
+    currentPage: page,
+    totalPages: Math.ceil(total / limit),
+    totalItems: total,
+    nextPage: 0,
+    prevPage: 0,
+  };
+
+  if (endIndex < total) {
+    pagination.nextPage = page + 1;
+  }
+
+  if (startIndex > 0) {
+    pagination.prevPage = page - 1;
+  }
+
+  const searchRegex = new RegExp(searchBy, "i");
+  console.log("search", searchRegex);
+
+  try {
+    let products = [];
+    if (searchBy.length > 0) {
+      products = await Product.find({
+        $or: [{ name: { $regex: searchRegex } }],
+      })
+        .sort({ [sortBy]: orderBy === "desc" ? -1 : 1 })
+        .skip(startIndex)
+        .limit(limit)
+        .exec();
+    } else {
+      products = await Product.find()
+        .sort({ [sortBy]: orderBy === "desc" ? -1 : 1 })
+        .skip(startIndex)
+        .limit(limit);
+    }
+
+    return {
+      products,
+      pagination,
+    };
+  } catch (error) {
+    throw new Error(FAILED_TO_GET_PRODUCTS as string);
   }
 }
 

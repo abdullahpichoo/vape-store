@@ -4,8 +4,9 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { FAILED_TO_GET_PRODUCTS } from "@/contants/errorMsgs";
-import { getProducts } from "@/helpers/network/products";
+import { getProducts, getProductsPaginated } from "@/helpers/network/products";
 import { baseUrl } from "@/routes/api";
+import { SearchParams } from "@/types";
 import { ProductType } from "@/types/api/product";
 
 import { columns } from "./columns";
@@ -26,16 +27,36 @@ async function getData(): Promise<ProductType[]> {
   }
 }
 
-export default async function DashboardProducts() {
+async function getPaginatedData(params: SearchParams): Promise<ProductType[]> {
+  try {
+    const { products, pagination } = await getProductsPaginated(params);
+    const filProducts = products.map((product: ProductType) => {
+      return {
+        ...product,
+        images: product.images?.map((image) => image.url),
+      };
+    });
+    console.log("Pagination", pagination);
+    return filProducts;
+  } catch (err) {
+    throw new Error((FAILED_TO_GET_PRODUCTS + err) as string);
+  }
+}
+
+export default async function DashboardProducts({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   if (!baseUrl) {
     return null;
   }
 
   let data: ProductType[] = [];
-  const productsData = await getData();
-  if (productsData && productsData.length > 0) {
-    data = productsData;
-  }
+  // const productsData = await getPaginatedData(searchParams);
+  // if (productsData && productsData.length > 0) {
+  //   data = productsData;
+  // }
 
   return (
     <>
