@@ -75,6 +75,19 @@ export const updateOrder = async (
   }
 };
 
+export const fetchOrderById = async (orderId: string): Promise<OrderType> => {
+  try {
+    const response = await fetch(adminOrderByIdApiRoute(orderId), {
+      credentials: "include",
+    });
+
+    const responseData = await response.json();
+    return responseData.body.payLoad;
+  } catch (err) {
+    throw new Error(err as string);
+  }
+};
+
 export const fetchUserOrderById = async (
   userId: string,
   orderId: string

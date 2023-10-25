@@ -1,7 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { adminOrders, orders } from "@/contants/tags";
-import { fetchAdminOrders, fetchUserOrders } from "@/helpers/network/order";
+import {
+  fetchAdminOrders,
+  fetchOrderById,
+  fetchUserOrders,
+} from "@/helpers/network/order";
 import { Pagination } from "@/types";
 import { OrderTableType, OrderType } from "@/types/api/order";
 import { formatDate } from "@/utils/client";
@@ -56,6 +60,23 @@ export const useFetchAdminOrders = (
         orders: filteredOrders,
         pagination: res.body.pagination,
       };
+    },
+    {
+      onSuccess,
+      onError,
+    }
+  );
+
+export const useFetchOrderById = (
+  orderId: string,
+  onSuccess?: (data: OrderType) => void,
+  onError?: (error: unknown) => void
+) =>
+  useQuery<OrderType>(
+    [orders, orderId],
+    async () => {
+      const res = await fetchOrderById(orderId);
+      return res;
     },
     {
       onSuccess,
