@@ -10,14 +10,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useDebounce } from "use-debounce";
 
+import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Pagination, SearchParams } from "@/types";
 import { OrderTableType } from "@/types/api/order";
-
-import { DataTable } from "./data-table";
 
 interface OrdersTableProps {
   data: OrderTableType[];

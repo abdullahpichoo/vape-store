@@ -14,6 +14,8 @@ export const productsApiRouteParams = (params: string) =>
 
 // Users
 export const usersApiRoute = `${baseUrl}/api/admin/users`;
+export const paginatedUserApiRoute = (params: string) =>
+  `${baseUrl}/api/admin/users${params}`;
 export const addUserApiRoute = `${baseUrl}/api/admin/users/new`;
 export const updateUserApiRoute = (userId: string) =>
   `${baseUrl}/api/admin/users/${userId}`;

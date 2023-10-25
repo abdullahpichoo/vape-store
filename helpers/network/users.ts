@@ -1,8 +1,8 @@
-import { headers, cookies } from "next/headers";
-
 import { userTag, usersTag } from "@/contants/tags";
-import { usersApiRoute } from "@/routes/api";
+import { paginatedUserApiRoute, usersApiRoute } from "@/routes/api";
+import { SearchParams } from "@/types";
 import { UserFormValues } from "@/types/api/user";
+import { convertSearchParamsToURL } from "@/utils/client";
 
 export const getUsers = async () => {
   try {
@@ -13,6 +13,22 @@ export const getUsers = async () => {
 
     const data = await response.json();
     return data.body.payLoad;
+  } catch {
+    throw new Error();
+  }
+};
+
+export const getPaginatedUsers = async (params: string) => {
+  try {
+    const response = await fetch(paginatedUserApiRoute(params), {
+      credentials: "include",
+    });
+
+    const data = await response.json();
+    return {
+      users: data.body.payLoad,
+      pagination: data.body.pagination,
+    };
   } catch {
     throw new Error();
   }

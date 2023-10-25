@@ -155,7 +155,7 @@ export const getProductsPaginated = async (params: SearchParams) => {
   const urlParams = convertSearchParamsToURL("", params);
   try {
     const response = await fetch(productsApiRouteParams(urlParams), {
-      cache: "no-store",
+      credentials: "include",
     });
 
     const data = await response.json();

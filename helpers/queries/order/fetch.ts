@@ -36,7 +36,6 @@ export const useFetchAdminOrders = (
   useQuery<AdminOrders>(
     [adminOrders, params],
     async () => {
-      console.log("Params Changed", params);
       const res = await fetchAdminOrders(params);
 
       const filteredOrders: OrderTableType[] = res.body.payLoad.map(

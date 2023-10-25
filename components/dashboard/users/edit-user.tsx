@@ -19,6 +19,7 @@ import { generateRandomPassword } from "@/utils/client";
 
 interface EditUserProps {
   user: UserType;
+  closeDialog: () => void;
 }
 const EditUser = (props: EditUserProps) => {
   const { user } = props;
@@ -31,7 +32,6 @@ const EditUser = (props: EditUserProps) => {
     handleSubmit,
     control,
     reset,
-    setValue,
     formState: { errors, isDirty, isValid },
   } = useForm<UserFormValues>({
     defaultValues: {
@@ -67,6 +67,7 @@ const EditUser = (props: EditUserProps) => {
         description: `User has been added successfully!`,
       });
       reset();
+      props.closeDialog();
     } catch (err) {
       console.log("error", err);
       toast({

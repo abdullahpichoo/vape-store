@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextResponse as TNextResponse } from "next/server";
 
-import { Pagination, Response } from "@/types";
+import { Pagination, Response, SearchParams } from "@/types";
 
 export const responseGenerator = (message: string) => {
   return {

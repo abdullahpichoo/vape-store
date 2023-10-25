@@ -16,7 +16,11 @@ import { addUserApiRoute } from "@/routes/api";
 import { UserFormValues, UserSchema } from "@/types/api/user";
 import { generateRandomPassword } from "@/utils/client";
 
-const AddUser = () => {
+interface AddUserProps {
+  closeDialog: () => void;
+}
+
+const AddUser = (props: AddUserProps) => {
   const [isAdding, setIsAdding] = useState(false);
 
   const { toast } = useToast();
@@ -59,6 +63,7 @@ const AddUser = () => {
         description: `User has been added successfully!`,
       });
       reset();
+      props.closeDialog();
     } catch (err) {
       console.log("error", err);
       toast({
