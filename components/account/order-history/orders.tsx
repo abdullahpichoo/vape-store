@@ -80,40 +80,26 @@ const Orders = (props: OrdersProps) => {
                 </div>
                 <div className="product-images">
                   <div className="grid grid-cols-12 gap-4">
-                    <div className="col-span-6 flex gap-3">
-                      <Img
-                        src={order.items[0].productImage}
-                        alt={order.items[0].productName}
-                        className="w-[8rem] h-[8rem] object-contain flex items-center justify-center"
-                      />
-                      <div className="details flex justify-center items-start flex-col gap-3">
-                        <p className="text-gray-500 text-[1.2rem] font-semibold">
-                          {order.items[0].productName}
-                        </p>
-                        <p className="text-gray-500 text-[1.2rem] font-semibold">
-                          {order.items[0].quantity} x $
-                          {order.items[0].productPrice}
-                        </p>
-                      </div>
-                      {order.items.length > 1 && (
-                        <div className="col-span-6 flex gap-3">
-                          <Img
-                            src={order.items[1].productImage}
-                            alt={order.items[1].productName}
-                            className="w-[8rem] h-[8rem] object-contain flex items-center justify-center"
-                          />
-                          <div className="details flex justify-center items-start flex-col gap-3">
-                            <p className="text-gray-500 text-[1.2rem] font-semibold">
-                              {order.items[1].productName}
-                            </p>
-                            <p className="text-gray-500 text-[1.2rem] font-semibold">
-                              {order.items[1].quantity} x $
-                              {order.items[1].productPrice}
-                            </p>
-                          </div>
+                    {order.items.map((item) => (
+                      <div
+                        className="col-span-6 flex gap-3"
+                        key={item.productId}
+                      >
+                        <Img
+                          src={item.productImage}
+                          alt={item.productName}
+                          className="w-[8rem] h-[8rem] object-contain flex items-center justify-center"
+                        />
+                        <div className="details flex justify-center items-start flex-col gap-3">
+                          <p className="text-gray-500 text-[1.2rem] font-semibold">
+                            {item.productName}
+                          </p>
+                          <p className="text-gray-500 text-[1.2rem] font-semibold">
+                            {item.quantity} x ${item.productPrice}
+                          </p>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

@@ -19,7 +19,7 @@ const ProductCard = (props: ProductCardProps) => {
           <Img
             src={product.images ? (product.images[0].url as string) : ""}
             alt={product.name}
-            className="w-full min-h-[15rem] md:min-h-[20rem] lg:min-h-[15rem] "
+            className="w-[12rem] max-w-full  h-[12rem] md:w-[20rem] md:h-[20rem] object-contain flex justify-center items-center"
           />
         </div>
         <div className="product-details flex flex-col gap-2">
