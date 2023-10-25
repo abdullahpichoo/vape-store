@@ -41,9 +41,12 @@ export const updateAddressApiRoute = (userId: string, addressId: string) =>
 // Orders
 export const adminOrdersApiRoute = (params: string) =>
   `${baseUrl}/api/admin/orders${params}`;
-export const adminOrdersApiRouteS = `${baseUrl}/api/admin/orders`;
+export const adminOrderByIdApiRoute = (orderId: string) =>
+  `${baseUrl}/api/admin/orders/${orderId}`;
 export const ordersApiRoute = (userId: string) =>
   `${baseUrl}/api/profile/${userId}/orders`;
+export const userOrderByIdApiRoute = (userId: string, orderId: string) =>
+  `${baseUrl}/api/profile/${userId}/orders/${orderId}`;
 export const addOrderApiRoute = (userId: string) =>
   `${baseUrl}/api/profile/${userId}/orders/new`;
 export const updateOrderApiRoute = (orderId: string) =>

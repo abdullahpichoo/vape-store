@@ -135,7 +135,9 @@ export const getOrdersByUserId = async (
   userId: string
 ): Promise<OrderType[]> => {
   try {
-    const orders = await Order.find({ "user.userId": userId });
+    const orders = await Order.find({ "user.userId": userId }).sort({
+      updatedAt: -1,
+    });
 
     return orders;
   } catch (err) {
@@ -170,10 +172,18 @@ export const updateOrder = async (
   data: OrderType
 ): Promise<OrderType> => {
   try {
-    const order = await Order.findByIdAndUpdate(id, data, { new: true });
+    const order = await Order.findById(id);
+
     if (!order) {
       throw new Error(ORDER_NOT_FOUND as string);
     }
+
+    if (order.status === "DELIVERED") {
+      throw new Error(FAILED_TO_UPDATE_ORDER + "Order is already delivered");
+    }
+
+    order.status = data.status;
+    await order.save();
     return order;
   } catch (err) {
     throw new Error(FAILED_TO_UPDATE_ORDER + err);

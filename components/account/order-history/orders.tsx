@@ -55,7 +55,7 @@ const Orders = (props: OrdersProps) => {
                         order.status === "ORDERED"
                           ? "text-orange-1"
                           : order.status === "DELIVERED"
-                          ? "text-green-3"
+                          ? "text-green-600"
                           : "text-orange-2"
                       }`}
                     >

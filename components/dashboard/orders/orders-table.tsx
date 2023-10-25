@@ -5,10 +5,12 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faLocationArrow,
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { DataTable } from "@/components/data-table";
@@ -99,11 +101,26 @@ const OrdersTable = (props: OrdersTableProps) => {
         );
       },
     },
-
     {
       accessorKey: "actions",
       header: "Actions",
       id: "actions",
+      cell: ({ row }) => {
+        const order = row.original;
+
+        return (
+          <>
+            <div className="flex justify-start gap-5">
+              <Link href={`/admin/dashboard/orders/${order._id}`}>
+                <span className="mr-2">
+                  <FontAwesomeIcon icon={faLocationArrow} />
+                </span>
+                <span className="font-semibold text-black">View</span>
+              </Link>
+            </div>
+          </>
+        );
+      },
     },
   ];
 

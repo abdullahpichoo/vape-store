@@ -10,6 +10,10 @@ export const orderStatus: OrderStatus = {
   DELIVERED: "DELIVERED",
 };
 
+export const orderStatusList = [
+  { label: "PROCESSING", value: "PROCESSING" },
+  { label: "DELIVERED", value: "DELIVERED" },
+];
 export interface OrderItemType {
   _id?: string;
   productId: string;
