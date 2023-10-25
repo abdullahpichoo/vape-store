@@ -12,7 +12,6 @@ import { connectToDatabase } from "@/utils/database";
 
 export const GET = async (req: NextRequest) => {
   const token = await getToken({ req });
-  console.log("Token", token, token?.role);
   if (!token || token.role === "user") return unauthenticatedResponse();
 
   const isConnected = await connectToDatabase();

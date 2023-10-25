@@ -15,14 +15,13 @@ import { connectToDatabase } from "@/utils/database";
 
 export const GET = async (req: NextRequest) => {
   const token = await getToken({ req });
-  console.log("Token", token);
+  if (!token || token.role !== "admin") return unauthenticatedResponse();
 
   const searchParams = req.nextUrl.searchParams;
 
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();
 
-  console.log("Server side search params", searchParams.toString());
   try {
     const { orders, pagination } = await getAllOrdersServer(searchParams);
     return getSuccessResponse<OrderType[]>(

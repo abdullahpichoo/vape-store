@@ -18,7 +18,7 @@ import { OrderType } from "@/types/api/order";
 import { connectToDatabase } from "@/utils/database";
 
 export const GET = async (
-  _: any,
+  req: NextRequest,
   {
     params,
   }: {
@@ -27,6 +27,9 @@ export const GET = async (
     };
   }
 ) => {
+  const token = await getToken({ req });
+  if (!token || token.role !== "admin") return unauthenticatedResponse();
+
   const { id } = params;
   if (!id) return orderNotFoundResponse();
 
@@ -51,6 +54,9 @@ export const PUT = async (
     };
   }
 ) => {
+  const token = await getToken({ req });
+  if (!token || token.role !== "admin") return unauthenticatedResponse();
+
   const { id } = params;
   if (!id) return orderNotFoundResponse();
 

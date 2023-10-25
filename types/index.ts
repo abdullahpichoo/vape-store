@@ -21,4 +21,5 @@ export interface SearchParams {
   sortBy?: string;
   orderBy?: string;
   searchBy?: string;
+  search?: string;
 }
