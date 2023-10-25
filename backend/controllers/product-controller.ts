@@ -34,15 +34,15 @@ export async function getPaginatedProducts(params: any): Promise<{
   products: ProductType[];
   pagination: Pagination;
 }> {
-  const page = params ? parseInt(params.get("pageNumber") ?? "1") : 1;
-  const limit = params ? parseInt(params.get("pageSize") ?? "10") : 10;
-  const sortBy = params ? params.get("sortBy") ?? "createdAt" : "createdAt";
-  const orderBy = params ? params.get("orderBy") ?? "desc" : "desc";
-  const searchBy = params ? params.get("searchBy") ?? "" : "";
+  const page = parseInt(params.get("pageNumber") || "1");
+  const limit = parseInt(params.get("pageSize") || "10");
+  const sortBy = params.get("sortBy") || "createdAt";
+  const orderBy = params.get("orderBy") || "desc";
+  const searchBy = params.get("searchBy") || "";
+  const search = params.get("search") || "";
 
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
-
   const total = await Product.countDocuments();
 
   const pagination: Pagination = {
@@ -61,15 +61,22 @@ export async function getPaginatedProducts(params: any): Promise<{
     pagination.prevPage = page - 1;
   }
 
-  const searchRegex = new RegExp(searchBy, "i");
-  console.log("search", searchRegex);
+  const searchRegex = new RegExp(search, "i");
 
   try {
     let products = [];
-    if (searchBy.length > 0) {
-      products = await Product.find({
-        $or: [{ name: { $regex: searchRegex } }],
-      })
+    if (search.length > 0 && searchBy.length > 0) {
+      const query: Record<string, any> = {
+        $or: [],
+      };
+
+      if (searchBy === "name") {
+        query.$or.push({ name: { $regex: searchRegex } });
+      } else if (searchBy === "brand") {
+        query.$or.push({ brand: { $regex: searchRegex } });
+      }
+
+      products = await Product.find(query)
         .sort({ [sortBy]: orderBy === "desc" ? -1 : 1 })
         .skip(startIndex)
         .limit(limit)

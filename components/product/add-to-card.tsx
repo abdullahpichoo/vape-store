@@ -111,9 +111,6 @@ const AddToCart = (props: AddToCartProps) => {
         </div>
       </div>
       <div className="flex items-center gap-5">
-        <Button size="sm" variant="orange">
-          Buy Now
-        </Button>
         <Button size="sm" variant="black" onClick={addItemToCart}>
           <div className="flex items-center justify-center gap-4">
             {isLoading && <Spinner size="sm" color="black" />}

@@ -1,62 +1,88 @@
+"use client";
+
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { useDebounce } from "use-debounce";
 
+import ProductsTable from "@/components/dashboard/products/products-table";
+import ErrorPage from "@/components/error";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { FAILED_TO_GET_PRODUCTS } from "@/contants/errorMsgs";
-import { getProducts, getProductsPaginated } from "@/helpers/network/products";
-import { baseUrl } from "@/routes/api";
+import { useFetchAdminProducts } from "@/helpers/queries/products/fetch";
 import { SearchParams } from "@/types";
-import { ProductType } from "@/types/api/product";
+import { convertSearchParamsToURL } from "@/utils/client";
 
-import { columns } from "./columns";
-import { DataTable } from "./data-table";
+export default function DashboardProducts() {
+  const [searchBy, setSearchBy] = useState({
+    searchBy: "",
+    search: "",
+  });
+  const [params, setParams] = useState<SearchParams>({
+    pageSize: "10",
+    pageNumber: "1",
+    sortBy: "createdAt",
+    orderBy: "desc",
+    searchBy: "",
+    search: "",
+  });
+  const [query] = useDebounce(searchBy, 750);
 
-async function getData(): Promise<ProductType[]> {
-  try {
-    const payloadProducts = await getProducts();
-    const products = payloadProducts.map((product: ProductType) => {
-      return {
-        ...product,
-        images: product.images?.map((image) => image.url),
-      };
-    });
-    return products;
-  } catch {
-    throw new Error(FAILED_TO_GET_PRODUCTS);
+  useEffect(() => {
+    if (!query.search) {
+      setParams((prev) => ({
+        ...prev,
+        searchBy: "",
+        search: "",
+      }));
+    } else {
+      setParams((prev) => ({
+        ...prev,
+        searchBy: query.searchBy,
+        search: query.search,
+      }));
+    }
+  }, [query]);
+
+  const {
+    data: productsData,
+    isLoading,
+    error,
+  } = useFetchAdminProducts(convertSearchParamsToURL("", params));
+
+  const getParams = (params: SearchParams) => {
+    setParams(params);
+  };
+
+  const renderTable = useMemo(() => {
+    return (
+      <>
+        {productsData && (
+          <ProductsTable
+            data={productsData.products}
+            pagination={productsData.pagination}
+            params={params}
+            setParams={getParams}
+          />
+        )}
+      </>
+    );
+  }, [productsData, params]);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Skeleton className="w-full h-[5rem]" />
+        <Skeleton className="w-full h-[30rem]" />
+      </div>
+    );
   }
-}
 
-async function getPaginatedData(params: SearchParams): Promise<ProductType[]> {
-  try {
-    const { products, pagination } = await getProductsPaginated(params);
-    const filProducts = products.map((product: ProductType) => {
-      return {
-        ...product,
-        images: product.images?.map((image) => image.url),
-      };
-    });
-    console.log("Pagination", pagination);
-    return filProducts;
-  } catch (err) {
-    throw new Error((FAILED_TO_GET_PRODUCTS + err) as string);
+  if (error) {
+    return <ErrorPage message={FAILED_TO_GET_PRODUCTS} />;
   }
-}
-
-export default async function DashboardProducts({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
-  if (!baseUrl) {
-    return null;
-  }
-
-  let data: ProductType[] = [];
-  // const productsData = await getPaginatedData(searchParams);
-  // if (productsData && productsData.length > 0) {
-  //   data = productsData;
-  // }
 
   return (
     <>
@@ -70,7 +96,53 @@ export default async function DashboardProducts({
             </Button>
           </Link>
         </div>
-        <DataTable columns={columns} data={data} />
+        <div className="flex flex-col sm:flex-row gap-10 mb-5">
+          <div className="form-item flex flex-col gap-2">
+            <label
+              htmlFor="name"
+              className="font-semibold text-neutral-600 ms-1 text-[1.2rem] md:text-[1.6rem]"
+            >
+              Search by Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              className="px-8 py-2 rounded-xl text-[1.4rem] md:text-[1.6rem] focus:outline-orange-1"
+              placeholder="Enter Product Name"
+              onChange={(e) => {
+                setSearchBy({
+                  searchBy: "name",
+                  search: e.target.value,
+                });
+              }}
+              defaultValue={searchBy.searchBy === "name" ? searchBy.search : ""}
+            />
+          </div>
+          <div className="form-item flex flex-col gap-2">
+            <label
+              htmlFor="name"
+              className="font-semibold text-neutral-600 ms-1 text-[1.2rem] md:text-[1.6rem]"
+            >
+              Search by Brand
+            </label>
+            <input
+              id="name"
+              type="text"
+              className="px-8 py-2 rounded-xl text-[1.4rem] md:text-[1.6rem] focus:outline-orange-1"
+              placeholder="Enter Brand Name"
+              onChange={(e) => {
+                setSearchBy({
+                  searchBy: "brand",
+                  search: e.target.value,
+                });
+              }}
+              defaultValue={
+                searchBy.searchBy === "brand" ? searchBy.search : ""
+              }
+            />
+          </div>
+        </div>
+        {renderTable}
       </div>
     </>
   );

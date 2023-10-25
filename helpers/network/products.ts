@@ -151,10 +151,9 @@ export const getFeaturedProducts = async () => {
   }
 };
 
-export const getProductsPaginated = async (params: SearchParams) => {
-  const urlParams = convertSearchParamsToURL("", params);
+export const getPaginatedProducts = async (params: string) => {
   try {
-    const response = await fetch(productsApiRouteParams(urlParams), {
+    const response = await fetch(productsApiRouteParams(params), {
       credentials: "include",
     });
 
