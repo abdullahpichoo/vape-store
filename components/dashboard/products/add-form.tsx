@@ -6,11 +6,13 @@ import { useForm } from "react-hook-form";
 
 import Button from "@/components/ui/btn";
 import InputController from "@/components/ui/form/input-controller";
+import SelectController from "@/components/ui/form/select-controller";
 import SwitchController from "@/components/ui/form/switch-controller";
 import TextAreaController from "@/components/ui/form/text-area-controller";
 import Spinner from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { FAILED_TO_CREATE_PRODUCT } from "@/contants/errorMsgs";
+import { categories } from "@/contants/product/categories";
 import { PRODUCT_CREATED_SUCCESSFULLY } from "@/contants/successMsgs";
 import { addProduct } from "@/helpers/network/products";
 import { ProductFormValues, ProductSchema } from "@/types/api/product";
@@ -158,7 +160,7 @@ const ProductAddForm = () => {
           />
         </div>
         <div className="col-span-12 md:col-span-6">
-          <InputController
+          <SelectController
             control={control}
             label="Category"
             name="category"
@@ -168,6 +170,7 @@ const ProductAddForm = () => {
               required: "Please Enter Product Category!",
             }}
             error={errors.category}
+            options={categories}
           />
         </div>
         <div className="col-span-12 md:col-span-6">
