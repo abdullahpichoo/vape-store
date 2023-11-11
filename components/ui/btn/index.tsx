@@ -8,8 +8,8 @@ const Button = (props: ButtonProps) => {
   const { variant, size, disabled } = props;
   const btnSize =
     size && size === "sm"
-      ? "text-[1rem] md:text-[1.2rem]"
-      : "text-[1.6rem] md:text-[1.8rem] lg:text-[2rem]";
+      ? "text-[1rem] md:text-[1.2rem] px-16 py-3"
+      : "text-[1.6rem] md:text-[1.8rem] lg:text-[2rem] px-24 py-4";
 
   return (
     <button
@@ -20,7 +20,7 @@ const Button = (props: ButtonProps) => {
           : "bg-black text-white hover:bg-grey"
       }
       ${disabled && "opacity-60 cursor-not-allowed "}
-      px-24 py-4 w-fit font-bold transition-all duration-150 ease-in-out ${btnSize} ${
+       w-fit font-bold transition-all duration-150 ease-in-out ${btnSize} ${
         props.className
       }`}
       style={{
