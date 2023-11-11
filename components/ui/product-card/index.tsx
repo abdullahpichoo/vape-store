@@ -15,11 +15,11 @@ const ProductCard = (props: ProductCardProps) => {
   return (
     <Link href={`/product/${product._id}`}>
       <div className="w-full h-full border-2 border-gray-200 px-5 py-3 group rounded-2xl hover:border-orange-1 duration-200 ease-in-out cursor-pointer">
-        <div className="product-image mb-2 group-hover:scale-105 duration-200 ease-in-out">
+        <div className="product-image my-10 group-hover:scale-105 duration-200 ease-in-out">
           <Img
             src={product.images ? (product.images[0].url as string) : ""}
             alt={product.name}
-            className="w-[12rem] max-w-full  h-[12rem] md:w-[20rem] md:h-[20rem] object-contain flex justify-center items-center"
+            className="w-[12rem] max-w-full h-[12rem] md:w-[20rem] md:h-[20rem] object-contain flex justify-center items-center"
           />
         </div>
         <div className="product-details flex flex-col gap-2">

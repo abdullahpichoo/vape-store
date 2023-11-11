@@ -2,6 +2,7 @@
 
 import { faCartShopping, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
@@ -76,9 +77,11 @@ const CartBtn = () => {
           <div className="flex flex-col gap-5 items-center justify-center h-full">
             <h1>Your Cart is Empty</h1>
             <h6>Login to see the items in your cart</h6>
-            <Button variant="black" size="sm">
-              Login
-            </Button>
+            <Link href={"auth/sign-in"}>
+              <Button variant="black" size="sm">
+                Login
+              </Button>
+            </Link>
           </div>
         )}
       </div>

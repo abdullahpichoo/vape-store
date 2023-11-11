@@ -75,9 +75,6 @@ const ProductAddForm = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("Image Files", imageFiles);
-  }, [imageFiles]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
