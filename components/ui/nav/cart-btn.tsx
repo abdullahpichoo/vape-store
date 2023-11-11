@@ -3,6 +3,7 @@
 import { faCartShopping, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
@@ -13,14 +14,16 @@ import Button from "../btn";
 import { Separator } from "../separator";
 import { Skeleton } from "../skeleton";
 
-const CartBtn = () => {
-  const session = useSession();
+interface CartBtnProps {
+  session: Session | null;
+}
+
+const CartBtn = (props: CartBtnProps) => {
+  const { session } = props;
+
   const cart = useCartStore((state) => state.cart);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  if (session.status === "loading")
-    return <Skeleton className="w-full h-[3rem]" />;
 
   return (
     <>
@@ -37,7 +40,7 @@ const CartBtn = () => {
           <h6 className="font-medium hidden lg:block">Cart</h6>
         </div>
         <div className="items-count text-[1rem] lg:text-[1.2rem] text-white px-4 py-2 bg-black rounded-full group-hover:scale-110 transition-all ease-in-out duration-200">
-          {cart.items.length}
+          {cart && cart.items.length}
         </div>
       </div>
 
@@ -66,9 +69,9 @@ const CartBtn = () => {
           <Separator />
         </div>
 
-        {session && session.status === "authenticated" && session.data?.user ? (
+        {session && session.user ? (
           <ShoppingCart
-            userId={session.data.user.id}
+            userId={session.user.id}
             closeDrawer={() => {
               setDrawerOpen(false);
             }}

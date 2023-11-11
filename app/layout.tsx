@@ -31,11 +31,11 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={`${montserrat.className} flex flex-col min-h-screen relative`}
       >
-        <div className="mb-8">
-          <NavBar />
-        </div>
-
         <Providers>
+          <div className="mb-8">
+            <NavBar />
+          </div>
+
           <main className="px-5 sm:px-24 md:px-36 xl:px-[30rem]">
             {children}
           </main>
