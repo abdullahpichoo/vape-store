@@ -2,6 +2,7 @@ import crypto from "crypto";
 
 import { revalidateTag } from "next/cache";
 
+import { mockProducts } from "@/app/api/products/categories/route";
 import Product from "@/backend/models/product";
 import {
   FAILED_TO_CREATE_PRODUCT,
@@ -145,6 +146,69 @@ export async function getProductsByBrand(params: any): Promise<{
       .skip(startIndex)
       .limit(limit)
       .exec();
+
+    return {
+      products,
+      pagination,
+    };
+  } catch (error) {
+    throw new Error(FAILED_TO_GET_PRODUCTS as string);
+  }
+}
+
+export async function getFilteredPaginatedProducts(params: any): Promise<{
+  products: ProductType[];
+  pagination: Pagination;
+}> {
+  const page = parseInt(params.get("pageNumber") || "1");
+  const limit = parseInt(params.get("pageSize") || "10");
+  const sortBy = params.get("sortBy") || "createdAt";
+  const orderBy = params.get("orderBy") || "desc";
+  const categories = params.getAll("categories");
+  const minPrice = params.get("minPrice") || 0;
+  const maxPrice = params.get("maxPrice") || 500;
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const total = mockProducts.length;
+
+  const pagination: Pagination = {
+    currentPage: page,
+    totalPages: Math.ceil(total / limit),
+    totalItems: total,
+    nextPage: 0,
+    prevPage: 0,
+  };
+
+  if (endIndex < total) {
+    pagination.nextPage = page + 1;
+  }
+
+  if (startIndex > 0) {
+    pagination.prevPage = page - 1;
+  }
+
+  // const categoriesRegex = new RegExp(categories.join("|"), "i");
+
+  try {
+    let products = [];
+    if (categories.length === 0) {
+      products = mockProducts
+        .filter((product) => {
+          return product.price >= minPrice && product.price <= maxPrice;
+        })
+        .slice(startIndex, endIndex);
+    } else {
+      products = mockProducts
+        .filter((product) => {
+          return (
+            categories.includes(product.category) &&
+            product.price >= minPrice &&
+            product.price <= maxPrice
+          );
+        })
+        .slice(startIndex, endIndex);
+    }
 
     return {
       products,

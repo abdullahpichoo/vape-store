@@ -170,14 +170,17 @@ export const getPaginatedProducts = async (params: string) => {
 
 export const getFilteredProducts = async (
   params: string
-): Promise<ProductType[]> => {
+): Promise<{ products: ProductType[]; pagination: Pagination }> => {
   try {
     const response = await fetch(filteredProductsApiRoute(params), {
       cache: "no-store",
     });
 
     const data = await response.json();
-    return data.body.payLoad;
+    return {
+      products: data.body.payLoad,
+      pagination: data.body.pagination,
+    };
   } catch {
     throw new Error();
   }

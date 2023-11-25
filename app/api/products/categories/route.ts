@@ -1,6 +1,9 @@
 import { NextRequest } from "next/server";
 
-import { getPaginatedProducts } from "@/backend/controllers/product-controller";
+import {
+  getFilteredPaginatedProducts,
+  getPaginatedProducts,
+} from "@/backend/controllers/product-controller";
 import { getSuccessResponse } from "@/backend/utils/responses";
 import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import { failedToFetchProductsResponse } from "@/backend/utils/responses/product";
@@ -64,18 +67,24 @@ const generateMockProducts = (count) => {
   return products;
 };
 
+export const mockProducts = generateMockProducts(100);
+
 export const GET = async (req: NextRequest) => {
   const searchParams = req.nextUrl.searchParams;
 
   const isConnected = await connectToDatabase();
   if (!isConnected) return failedToConnectToDatabaseResponse();
 
+  console.log("Search params", searchParams);
+
   try {
-    // const { products, pagination } = await getPaginatedProducts(searchParams);
-    const mockProducts = generateMockProducts(100);
+    const { products, pagination } = await getFilteredPaginatedProducts(
+      searchParams
+    );
     return getSuccessResponse<ProductType[]>(
-      mockProducts,
-      PRODUCTS_FETCHED_SUCCESSFULLY
+      products,
+      PRODUCTS_FETCHED_SUCCESSFULLY,
+      pagination
     );
   } catch (error) {
     return failedToFetchProductsResponse();
