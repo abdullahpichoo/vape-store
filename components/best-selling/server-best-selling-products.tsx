@@ -10,9 +10,7 @@ import ProductsSwiper from "./products-swiper";
 
 const getData = async () => {
   const response = await fetch(bestSellingProductsApiRoute, {
-    next: {
-      revalidate: 3600,
-    },
+    cache: "no-store",
   });
 
   if (!response.ok) {
@@ -38,20 +36,17 @@ const ServerBestSellingProducts = async () => {
         </h3>
         <Heading size="xl">Best Selling</Heading>
       </div>
-      <div className="grid grid-cols-12 lg:grid-cols-5 gap-3">
-        {products && products.length > 0 && (
-          <ProductsSwiper products={products} />
-        )}
-      </div>
+      {products && products.length > 0 && (
+        <ProductsSwiper products={products} />
+      )}
 
-      <Link
-        href={"/product/shop-by-products"}
-        className="view-more my-5 text-center"
-      >
-        <Button size="md" variant="orange">
-          View More
-        </Button>
-      </Link>
+      <div className="view-more my-5 text-center">
+        <Link href={"/product/shop-by-products"}>
+          <Button size="md" variant="orange">
+            View More
+          </Button>
+        </Link>
+      </div>
     </section>
   );
 };

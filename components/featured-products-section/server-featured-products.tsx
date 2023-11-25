@@ -50,14 +50,13 @@ const ServerFeaturedProducts = async () => {
           ))}
       </div>
 
-      <Link
-        href={"/product/shop-by-products"}
-        className="view-more my-5 text-center"
-      >
-        <Button size="md" variant="orange">
-          View More
-        </Button>
-      </Link>
+      <div className="view-more my-5 text-center">
+        <Link href={"/product/shop-by-products"}>
+          <Button size="md" variant="orange">
+            View More
+          </Button>
+        </Link>
+      </div>
     </section>
   );
 };
