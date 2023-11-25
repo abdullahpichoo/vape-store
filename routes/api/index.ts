@@ -11,6 +11,8 @@ export const bestSellingProductsApiRoute = `${baseUrl}/api/products/best-selling
 export const featuredProductsApiRoute = `${baseUrl}/api/products/featured`;
 export const productsApiRouteParams = (params: string) =>
   `${baseUrl}/api/products/${params}`;
+export const filteredProductsApiRoute = (params: string) =>
+  `${baseUrl}/api/products/categories${params}`;
 
 // Users
 export const usersApiRoute = `${baseUrl}/api/admin/users`;

@@ -31,7 +31,7 @@ const BrowseItems = () => {
         <HoverCard openDelay={150} closeDelay={100}>
           <HoverCardTrigger
             onClick={() => {
-              router.push("#", { scroll: false });
+              router.push("/product/shop-by-products", { scroll: false });
             }}
             className="cursor-pointer"
           >

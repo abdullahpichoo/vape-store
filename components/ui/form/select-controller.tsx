@@ -19,6 +19,7 @@ interface SelectControllerProps<T extends FieldValues> {
     value: string;
     label: string;
   }[];
+  multiple?: boolean;
   defaultValue?: string;
   error?: FieldError;
   rules?: RegisterOptions;
@@ -32,6 +33,7 @@ const SelectController = <T extends FieldValues>({
   placeholder,
   options,
   defaultValue,
+  multiple,
   error,
   rules,
 }: SelectControllerProps<T>) => {
@@ -52,6 +54,7 @@ const SelectController = <T extends FieldValues>({
             className="px-8 py-4 rounded-xl text-[1.4rem] md:text-[1.6rem] border border-neutral-200 focus:outline-orange-1"
             placeholder={placeholder}
             defaultValue={defaultValue}
+            multiple={multiple}
             {...field}
           >
             <option value="" disabled>

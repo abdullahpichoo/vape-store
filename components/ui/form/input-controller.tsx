@@ -31,7 +31,7 @@ const InputController = <T extends FieldValues>({
   rules,
 }: InputControllerProps<T>) => {
   return (
-    <div className="form-item flex flex-col gap-2">
+    <div className="form-item flex flex-col gap-2 w-full">
       <label
         htmlFor={name}
         className="font-semibold text-neutral-600 ms-1 text-[1.2rem] md:text-[1.6rem]"

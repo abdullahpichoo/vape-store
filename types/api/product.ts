@@ -30,6 +30,17 @@ export type ProductFormValues = Omit<
   "_id" | "createdAt" | "updatedAt"
 >;
 
+export type ProductFilterFormValues = {
+  categories: {
+    value: string;
+    label: string;
+  }[];
+  priceRange: {
+    min: number;
+    max: number;
+  };
+};
+
 export const ProductSchema = yup.object().shape({
   name: yup.string().required("Please enter the name of your product!"),
   description: yup

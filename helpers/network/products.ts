@@ -7,6 +7,7 @@ import {
   bestSellingProductsApiRoute,
   deleteProductApiRoute,
   featuredProductsApiRoute,
+  filteredProductsApiRoute,
   productsApiRoute,
   productsApiRouteParams,
   updateProductApiRoute,
@@ -162,6 +163,21 @@ export const getPaginatedProducts = async (params: string) => {
       products: data.body.payLoad,
       pagination: data.body.pagination,
     };
+  } catch {
+    throw new Error();
+  }
+};
+
+export const getFilteredProducts = async (
+  params: string
+): Promise<ProductType[]> => {
+  try {
+    const response = await fetch(filteredProductsApiRoute(params), {
+      cache: "no-store",
+    });
+
+    const data = await response.json();
+    return data.body.payLoad;
   } catch {
     throw new Error();
   }
