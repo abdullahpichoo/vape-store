@@ -179,7 +179,6 @@
   ul.pagination li {
     color: #000;
     text-decoration: none;
-    font-size: 12px;
     font-weight: 600;
     padding: 0 10px;
     line-height: 3rem;
@@ -187,7 +186,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s ease-in-out;
-    @apply border border-gray-300 rounded-xl hover:bg-black hover:text-white;
+    @apply border border-gray-300 rounded-xl hover:bg-black hover:text-white text-[1rem] sm:text-[1.2rem];
   }
   ul.pagination .active-page {
     @apply bg-orange-1 text-black rounded-xl border-0;

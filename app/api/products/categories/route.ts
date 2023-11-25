@@ -7,11 +7,11 @@ import {
 import { getSuccessResponse } from "@/backend/utils/responses";
 import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import { failedToFetchProductsResponse } from "@/backend/utils/responses/product";
+import { brandsEnum } from "@/contants/product/brands";
+import { categoriesEnum } from "@/contants/product/categories";
 import { PRODUCTS_FETCHED_SUCCESSFULLY } from "@/contants/successMsgs";
 import { ProductType } from "@/types/api/product";
 import { connectToDatabase } from "@/utils/database";
-import { categoriesEnum } from "@/contants/product/categories";
-import { brandsEnum } from "@/contants/product/brands";
 
 const images = [
   {
@@ -26,7 +26,7 @@ const images = [
   },
 ];
 
-const getRandomProperty = (obj) => {
+const getRandomProperty = (obj: { [key: string]: string }) => {
   const keys = Object.keys(obj);
   return obj[keys[Math.floor(Math.random() * keys.length)]];
 };
@@ -59,7 +59,7 @@ const generateRandomProduct = () => {
   };
 };
 
-const generateMockProducts = (count) => {
+const generateMockProducts = (count: number) => {
   const products = [];
   for (let i = 0; i < count; i++) {
     products.push(generateRandomProduct());

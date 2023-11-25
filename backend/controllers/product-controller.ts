@@ -161,7 +161,7 @@ export async function getFilteredPaginatedProducts(params: any): Promise<{
   pagination: Pagination;
 }> {
   const page = parseInt(params.get("pageNumber") || "1");
-  const limit = parseInt(params.get("pageSize") || "10");
+  const limit = parseInt(params.get("pageSize") || "25");
   const sortBy = params.get("sortBy") || "createdAt";
   const orderBy = params.get("orderBy") || "desc";
   const categories = params.getAll("categories");

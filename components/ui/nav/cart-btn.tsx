@@ -4,7 +4,6 @@ import { faCartShopping, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { Session } from "next-auth";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 import ShoppingCart from "@/components/shopping-cart";
@@ -12,7 +11,6 @@ import useCartStore from "@/context/cartStore";
 
 import Button from "../btn";
 import { Separator } from "../separator";
-import { Skeleton } from "../skeleton";
 
 interface CartBtnProps {
   session: Session | null;
@@ -45,13 +43,13 @@ const CartBtn = (props: CartBtnProps) => {
       </div>
 
       <div
-        className={`backdrop absolute top-0 left-0 z-30 w-full h-[100vh] bg-black opacity-50 ease-in-out duration-300 transition-all ${
+        className={`backdrop absolute top-0 left-0 z-[1000] w-full h-full bg-black opacity-50 ease-in-out duration-300 transition-all ${
           drawerOpen ? "block" : "hidden"
         }`}
       />
 
       <div
-        className={`top-0 right-0 w-[70vw] sm:w-[60vw] lg:w-[40vw] bg-white px-10 py-14 text-white fixed h-[100vh] overflow-y-auto z-40 ease-in-out duration-300 transition-all transform ${
+        className={`top-0 right-0 w-[70vw] sm:w-[60vw] lg:w-[40vw] bg-white px-10 py-14 text-white fixed h-[100vh] overflow-y-auto z-[1000] ease-in-out duration-300 transition-all transform ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

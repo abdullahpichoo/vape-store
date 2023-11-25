@@ -40,7 +40,7 @@ const BrowseItems = () => {
               <h6 className="uppercase text-[1.3rem]">Shop By Products</h6>
             </div>
           </HoverCardTrigger>
-          <HoverCardContent className="w-[40vw] px-20 py-5">
+          <HoverCardContent className="w-[40vw] px-20 py-5 z-[5000]">
             <h5 className="uppercase">Categories</h5>
             <div className="dropdown-items grid grid-cols-2 py-2">
               {categories.map((item) => (
@@ -68,7 +68,7 @@ const BrowseItems = () => {
               <h6 className="uppercase text-[1.3rem]">Shop By Brands</h6>
             </div>
           </HoverCardTrigger>
-          <HoverCardContent className="w-[40vw] px-20 py-5">
+          <HoverCardContent className="w-[40vw] px-20 py-5 z-[5000]">
             <h5 className="uppercase">Brands</h5>
             <div className="dropdown-items grid grid-cols-2 py-2">
               {brands.map((item) => (

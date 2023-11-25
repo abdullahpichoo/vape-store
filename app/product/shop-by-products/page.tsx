@@ -20,6 +20,7 @@ import {
 import { ProductFilterFormValues } from "@/types/api/product";
 
 import FilteredProducts from "./filtered-products";
+import Loading from "./loading";
 
 const ShopByProducts = () => {
   const [params, setParams] = useState<ProductsFilterParams>({
@@ -60,15 +61,17 @@ const ShopByProducts = () => {
   };
 
   return (
-    <section>
-      <Heading size="xl">All Products</Heading>
+    <section className=" sm:-mx-20 md:-mx-32 xl:-mx-[28rem]">
+      <div className="mb-12">
+        <Heading size="xl">All Products</Heading>
+      </div>
 
-      <section className="grid grid-cols-12 gap-5 sm:-mx-20 md:-mx-32 xl:-mx-[28rem]">
-        <Card className="filter col-span-12 lg:col-span-2 h-fit">
+      <section className="grid grid-cols-12 gap-5 relative">
+        <Card className="filter sticky top-0 z-[500] col-span-12 lg:col-span-2 h-fit">
           <form action="" onSubmit={handleSubmit(onFilterChange)}>
             <div className="categories-filter flex flex-col sm:flex-row lg:flex-col justify-between align-middle gap-5">
               <h5>Filters</h5>
-              <div className="form-item flex flex-col gap-2 w-full relative">
+              <div className="form-item flex flex-col gap-2 w-full">
                 <label
                   htmlFor={"categories"}
                   className="font-semibold text-neutral-600 ms-1 text-[1.2rem] md:text-[1.6rem]"
@@ -83,7 +86,7 @@ const ShopByProducts = () => {
                       isMulti
                       {...field}
                       options={categories}
-                      className="z-[500]"
+                      className="z-[100]"
                     />
                   )}
                 />
@@ -116,12 +119,7 @@ const ShopByProducts = () => {
         <div className="col-span-12 lg:col-span-10">
           {isLoading ? (
             <>
-              <div className="flex gap-5">
-                <Skeleton className="w-full h-[20rem]" />
-                <Skeleton className="w-full h-[20rem]" />
-                <Skeleton className="w-full h-[20rem]" />
-                <Skeleton className="w-full h-[20rem]" />
-              </div>
+              <Loading />
             </>
           ) : (
             <>
@@ -143,7 +141,7 @@ const ShopByProducts = () => {
                     pageRangeDisplayed={5}
                     pageCount={productsData.pagination.totalPages}
                     previousLabel="< previous"
-                    className="pagination flex justify-end items-center gap-2 my-5"
+                    className="pagination flex justify-end items-center gap-2 my-5 w-full flex-wrap"
                     activeClassName="active-page"
                     forcePage={productsData.pagination.currentPage - 1}
                   />
