@@ -1,21 +1,22 @@
 import Link from "next/link";
 
-import { featuredProductsApiRoute } from "@/routes/api";
+import { bestSellingProductsApiRoute } from "@/routes/api";
 import { ProductType } from "@/types/api/product";
 
 import Button from "../ui/btn";
 import Heading from "../ui/heading";
-import ProductCard from "../ui/product-card";
+
+import ProductsSwiper from "./products-swiper";
 
 const getData = async () => {
-  const response = await fetch(featuredProductsApiRoute, {
+  const response = await fetch(bestSellingProductsApiRoute, {
     next: {
       revalidate: 3600,
     },
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch featured products");
+    throw new Error("Failed to fetch best selling products");
   }
 
   if (response.headers.get("content-type") !== "application/json") {
@@ -26,28 +27,21 @@ const getData = async () => {
   return data.body.payLoad;
 };
 
-const ServerFeaturedProducts = async () => {
+const ServerBestSellingProducts = async () => {
   const products = (await getData()) as ProductType[];
 
   return (
     <section>
       <div className="heading-section flex flex-col gap-0">
         <h3 className="-mb-5 font-hind font-semibold text-gray-600">
-          {"Don't Miss Our Featured Items"}
+          Meet Our Best Products
         </h3>
-        <Heading size="xl">Featured Products</Heading>
+        <Heading size="xl">Best Selling</Heading>
       </div>
       <div className="grid grid-cols-12 lg:grid-cols-5 gap-3">
-        {products &&
-          products.length > 0 &&
-          products.map((product) => (
-            <div
-              key={product._id}
-              className="col-span-6 sm:col-span-4 lg:col-span-1"
-            >
-              <ProductCard product={product} />
-            </div>
-          ))}
+        {products && products.length > 0 && (
+          <ProductsSwiper products={products} />
+        )}
       </div>
 
       <Link
@@ -62,4 +56,4 @@ const ServerFeaturedProducts = async () => {
   );
 };
 
-export default ServerFeaturedProducts;
+export default ServerBestSellingProducts;

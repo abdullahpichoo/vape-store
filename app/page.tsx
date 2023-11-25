@@ -1,5 +1,6 @@
 import AgeVerify from "@/components/age-verify";
 import BestSelling from "@/components/best-selling";
+import ServerBestSellingProducts from "@/components/best-selling/server-best-selling-products";
 import FeaturedBrands from "@/components/featured-brands-section";
 import FeaturedProducts from "@/components/featured-products-section";
 import ServerFeaturedProducts from "@/components/featured-products-section/server-featured-products";
@@ -12,7 +13,8 @@ export default function Home() {
       <div className="flex flex-col gap-10 relative">
         <AgeVerify />
         <HeroSection />
-        <BestSelling />
+        {/* <BestSelling /> */}
+        <ServerBestSellingProducts />
         <Features />
         {/* <FeaturedProducts /> */}
         <ServerFeaturedProducts />
