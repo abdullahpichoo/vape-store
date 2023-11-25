@@ -44,12 +44,19 @@ const BrowseItems = () => {
             <h5 className="uppercase">Categories</h5>
             <div className="dropdown-items grid grid-cols-2 py-2">
               {categories.map((item) => (
-                <div key={item.value} className="col-span-1 dropdown-item p-2">
-                  <Link href={"#"}>
-                    <h6 className="uppercase font-medium text-gray-800">
-                      {item.label}
-                    </h6>
-                  </Link>
+                <div
+                  key={item.value}
+                  className="col-span-1 dropdown-item p-2 cursor-pointer"
+                  onClick={() => {
+                    router.push(
+                      `/product/shop-by-products?categories=${item.value}`,
+                      { scroll: false }
+                    );
+                  }}
+                >
+                  <h6 className="uppercase font-medium text-gray-800">
+                    {item.label}
+                  </h6>
                 </div>
               ))}
             </div>

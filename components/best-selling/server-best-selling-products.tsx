@@ -10,7 +10,9 @@ import ProductsSwiper from "./products-swiper";
 
 const getData = async () => {
   const response = await fetch(bestSellingProductsApiRoute, {
-    cache: "no-store",
+    next: {
+      revalidate: 3600,
+    },
   });
 
   if (!response.ok) {

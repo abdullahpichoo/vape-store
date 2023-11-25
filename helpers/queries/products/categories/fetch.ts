@@ -49,7 +49,6 @@ export const useFetchFilteredProducts = (
   return useQuery<Products>(
     [products, paramsURL],
     async () => {
-      console.log("Params URL: ", paramsURL);
       const { products, pagination } = await getFilteredProducts(paramsURL);
 
       return { products, pagination };
