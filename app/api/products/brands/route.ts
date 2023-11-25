@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-import { getPaginatedProducts } from "@/backend/controllers/product-controller";
+import { getProductsByBrand } from "@/backend/controllers/product-controller";
 import { getSuccessResponse } from "@/backend/utils/responses";
 import { failedToConnectToDatabaseResponse } from "@/backend/utils/responses/database";
 import { failedToFetchProductsResponse } from "@/backend/utils/responses/product";
@@ -15,7 +15,7 @@ export const GET = async (req: NextRequest) => {
   if (!isConnected) return failedToConnectToDatabaseResponse();
 
   try {
-    const { products, pagination } = await getPaginatedProducts(searchParams);
+    const { products, pagination } = await getProductsByBrand(searchParams);
     return getSuccessResponse<ProductType[]>(
       products,
       PRODUCTS_FETCHED_SUCCESSFULLY,

@@ -97,6 +97,64 @@ export async function getPaginatedProducts(params: any): Promise<{
   }
 }
 
+export async function getProductsByBrand(params: any): Promise<{
+  products: ProductType[];
+  pagination: Pagination;
+}> {
+  const page = parseInt(params.get("pageNumber") || "1");
+  const limit = parseInt(params.get("pageSize") || "10");
+  const sortBy = params.get("sortBy") || "createdAt";
+  const orderBy = params.get("orderBy") || "desc";
+
+  if (!params.get("brandName")) {
+    throw new Error("Brand name is required");
+  }
+
+  const brandName = params.get("brandName");
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const total = await Product.countDocuments({ brand: brandName });
+
+  const pagination: Pagination = {
+    currentPage: page,
+    totalPages: Math.ceil(total / limit),
+    totalItems: total,
+    nextPage: 0,
+    prevPage: 0,
+  };
+
+  if (endIndex < total) {
+    pagination.nextPage = page + 1;
+  }
+
+  if (startIndex > 0) {
+    pagination.prevPage = page - 1;
+  }
+
+  const brandRegex = new RegExp(brandName, "i");
+
+  try {
+    let products = [];
+    const query: Record<string, any> = {
+      $or: [{ brand: { $regex: brandRegex } }],
+    };
+
+    products = await Product.find(query)
+      .sort({ [sortBy]: orderBy === "desc" ? -1 : 1 })
+      .skip(startIndex)
+      .limit(limit)
+      .exec();
+
+    return {
+      products,
+      pagination,
+    };
+  } catch (error) {
+    throw new Error(FAILED_TO_GET_PRODUCTS as string);
+  }
+}
+
 export async function getAllProducts(): Promise<ProductType[]> {
   try {
     const products = await Product.find({});

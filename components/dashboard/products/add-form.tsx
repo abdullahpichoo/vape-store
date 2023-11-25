@@ -12,6 +12,7 @@ import TextAreaController from "@/components/ui/form/text-area-controller";
 import Spinner from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { FAILED_TO_CREATE_PRODUCT } from "@/contants/errorMsgs";
+import { brands } from "@/contants/product/brands";
 import { categories } from "@/contants/product/categories";
 import { PRODUCT_CREATED_SUCCESSFULLY } from "@/contants/successMsgs";
 import { addProduct } from "@/helpers/network/products";
@@ -74,7 +75,6 @@ const ProductAddForm = () => {
       setIsAdding(false);
     }
   };
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -162,25 +162,26 @@ const ProductAddForm = () => {
             label="Category"
             name="category"
             type="text"
-            placeholder="Enter Product Category"
+            placeholder="Select Category"
             rules={{
-              required: "Please Enter Product Category!",
+              required: "Please Choose Product Category!",
             }}
             error={errors.category}
             options={categories}
           />
         </div>
         <div className="col-span-12 md:col-span-6">
-          <InputController
+          <SelectController
             control={control}
             label="Brand"
             name="brand"
             type="text"
-            placeholder="Enter Product Brand"
+            placeholder="Select Brand"
             rules={{
-              required: "Please Enter Product Brand!",
+              required: "Please Choose Product Brand!",
             }}
-            error={errors.brand}
+            error={errors.category}
+            options={brands}
           />
         </div>
         <div className="col-span-12 md:col-span-6">
